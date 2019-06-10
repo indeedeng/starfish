@@ -102,7 +102,8 @@ function fetchPageOfDataAndFilter(url) {
       let importantEvents = [];
       response.json()
       .then((json, err) => {
-        filterResponseForImportantEvents(json, importantEvents);
+        let filteredForImportant = filterResponseForImportantEvents(json);
+        importantEvents = importantEvents.concat(filteredForImportant);
         if (parsed && parsed.next && parsed.next.url) {
           fetchPageOfDataAndFilter(parsed.next.url).then(newEvents => {
             return resolve(importantEvents.concat(newEvents));
@@ -117,7 +118,8 @@ function fetchPageOfDataAndFilter(url) {
   });
 }
 
-function filterResponseForImportantEvents(allEventsFromFetch, arrayOfImportantEvents) {
+function filterResponseForImportantEvents(allEventsFromFetch) {
+  let arrayOfImportantEvents = [];
   for(let i=0; i<allEventsFromFetch.length; i++) {
     let event = allEventsFromFetch[i];
     switch(event.type) {
@@ -131,6 +133,7 @@ function filterResponseForImportantEvents(allEventsFromFetch, arrayOfImportantEv
         break;
     }
   }
+  return arrayOfImportantEvents
 }
 
 function createIdObjects(row, LDAP, idObject, importantEvents) {
@@ -152,4 +155,4 @@ function filterContributorByTime(idObject, dates) {
   }
 }
 
-
+module.exports = filterResponseForImportantEvents
