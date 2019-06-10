@@ -63,9 +63,7 @@ process.stdin.on('end', () => {
     }
     arrayOfGithubIds.push(currentRow[1]);
     let LDAP = parseLDAPfromEmail(currentRow);
-    //if(currentRow[1]==="danisyellis" || currentRow[1]==="rohankapoorcom") {
     fetchUserDataAndAddToCSV(currentRow, LDAP, dates)
-    //}
   }
 });
 
@@ -73,18 +71,13 @@ process.stdin.on('end', () => {
 function parseDatesFromArgv() {
   let startDate;
   let endDate;
-  if(process.argv[4]) {
-    startDate = process.argv[2] + " " + process.argv[4];
+  if(process.env.TIMEZONE_OFFSET) {
+    startDate = process.argv[2] + " " + process.env.TIMEZONE_OFFSET;
+    endDate = process.argv[3] + " " + process.env.TIMEZONE_OFFSET;
   } else {
     startDate = process.argv[2];
-  }
-
-  if(process.argv[5]) {
-    endDate = process.argv[3] + " " + process.argv[5];
-  } else {
     endDate = process.argv[3];
   }
-
   return [startDate, endDate]
 }
 
@@ -148,12 +141,11 @@ function createIdObjects(row, LDAP, idObject, importantEvents) {
 }
 
 function filterContributorByTime(idObject, dates) {
-  // is timeInterval the correct phrase?
-  const timeInterval = moment.range([moment.utc(`${dates[0]}`, 'YYYY-MM-DD hh:mm'), moment.utc(`${dates[1]}`, 'YYYY-MM-DD hh:mm')]);
+  const timeWindow = moment.range([moment.utc(`${dates[0]}`, 'YYYY-MM-DD hh:mm'), moment.utc(`${dates[1]}`, 'YYYY-MM-DD hh:mm')]);
   const contribsByUser = [];
   for(let i=0; i<idObject.contributions.length; i++) {
     let contribDate = moment(idObject.contributions[i].created_at, "YYYY-MM-DD, h:mm:ss a")
-    if(timeInterval.contains(contribDate)) {
+    if(timeWindow.contains(contribDate)) {
       console.log(idObject.LDAP)
       break;
     }
