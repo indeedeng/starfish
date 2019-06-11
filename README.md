@@ -22,9 +22,10 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Cl
 When logged in to GitHub, go to Settings, Developer Settings, OAuth Apps. Click the "new OAuth App" button and register a new OAuth app. For this app, you can fill this form out with anything and it won't matter. What does matter is that you fill out the form, click "Register Application", and have a Client ID and Client Secret.
 
 #### Next, Create a file named .env and copy the contents of the .env.template file into it.
-- In the .env file, Fill in the Client ID and Client Secret.
+- In the .env file, Fill in the GitHub Client ID and Github Client Secret.
 - By default, the time window uses UTC-0 (same as GMT). If that's acceptable, leave TIMEZONE_OFFSET as an empty string. If you want your time to be local, provide a UTC offset here.
 Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OFFSET equal to "08:00".
+- The CSV will be turned in to an array. So, the numbers for the CSV columns will be zero-based. For us, the ALTERNATE_ID is an employee's email because we get that automatically from our google form. If you just want to have GitHub ids logged out, you can put the same column number in both spots.
 
 #### Also, you will need either an array of the Github Ids you're interested in, or a CSV that can be parsed to create that array
 #### CSV?????
@@ -46,7 +47,7 @@ This tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, Pull
 Caveat: The github API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
 
 ## Contributing
-In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why. We'd love to have you.
+In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
 
 # Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
