@@ -1,36 +1,22 @@
-// TODO: put timezone offset into env instead of it being a command line argument
-
-// TODO: MAYBE** modularize out makeIdObject and MAYBE** make different paths for using LDAPs or not
-
-/*
-TO DECIDE:
-- how best to handle the LDAP/no LDAP paths
-- how best to handle CSV vs no CSV paths (my thought is that the CSV gets parsed in another file to have an array of github ids and the main code just uses an array of github ids)
-- should the output of running this be a text file in a folder called result, or just a console.log?
-- should we change the code to check first for time when looping through the user's events, and then filter by type, before continuing to go through the user's events in the github api. It would be more performant because we could break after we find one.
-  This  one is related to the next one:
-- should we add back in code to do other things, like get a user's contribs, or all users' contribs? And, if so, should they be their own completely separate files, or functions that can be called within this one (since we're already looping through the api), or what?
-*/
-
-
-
 require('dotenv').config()
 const fetch = require('node-fetch');
 const Moment = require('moment');
 const {extendMoment} = require('moment-range');
 const moment = extendMoment(Moment);
 const parse = require('parse-link-header');
-
 const env = require("./.env")
 
-let arrayOfIdObjects = []; //LDAP plus GitHub Id
-let clientID = process.env.CLIENT_ID;
-let clientSecret = process.env.CLIENT_SECRET;
+let arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
+const githubClientID = process.env.GITHUB_CLIENT_ID;
+const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID
+const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID
+
 
 //parse CSV into JSON
-let {Parser} = require('parse-csv');
-let parser = new Parser();
-let encoding = 'utf-8';
+const {Parser} = require('parse-csv');
+const parser = new Parser();
+const encoding = 'utf-8';
 let csvData = "";
 
 process.stdin.setEncoding(encoding);
@@ -41,7 +27,7 @@ process.stdin.on('readable', () => {
   }
 })
 process.stdin.on('end', () => {
-  let dates = parseDatesFromArgv();
+  const dates = parseDatesFromArgv();
 
   process.stdout.write(`Users that contributed between ${dates[0]} and ${dates[1]} `+ "\n")
 
@@ -53,7 +39,7 @@ process.stdin.on('end', () => {
     let duplicateGithubId = false;
     for(let i=0; i<arrayOfGithubIds.length; i++) {
       if(arrayOfGithubIds[i]===currentRow[1]) {
-        console.log("Duplicate GitHub ID- Erase From Google Sheet:", currentRow[1]);
+        console.log("Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:", currentRow[1]);
         duplicateGithubId=true
         break;
       }
@@ -62,8 +48,7 @@ process.stdin.on('end', () => {
       continue;
     }
     arrayOfGithubIds.push(currentRow[1]);
-    let LDAP = parseLDAPfromEmail(currentRow);
-    fetchUserDataAndAddToCSV(currentRow, LDAP, dates)
+    fetchUserDataAndAddToCSV(currentRow, dates)
   }
 });
 
@@ -81,15 +66,11 @@ function parseDatesFromArgv() {
   return [startDate, endDate]
 }
 
-function parseLDAPfromEmail(row) {
-  return row[4].slice(0, row[4].indexOf("@"))
-}
-
-function fetchUserDataAndAddToCSV(row, LDAP, dates) {
-  let url = `https://api.github.com/users/${row[1]}/events?client_id=${clientID}&client_secret=${clientSecret}`
+function fetchUserDataAndAddToCSV(row, dates) {
+  let url = `https://api.github.com/users/${row[1]}/events?client_id=${githubClientID}&client_secret=${githubClientSecret}`
   fetchPageOfDataAndFilter(url).then(importantEvents => {
     let idObject = {};
-    createIdObjects(row, LDAP, idObject, importantEvents);
+    createIdObjects(row, idObject, importantEvents);
     filterContributorByTime(idObject, dates)
   }).catch(err => {console.log("error", err);})
 }
@@ -136,9 +117,9 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
   return arrayOfImportantEvents
 }
 
-function createIdObjects(row, LDAP, idObject, importantEvents) {
-  idObject.LDAP = LDAP;
-  idObject.github = row[1];
+function createIdObjects(row, idObject, importantEvents) {
+  idObject.alternateId = row[alternateIdColumnNumber];
+  idObject.github = row[githubIdColumnNumber];
   idObject.contributions = importantEvents;
   arrayOfIdObjects.push(idObject)
 }
@@ -149,7 +130,7 @@ function filterContributorByTime(idObject, dates) {
   for(let i=0; i<idObject.contributions.length; i++) {
     let contribDate = moment(idObject.contributions[i].created_at, "YYYY-MM-DD, h:mm:ss a")
     if(timeWindow.contains(contribDate)) {
-      console.log(idObject.LDAP)
+      console.log(idObject.alternateId)
       break;
     }
   }
