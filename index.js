@@ -39,7 +39,7 @@ process.stdin.on('end', () => {
     let duplicateGithubId = false;
     for(let i=0; i<arrayOfGithubIds.length; i++) {
       if(arrayOfGithubIds[i]===currentRow[1]) {
-        console.log("Duplicate GitHub ID- erase one instance from your CSV:", currentRow[1]);
+        console.log("Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:", currentRow[1]);
         duplicateGithubId=true
         break;
       }
