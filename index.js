@@ -1,5 +1,3 @@
-//TODO: update README
-
 require('dotenv').config()
 const fetch = require('node-fetch');
 const Moment = require('moment');
