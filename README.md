@@ -1,7 +1,7 @@
 # Starfish
 ## Because Your Open Source Contributors Are Stars!
 
-### This is a tool to
+### This is a tool to:
 - parse a CSV of employee GitHub Ids
 - use those Ids, and the Github REST API, to check for open source contributions by those employees that happened between any 2 dates
 - log out the ids of those employees (either GitHub Ids or another unique identifier you choose)
@@ -9,7 +9,9 @@
 ### Purpose
 #### The purpose of this tool is to make it easy for you to run your own FOSS Contributor Fund
 Creating a FOSS contributor fund at your company is a great way to help sustain the open source software your company depends on!
+
 FOSS Funds are democratized - anyone who has contributed to open source in a given cycle gets to vote that cycle for the project they are excited about.
+
 You can use Starfish to determine which of your employees are eligible to vote within a specific time range.
 For More Info on what a FOSS Contributor Fund is, and how to start your own, [Click Here](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/)
 
@@ -23,6 +25,7 @@ The "alternate id" can be LDAPs, emails, or any other unique identifier you use 
 You can also choose to not use this.
 ##### Why CSV?
 We found that an easy way to get GitHub ids from Indeed employees was through a Google form that automatically recorded their Indeed email. From that form, we got a Google Sheet with employee info that is easily exported as a CSV. (Go to File, Download As, and then choose CSV)
+
 (Even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and get a CSV from that, if you're unfamiliar with the CSV format)
 
 #### Then, get yourself Github authentication credentials.
@@ -36,8 +39,11 @@ Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OF
 
 ### To run:
 In your terminal, type `cat {path/to/CSVfile} | node index.js {date1} {date2}`
+
 In the above, any text inside of curly brackets {} means that you should put your own value in.
+
 Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.
+
 Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile} | node index.js > {nameOfFileToCreate}.txt {date1} {date2}`
 
 ### Tests
