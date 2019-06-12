@@ -1,12 +1,14 @@
 # Starfish
 ## Because Your Open Source Contributors Are Stars!
 
-### This is a tool to:
+<img src="https://images.unsplash.com/photo-1534837306493-691bb3cb0db2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" width="244" height="183" title = "Photo by Clara Cordero on Unsplash"/> 
+
+## This is a tool to:
 - parse a CSV of employee GitHub Ids
 - use those Ids, and the Github REST API, to check for open source contributions by those employees that happened between any 2 dates
 - log out the ids of those employees (either GitHub Ids or another unique identifier you choose)
 
-### Purpose
+## Purpose
 #### The purpose of this tool is to make it easy for you to run your own FOSS Contributor Fund
 Creating a FOSS contributor fund at your company is a great way to help sustain the open source software your company depends on!
 
@@ -47,7 +49,7 @@ Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile}
 We've just started writing tests - there's one so far. You can run it with the command `npm test`.
 
 
-## Other Important Info
+# Other Important Info
 
 This tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
 
@@ -64,3 +66,9 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 
 #### Maintainers
 [danisyellis](https://github.com/danisyellis)
+
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
+
+
