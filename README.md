@@ -1,7 +1,7 @@
 # Starfish
 ## Because Your Open Source Contributors Are Stars!
 
-<img src="https://images.unsplash.com/photo-1534837306493-691bb3cb0db2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" width="244" height="183" title = "Photo by Clara Cordero on Unsplash"/> 
+<img src="https://images.unsplash.com/photo-1534837306493-691bb3cb0db2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" width="244" height="183" title = "Photo by Clara Cordero on Unsplash"/>
 
 ## This is a tool to:
 - parse a CSV of employee GitHub Ids
@@ -20,14 +20,24 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Cl
 # Getting Started
 ### Prerequisites
 
-#### First, run npm install.
+#### First, clone the repo to your computer, then navigate to the starfish folder and run `npm install`.
 
-#### Next, make a CSV with the Github Ids you're interested in checking, and, if desired, an "alternate id" to go with each
-The "alternate id" can be LDAPs, emails, or any other unique identifier you use for your people.
-You can also choose to not use this.
-##### Why CSV?
-We found that an easy way to get GitHub ids from Indeed employees was through a Google form that automatically recorded their Indeed email. From that form, we got a Google Sheet with employee info that is easily exported as a CSV. (Go to File, Download As, and then choose CSV.)  
-(Even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and get a CSV from that, if you're unfamiliar with the CSV format)
+#### Next, make a .csv file with the Github Ids you're interested in checking, and, if desired, an "alternate id" to go with each
+> #### Q&A Time!
+> ##### What do you mean "alternate id"?
+> I mean, if you normally identify your employees by some unique identifier- like an LDAP, their email, an employee id number, or even just their names- you can add that to the CSV so that your output is more useful to you. (For example, we find a list of the emails of every employee who's eligible to vote in the FOSS Fund that month to be really useful.)  
+If you decide not to use an 'alternate id', your list of eligible employees will just be a list of their GitHub ids.
+> ##### Why CSV?
+> We found that an easy way to get GitHub ids from Indeed employees was through a Google form that automatically recorded their Indeed email. From that form, we got a Google Sheet with employee info that is easily exported as a CSV file. (Go to File, Download As, and then choose CSV.)
+> ##### How do I make a CSV?
+> A CSV is just a file of comma-separated values, with a carriage return between each line. It looks like this:  
+My GitHub ID is:,Email Address  
+danisyellis,dgellis@indeed.com  
+anexample,example@indeed.com  
+nerys,kira@bm.gov  
+captsisko,bsisko@starfleet.com  
+
+> You can create this on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and download a CSV from that.
 
 #### Then, get yourself Github authentication credentials.
 When logged in to GitHub, go to Settings, Developer Settings, OAuth Apps. Click the "new OAuth App" button and register a new OAuth app. For use with Starfish, you can fill this form out with anything and it won't matter. What does matter is that you fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
@@ -67,8 +77,8 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 #### Maintainers
 [danisyellis](https://github.com/danisyellis)
 
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/> 
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
+<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
 
 
