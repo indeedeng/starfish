@@ -30,13 +30,14 @@ If you decide not to use an 'alternate id', your list of eligible employees will
 > ##### Why CSV?
 > We found that an easy way to get GitHub ids from Indeed employees was through a Google form that automatically recorded their Indeed email. From that form, we got a Google Sheet with employee info that is easily exported as a CSV file. (Go to File, Download As, and then choose CSV.)
 > ##### How do I make a CSV?
-> A CSV is just a file of comma-separated values, with a carriage return between each line. It looks like this:  
+> A CSV is just a file of comma-separated values, with a newline between each line. It looks like this:  
 My GitHub ID is:,Email Address  
 danisyellis,dgellis@indeed.com  
-anexample,example@indeed.com  
+anexample,example@example.com  
 nerys,kira@bm.gov  
 captsisko,bsisko@starfleet.com  
 
+> (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)
 > You can create this on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and download a CSV from that.
 
 #### Then, get yourself Github authentication credentials.
