@@ -15,7 +15,7 @@ Creating a FOSS contributor fund at your company is a great way to help sustain 
 FOSS Funds are democratized - anyone who has contributed to open source in a given cycle gets to vote that cycle for the project they are excited about.  
 *You can use Starfish to determine which of your employees are eligible to vote within a specific time range.*
 
-For More Info on what a FOSS Contributor Fund is, and how to start your own, [Click Here](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/)
+For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/)
 
 # Getting Started
 ### Prerequisites
@@ -76,7 +76,7 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 Starfish is licensed under the [Apache 2 License](LICENSE).
 
 #### Maintainers
-[danisyellis](https://github.com/danisyellis)
+[danisyellis](https://github.com/danisyellis), Indeed Open Source
 
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
