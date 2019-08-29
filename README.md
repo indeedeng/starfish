@@ -15,7 +15,7 @@ Creating a FOSS contributor fund at your company is a great way to help sustain 
 FOSS Funds are democratized - anyone who has contributed to open source in a given cycle gets to vote that cycle for the project they are excited about.  
 *You can use Starfish to determine which of your employees are eligible to vote within a specific time range.*
 
-For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/)
+For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/) or [This awesome article from Open Collective](https://blog.opencollective.com/indeeds-open-source-sustainability-strategy/)
 
 # Getting Started
 ### Prerequisites
@@ -66,6 +66,8 @@ This tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, Pull
 
 Caveat: The github API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
 
+Also, we know that there are many types of contributions - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
+
 ## Contributing
 In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
 
@@ -76,7 +78,8 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 Starfish is licensed under the [Apache 2 License](LICENSE).
 
 #### Maintainers
-[danisyellis](https://github.com/danisyellis), Indeed Open Source
+[danisyellis](https://github.com/danisyellis), Indeed Open Source 
+- feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
