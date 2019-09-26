@@ -41,7 +41,7 @@ captsisko,bsisko@starfleet.com
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and download a CSV from that.
 
 #### Then, get yourself Github authentication credentials.
-When logged in to GitHub, go to Settings, Developer Settings, OAuth Apps. Click the "new OAuth App" button and register a new OAuth app. For use with Starfish, you can fill this form out with anything and it won't matter. What does matter is that you fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
+Log in to GitHub and [register a new OAuth app](https://github.com/settings/applications/new) (you can find this under Profile > Settings > Developer Settings > OAuth Apps > "new OAuth App"). Starfish will not use the Homepage or Callback URL, but you will need to provide a valid URL in these fields in order to create the app. Fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 - Fill in the GitHub Client ID and Github Client Secret.
