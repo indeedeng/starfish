@@ -40,6 +40,8 @@ captsisko,bsisko@starfleet.com
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and download a CSV from that.
 
+You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git. Or, you can name the folder something else and add that folder name to the .gitignore file.
+
 #### Then, get yourself Github authentication credentials.
 Log in to GitHub and [register a new OAuth app](https://github.com/settings/applications/new) (you can find this under Profile > Settings > Developer Settings > OAuth Apps > "new OAuth App"). Starfish will not use the Homepage or Callback URL, but you will need to provide a valid URL in these fields in order to create the app. Fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
 
