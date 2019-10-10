@@ -83,4 +83,5 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 [danisyellis](https://github.com/danisyellis), Indeed Open Source
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
-<img align="center" src="OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/>
+
+<p align="center"> <img src="OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
