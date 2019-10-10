@@ -52,7 +52,7 @@ Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OF
 - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
 
 ### To run:
-In your terminal, type `cat {path/to/CSVfile} | node index.js {date1} {date2}`  
+In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`  
 > In the above, any text inside of curly brackets {} means that you should put your own value in.  
 > Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.
 
@@ -80,11 +80,9 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 Starfish is licensed under the [Apache 2 License](LICENSE).
 
 #### Maintainers
-[danisyellis](https://github.com/danisyellis), Indeed Open Source 
+[danisyellis](https://github.com/danisyellis), Indeed Open Source
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
 <img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
-
-
