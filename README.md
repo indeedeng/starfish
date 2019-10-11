@@ -64,7 +64,9 @@ We've just started writing tests - there's one so far. You can run it with the c
 
 # Other Important Info
 
-This tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+
+You can also override the list of events to check by overriding the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
 
 Caveat: The github API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
 

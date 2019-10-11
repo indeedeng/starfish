@@ -9,9 +9,14 @@ const env = require("./.env")
 let arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
 const githubClientID = process.env.GITHUB_CLIENT_ID;
 const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
-const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID
-const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID
-
+const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID;
+const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID;
+let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
+if (!githubImportantEvents) {
+  githubImportantEvents = ["CommitCommentEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent"]
+} else {
+  githubImportantEvents = githubImportantEvents.split(",")
+}
 
 //parse CSV into JSON
 const {Parser} = require('parse-csv');
@@ -102,16 +107,9 @@ function fetchPageOfDataAndFilter(url) {
 function filterResponseForImportantEvents(allEventsFromFetch) {
   let arrayOfImportantEvents = [];
   for(let i=0; i<allEventsFromFetch.length; i++) {
-    let event = allEventsFromFetch[i];
-    switch(event.type) {
-      case 'CommitCommentEvent':
-      case 'IssueCommentEvent':
-      case 'IssuesEvent':
-      case 'PullRequestEvent':
-      case 'PullRequestReviewEvent':
-      case 'PullRequestReviewCommentEvent':
-        arrayOfImportantEvents.push(event);
-        break;
+    const event = allEventsFromFetch[i];
+    if (githubImportantEvents.indexOf(event.type) !== -1) {
+      arrayOfImportantEvents.push(event);
     }
   }
   return arrayOfImportantEvents
