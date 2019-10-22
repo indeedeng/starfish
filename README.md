@@ -83,6 +83,5 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 [danisyellis](https://github.com/danisyellis), Indeed Open Source
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
-<img align="left" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTx4qXPsK4SXsr542YR35pYvLpshJytPWB0iJYGHTKeAHQMVxFkbw" width="271" height="180" title = "Photo from Creativity103 on Flickr"/>
+
+<p align="center"> <img src="OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
