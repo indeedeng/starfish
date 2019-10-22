@@ -1,7 +1,7 @@
 # Starfish
 ## Because Your Open Source Contributors Are Stars!
 
-<img src="https://images.unsplash.com/photo-1534837306493-691bb3cb0db2?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60" width="244" height="183" title = "Photo by Clara Cordero on Unsplash"/>
+<p align="left"> <img src="Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
 
 ## This is a tool to:
 - parse a CSV of employee GitHub Ids
