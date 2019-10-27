@@ -83,14 +83,14 @@ function fetchUserDataAndAddToCSV(row, dates) {
 }
 
 function fetchPageOfDataAndFilter(url) {
-  return new Promise((resolve, reject) => {
+  return new Promise(resolve => {
     fetch(url)
-      .then((response, err) => {
+      .then(response => {
         const parsed = parse(response.headers.get("link"));
         let importantEvents = [];
         response
           .json()
-          .then((json, err) => {
+          .then(json => {
             const filteredForImportant = filterResponseForImportantEvents(json);
             importantEvents = importantEvents.concat(filteredForImportant);
 
