@@ -1,12 +1,5 @@
 require("dotenv").config();
 
-const fetch = require("node-fetch");
-const Moment = require("moment");
-const { extendMoment } = require("moment-range");
-const moment = extendMoment(Moment);
-const parse = require("parse-link-header");
-const env = require("./.env");
-
 const arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
 const {
   CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: alternateIdColumnNumber,
@@ -14,6 +7,12 @@ const {
   GITHUB_CLIENT_ID: githubClientID,
   GITHUB_CLIENT_SECRET: githubClientSecret
 } = process.env;
+let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
+if (!githubImportantEvents) {
+  githubImportantEvents = ["CommitCommentEvent", "IssueCommentEvent", "IssuesEvent", "PullRequestEvent", "PullRequestReviewEvent", "PullRequestReviewCommentEvent"]
+} else {
+  githubImportantEvents = githubImportantEvents.split(",")
+}
 
 //parse CSV into JSON
 const { Parser } = require("parse-csv");
@@ -110,20 +109,11 @@ function fetchPageOfDataAndFilter(url) {
   });
 }
 
-const importantEventTypes = [
-  "CommitCommentEvent",
-  "IssueCommentEvent",
-  "IssuesEvent",
-  "PullRequestEvent",
-  "PullRequestReviewEvent",
-  "PullRequestReviewCommentEvent"
-];
-
 function filterResponseForImportantEvents(allEventsFromFetch) {
   const arrayOfImportantEvents = [];
   for (let i = 0; i < allEventsFromFetch.length; i++) {
     const event = allEventsFromFetch[i];
-    if (importantEventTypes.includes(event.type)) {
+    if (githubImportantEvents.includes(event.type)) {
       arrayOfImportantEvents.push(event);
     }
   }
