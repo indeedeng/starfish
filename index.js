@@ -130,8 +130,8 @@ function filterContributorByTime(idObject, dates) {
 
   const timeWindow = moment.range([startMoment, endMoment]);
   for(let i=0; i<idObject.contributions.length; i++) {
-    let contribDate = moment.utc(idObject.contributions[i].created_at)
-    if(timeWindow.contains(contribDate)) {
+    const momentOfContribution = moment.utc(idObject.contributions[i].created_at)
+    if(timeWindow.contains(momentOfContribution)) {
       console.log(idObject.alternateId)
       break;
     }
