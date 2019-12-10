@@ -123,10 +123,14 @@ function createIdObjects(row, idObject, importantEvents) {
 }
 
 function filterContributorByTime(idObject, dates) {
-  const timeWindow = moment.range([moment.utc(`${dates[0]}`, 'YYYY-MM-DD hh:mm'), moment.utc(`${dates[1]}`, 'YYYY-MM-DD hh:mm')]);
-  const contribsByUser = [];
+  const startDate = dates[0];
+  const endDate = dates[1];
+  const startMoment = moment.utc(`${startDate}`, 'YYYY-MM-DD hh:mm');
+  const endMoment = moment.utc(`${endDate}`, 'YYYY-MM-DD hh:mm');
+
+  const timeWindow = moment.range([startMoment, endMoment]);
   for(let i=0; i<idObject.contributions.length; i++) {
-    let contribDate = moment(idObject.contributions[i].created_at, "YYYY-MM-DD, h:mm:ss a")
+    let contribDate = moment.utc(idObject.contributions[i].created_at)
     if(timeWindow.contains(contribDate)) {
       console.log(idObject.alternateId)
       break;
