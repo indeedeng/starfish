@@ -43,7 +43,7 @@ captsisko,bsisko@starfleet.com
 You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git. Or, you can name the folder something else and add that folder name to the .gitignore file.
 
 #### Then, get yourself Github authentication credentials.
-Log in to GitHub and [register a new OAuth app](https://github.com/settings/applications/new) (you can find this under Profile > Settings > Developer Settings > OAuth Apps > "new OAuth App"). Starfish will not use the Homepage or Callback URL, but you will need to provide a valid URL in these fields in order to create the app. Fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
+Log in to GitHub and [register a new OAuth app](https://github.com/settings/applications/new) (you can find this under Profile > Settings > Developer Settings > OAuth Apps > "new OAuth App"). Starfish will not use the Homepage or Callback URL, but you will need to provide any valid URL, ex: http://indeed.com, in these fields in order to create the app. Fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 - Fill in the GitHub Client ID and Github Client Secret.
