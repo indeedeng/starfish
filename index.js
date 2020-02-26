@@ -7,8 +7,7 @@ const parse = require('parse-link-header');
 const env = require("./.env")
 
 let arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
-const githubClientID = process.env.GITHUB_CLIENT_ID;
-const githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
+const githubAuth = Buffer.from(`${process.env.GITHUB_CLIENT_ID}:${process.env.GITHUB_CLIENT_SECRET}`).toString("base64");
 const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID;
 const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID;
 let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
@@ -72,7 +71,7 @@ function parseDatesFromArgv() {
 }
 
 function fetchUserDataAndAddToCSV(row, dates) {
-  let url = `https://api.github.com/users/${row[1]}/events?client_id=${githubClientID}&client_secret=${githubClientSecret}`
+  let url = `https://api.github.com/users/${row[1]}/events`
   fetchPageOfDataAndFilter(url).then(importantEvents => {
     let idObject = {};
     createIdObjects(row, idObject, importantEvents);
@@ -82,7 +81,12 @@ function fetchUserDataAndAddToCSV(row, dates) {
 
 function fetchPageOfDataAndFilter(url) {
   return new Promise((resolve, reject) => {
-    fetch(url)
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Authorization": `Basic ${githubAuth}`
+      }
+    })
     .then((response, err) => {
       let parsed = parse(response.headers.get('link'));
       let importantEvents = [];
