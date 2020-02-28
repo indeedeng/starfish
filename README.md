@@ -46,7 +46,6 @@ You may want to store multiple CSV files in a folder that's inside of Starfish, 
 Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). The default permissions should suffice, fill the "Note" field with e.g. "Starfish" or another description, and then click "Generate token". Copy the access token and store it as you will need it for the next step.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
-- Fill in your GitHub user id in GITHUB_ID
 - Paste the access token into GITHUB_TOKEN
 - By default, the time window uses UTC-0 (same as GMT). If that's acceptable, leave TIMEZONE_OFFSET as an empty string. If you want your time to be local, provide a UTC offset here.
 Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OFFSET equal to "08:00".

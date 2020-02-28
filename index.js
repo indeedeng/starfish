@@ -7,7 +7,7 @@ const parse = require('parse-link-header');
 const env = require("./.env")
 
 let arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
-const githubAuth = Buffer.from(`${process.env.GITHUB_ID}:${process.env.GITHUB_TOKEN}`).toString("base64");
+const githubToken = Buffer.from(process.env.GITHUB_TOKEN).toString("base64");
 const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID;
 const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID;
 let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
@@ -84,7 +84,7 @@ function fetchPageOfDataAndFilter(url) {
     fetch(url, {
       method: "GET",
       headers: {
-        "Authorization": `Basic ${githubAuth}`
+        "Authorization": `Basic ${githubToken}`
       }
     })
     .then((response, err) => {
