@@ -43,7 +43,7 @@ captsisko,bsisko@starfleet.com
 You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git. Or, you can name the folder something else and add that folder name to the .gitignore file.
 
 #### Then, get yourself Github authentication credentials.
-Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). The default permissions should suffice, fill the "Note" field with e.g. "Starfish" or another description, and then click "Generate token". Copy the access token and store it as you will need it for the next step.
+Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 - Paste the access token into GITHUB_TOKEN
