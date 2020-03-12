@@ -43,10 +43,10 @@ captsisko,bsisko@starfleet.com
 You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git. Or, you can name the folder something else and add that folder name to the .gitignore file.
 
 #### Then, get yourself Github authentication credentials.
-Log in to GitHub and [register a new OAuth app](https://github.com/settings/applications/new) (you can find this under Profile > Settings > Developer Settings > OAuth Apps > "new OAuth App"). Starfish will not use the Homepage or Callback URL, but you will need to provide a valid URL in these fields in order to create the app. Fill out the form, click "Register Application", and obtain a Client ID and Client Secret.
+Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
-- Fill in the GitHub Client ID and Github Client Secret.
+- Paste the access token into GITHUB_TOKEN
 - By default, the time window uses UTC-0 (same as GMT). If that's acceptable, leave TIMEZONE_OFFSET as an empty string. If you want your time to be local, provide a UTC offset here.
 Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OFFSET equal to "08:00".
 - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
