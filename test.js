@@ -1,16 +1,12 @@
-var assert = require('assert');
-
 var expect = require('chai').expect;
 
-let filterResponseForImportantEvents = require("./index")
+let filterResponseForImportantEvents = require('./index');
 
 describe('Testing filterResponseForImportantEvents', function () {
-
-  it('should return an array with the one important event', function(){
-        var arrayofTwoEvents = [{type: 'IssueCommentEvent'}, {type: 'Unimportant'}];
+    it('should return an array with the one important event', function(){
+        var arrayofTwoEvents = [{ type: 'IssueCommentEvent' }, { type: 'Unimportant' }];
         let resultArray = filterResponseForImportantEvents(arrayofTwoEvents);
         expect(resultArray.length).to.equal(1);
-        expect(resultArray[0].type).to.equal("IssueCommentEvent")
-  });
-
-})
+        expect(resultArray[0].type).to.equal('IssueCommentEvent');
+    });
+});

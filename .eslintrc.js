@@ -9,7 +9,8 @@ module.exports = {
 		'node': true,
 		//browser: true,   this line is in the standard indeed eslint plugin, but is not true for Starfish
 	},
-	'extends': 'eslint:recommended',
+    'extends': 'eslint:recommended',
+    'plugins': ['gettext'],
 	'globals': {
 		'Atomics': 'readonly',
 		'SharedArrayBuffer': 'readonly'
@@ -49,7 +50,7 @@ module.exports = {
 		'no-sync': 'off',
 		'no-loops/no-loops': 'off',
 
-		//from Indeed's base rules
+		//from Indeed's "base" rules
 		//https://code.corp.indeed.com/frontend/eslint-plugin-indeed/blob/master/settings.js
 		'array-callback-return': ERROR,
         'comma-spacing': [
@@ -60,7 +61,7 @@ module.exports = {
             }
         ],
         'comma-style': [ERROR, 'last'],
-        'compat/compat': 'error',
+        //'compat/compat': 'error',
         complexity: [WARN, 10],
         curly: ERROR,
         'dot-notation': ERROR,

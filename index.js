@@ -1,7 +1,7 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const Moment = require('moment');
-const {extendMoment} = require('moment-range');
+const { extendMoment } = require('moment-range');
 const moment = extendMoment(Moment);
 const parse = require('parse-link-header');
 const env = require('./.env');
@@ -19,7 +19,7 @@ if (!githubImportantEvents) {
 }
 
 //parse CSV into JSON
-const {Parser} = require('parse-csv');
+const { Parser } = require('parse-csv');
 const parser = new Parser();
 const encoding = 'utf-8';
 let csvData = '';
@@ -34,22 +34,22 @@ process.stdin.on('readable', () => {
 process.stdin.on('end', () => {
     const dates = parseDatesFromArgv();
 
-    process.stdout.write(`Users that contributed between ${dates[0]} and ${dates[1]} `+ '\n');
+    process.stdout.write(`Users that contributed between ${dates[0]} and ${dates[1]} ` + '\n');
 
     var datagrid = parser.parse(csvData).data;
     let arrayOfGithubIds = [];
     //detect duplicates, add user events, and send the the csv to stdout
-    for(let i=1; i<datagrid.length; i++) {
+    for (let i = 1; i < datagrid.length; i++) {
         let currentRow = datagrid[i];
         let duplicateGithubId = false;
-        for(let i=0; i<arrayOfGithubIds.length; i++) {
-            if(arrayOfGithubIds[i]===currentRow[1]) {
+        for (let i = 0; i < arrayOfGithubIds.length; i++) {
+            if (arrayOfGithubIds[i] === currentRow[1]) {
                 console.log('Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:', currentRow[1]);
-                duplicateGithubId=true;
+                duplicateGithubId = true;
                 break;
             }
         }
-        if(duplicateGithubId===true) {
+        if (duplicateGithubId === true) {
             continue;
         }
         arrayOfGithubIds.push(currentRow[1]);
@@ -61,13 +61,14 @@ process.stdin.on('end', () => {
 function parseDatesFromArgv() {
     let startDate;
     let endDate;
-    if(process.env.TIMEZONE_OFFSET) {
+    if (process.env.TIMEZONE_OFFSET) {
         startDate = process.argv[2] + ' ' + process.env.TIMEZONE_OFFSET;
         endDate = process.argv[3] + ' ' + process.env.TIMEZONE_OFFSET;
     } else {
         startDate = process.argv[2];
         endDate = process.argv[3];
     }
+
     return [startDate, endDate];
 }
 
@@ -77,7 +78,10 @@ function fetchUserDataAndAddToCSV(row, dates) {
         let idObject = {};
         createIdObjects(row, idObject, importantEvents);
         filterContributorByTime(idObject, dates);
-    }).catch(err => {console.log('error', err);});
+    })
+        .catch(err => {
+            console.log('error', err);
+        });
 }
 
 function fetchPageOfDataAndFilter(url) {
@@ -98,7 +102,9 @@ function fetchPageOfDataAndFilter(url) {
                             return resolve(importantEvents);
                         }
                     })
-                    .catch(err => {console.log('Error turning response into JSON:', err);});
+                    .catch(err => {
+                        console.log('Error turning response into JSON:', err);
+                    });
             })
             .catch(err => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
     });
@@ -106,12 +112,13 @@ function fetchPageOfDataAndFilter(url) {
 
 function filterResponseForImportantEvents(allEventsFromFetch) {
     let arrayOfImportantEvents = [];
-    for(let i=0; i<allEventsFromFetch.length; i++) {
+    for (let i = 0; i < allEventsFromFetch.length; i++) {
         const event = allEventsFromFetch[i];
         if (githubImportantEvents.indexOf(event.type) !== -1) {
             arrayOfImportantEvents.push(event);
         }
     }
+
     return arrayOfImportantEvents;
 }
 
@@ -129,9 +136,9 @@ function filterContributorByTime(idObject, dates) {
     const endMoment = moment.utc(`${endDate}`, 'YYYY-MM-DD hh:mm');
 
     const timeWindow = moment.range([startMoment, endMoment]);
-    for(let i=0; i<idObject.contributions.length; i++) {
+    for (let i = 0; i < idObject.contributions.length; i++) {
         const momentOfContribution = moment.utc(idObject.contributions[i].created_at);
-        if(timeWindow.contains(momentOfContribution)) {
+        if (timeWindow.contains(momentOfContribution)) {
             console.log(idObject.alternateId);
             break;
         }
