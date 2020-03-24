@@ -4,7 +4,9 @@
   "description": "- parse a CSV of employee GitHub Ids - use those Ids and the Github REST API to check for open source contributions on GitHub that happened between 2 different dates - make a new text file with the GitHub Ids of those employees",
   "main": "contributors.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "lint": "npx eslint .",
+    "lint-fix": "npx eslint . --fix"
   },
   "author": "",
   "license": "ISC",
