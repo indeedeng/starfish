@@ -6,7 +6,8 @@ module.exports = {
 	'env': {
 		'commonjs': true,
 		'es6': true,
-		'node': true,
+        'node': true,
+        "mocha": true,
 		//browser: true,   this line is in the standard indeed eslint plugin, but is not true for Starfish
 	},
     'extends': 'eslint:recommended',
