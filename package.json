@@ -4,18 +4,24 @@
   "description": "- parse a CSV of employee GitHub Ids - use those Ids and the Github REST API to check for open source contributions on GitHub that happened between 2 different dates - make a new text file with the GitHub Ids of those employees",
   "main": "contributors.js",
   "scripts": {
-    "test": "mocha test.js"
+    "test": "mocha test.js",
+    "lint": "npx eslint .",
+    "lint-fix": "npx eslint . --fix"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
     "dotenv": "^8.0.0",
+    "eslint-plugin-gettext": "^1.1.0",
     "mocha": "^6.1.4",
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
     "node-fetch": "^2.6.0",
     "parse-csv": "^0.2.0",
     "parse-link-header": "^1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0"
   }
 }
