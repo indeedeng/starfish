@@ -98,7 +98,7 @@ function filterContributorByTime(idObject, dates) {
     }
 }
 function fetchUserDataAndAddToCSV(row, dates) {
-    let url = `https://api.github.com/users/${row[1]}/events`;
+    let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url).then(importantEvents => {
         let idObject = {};
         createIdObjects(row, idObject, importantEvents);
@@ -136,8 +136,8 @@ process.stdin.on('end', () => {
         let currentRow = datagrid[i];
         let duplicateGithubId = false;
         for (let j = 0; j < arrayOfGithubIds.length; j++) {
-            if (arrayOfGithubIds[j] === currentRow[1]) {
-                console.log('Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:', currentRow[1]);
+            if (arrayOfGithubIds[j] === currentRow[githubIdColumnNumber]) {
+                console.log('Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:', currentRow[githubIdColumnNumber]);
                 duplicateGithubId = true;
                 break;
             }
@@ -145,7 +145,7 @@ process.stdin.on('end', () => {
         if (duplicateGithubId === true) {
             continue;
         }
-        arrayOfGithubIds.push(currentRow[1]);
+        arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
         fetchUserDataAndAddToCSV(currentRow, dates);
     }
 });
