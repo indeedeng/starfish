@@ -53,6 +53,10 @@ function fetchPageOfDataAndFilter(url) {
             }
         })
             .then((response) => {
+                if (!response.ok) {
+                    console.log(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
+                    throw new Error(response.statusText);
+                }
                 let parsed = parse(response.headers.get('link'));
                 let importantEvents = [];
                 response.json()
