@@ -98,7 +98,7 @@ function filterContributorByTime(idObject, dates) {
     }
 }
 function fetchUserDataAndAddToCSV(row, dates) {
-    let url = `https://api.github.com/users/${row[1]}/events`;
+    let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url).then(importantEvents => {
         let idObject = {};
         createIdObjects(row, idObject, importantEvents);
