@@ -1,0 +1,147 @@
+{
+	"env": {
+		"commonjs": true,
+		"es6": true,
+        "node": true,
+        "mocha": true
+    },
+    "plugins": 
+        ["gettext",
+        "prettier"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:prettier/recommended"
+    ],
+	"globals": {
+		"Atomics": "readonly",
+		"SharedArrayBuffer": "readonly"
+    },
+	"parserOptions": {
+        "ecmaVersion": 2018
+	},
+	"settings": {
+		"polyfills": ["promises"]
+	},
+	"rules": {
+		"no-console": "off",
+		"no-sync": "off",
+		"no-loops/no-loops": "off",
+		"array-callback-return": "error",
+        "comma-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+        ],
+        "comma-style": ["error", "last"],
+        "complexity": ["warn", 10],
+        "curly": "error",
+        "dot-notation": "error",
+        "eqeqeq": "error",
+        "gettext/no-variable-string": "error",
+        "gettext/required-positional-markers-for-multiple-variables": "error",
+        "handle-callback-err": "error",
+        "linebreak-style": ["error", "unix"],
+        "max-params": ["error", 5],
+        "no-alert": "error",
+        "no-array-constructor": "error",
+        "no-caller": "error",
+        "no-catch-shadow": "error",
+        "no-confusing-arrow": "error",
+        "no-duplicate-imports": "error",
+        "no-eval": "error",
+        "no-extend-native": "error",
+        "no-extra-bind": "error",
+        "no-floating-decimal": "error",
+        "no-implicit-globals": "error",
+        "no-implied-eval": "error",
+        "no-inner-declarations": "error",
+        "no-labels": "error",
+        "no-loop-func": "error",
+        "no-native-reassign": "error",
+        "no-nested-ternary": "error",
+        "no-new-func": "error",
+        "no-new-object": "error",
+        "no-new-wrappers": "error",
+        "no-octal-escape": "error",
+        "no-path-concat": "error",
+        "no-proto": "warn",
+        "no-return-assign": "error",
+        "no-script-url": "error",
+        "no-self-compare": "error",
+        "no-sequences": "error",
+        "no-shadow": "error",
+        "no-shadow-restricted-names": "error",
+        "no-throw-literal": "warn",
+        "no-undef-init": "error",
+        "no-unmodified-loop-condition": "error",
+        "no-unneeded-ternary": "error",
+        "no-unused-expressions": "error",
+        "no-unused-vars": "error",
+        "no-use-before-define": "error",
+        "no-useless-call": "error",
+        "no-useless-concat": "error",
+        "no-with": "error",
+        "quotes": ["error", "single", "avoid-escape"],
+        "semi": ["error", "always"],
+        "semi-spacing": [
+            "error",
+            {
+                "before": false,
+                "after": true
+            }
+		],
+		"brace-style": ["error", "1tbs"],
+        "block-spacing": "error",
+        "camelcase": "error",
+        "dot-location": ["error", "property"],
+        "eol-last": ["error", "always"],
+		"indent": [
+			"error",
+			4,
+			{
+				"SwitchCase": 1
+			}
+		],
+        "key-spacing": [
+            "error",
+            {
+                "beforeColon": false,
+                "afterColon": true
+            }
+        ],
+        "keyword-spacing": "error",
+        "new-parens": "error",
+        "newline-before-return": "error",
+        "newline-per-chained-call": "error",
+        "no-implicit-coercion": [
+            "error",
+            {
+                "allow": ["!!"]
+            }
+        ],
+        "no-lone-blocks": "error",
+        "no-multi-spaces": "error",
+        "no-multi-str": "error",
+        "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0, "maxBOF": 0 }],
+        "no-spaced-func": "error",
+        "no-trailing-spaces": "error",
+        "no-whitespace-before-property": "error",
+        "object-curly-spacing": ["error", "always"],
+        "one-var-declaration-per-line": "error",
+        "operator-linebreak": [
+            "error",
+            "after",
+            {
+                "overrides": { "?": "before", ":": "before" }
+            }
+        ],
+        "padded-blocks": ["error", { "blocks": "never", "classes": "never", "switches": "never" }],
+        "space-in-parens": ["error", "never"],
+        "space-infix-ops": "error",
+        "space-unary-ops": "error",
+        "yoda": ["error", "never"],
+        "prettier/prettier": "error"
+	}
+}

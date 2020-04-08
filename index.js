@@ -11,7 +11,14 @@ const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID;
 const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID;
 let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
 if (!githubImportantEvents) {
-    githubImportantEvents = ['CommitCommentEvent', 'IssueCommentEvent', 'IssuesEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'PullRequestReviewCommentEvent'];
+    githubImportantEvents = [
+        'CommitCommentEvent',
+        'IssueCommentEvent',
+        'IssuesEvent',
+        'PullRequestEvent',
+        'PullRequestReviewEvent',
+        'PullRequestReviewCommentEvent',
+    ];
 } else {
     githubImportantEvents = githubImportantEvents.split(',');
 }
