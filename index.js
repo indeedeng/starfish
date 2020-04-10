@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const Moment = require('moment');
+const Moment = require('moment-timezone');
 const { extendMoment } = require('moment-range');
 const moment = extendMoment(Moment);
 const parse = require('parse-link-header');
@@ -19,17 +19,17 @@ if (!githubImportantEvents) {
 
 //Helper Functions
 function parseDatesFromArgv() {
-    let startDate;
-    let endDate;
-    if (process.env.TIMEZONE_OFFSET) {
-        startDate = process.argv[2] + ' ' + process.env.TIMEZONE_OFFSET;
-        endDate = process.argv[3] + ' ' + process.env.TIMEZONE_OFFSET;
-    } else {
-        startDate = process.argv[2];
-        endDate = process.argv[3];
-    }
+    const timeZone = process.env.TIMEZONE;
+    const startDate = process.argv[2];
+    const endDate = process.argv[3];
 
-    return [startDate, endDate];
+    const start = moment.tz(startDate, timeZone);
+    const startMoment = start.startOf('day');
+
+    const end = moment.tz(endDate, timeZone);
+    const endMoment = end.endOf('day');
+
+    return [startMoment, endMoment];
 }
 
 function filterResponseForImportantEvents(allEventsFromFetch) {
@@ -86,11 +86,10 @@ function createIdObjects(row, idObject, importantEvents) {
     arrayOfIdObjects.push(idObject);
 }
 
-function filterContributorByTime(idObject, dates) {
-    const startDate = dates[0];
-    const endDate = dates[1];
-    const startMoment = moment.utc(`${startDate}`, 'YYYY-MM-DD hh:mm');
-    const endMoment = moment.utc(`${endDate}`, 'YYYY-MM-DD hh:mm');
+function filterContributorByTime(idObject, moments) {
+    const startMoment = moments[0];
+    const endMoment = moments[1];
+
 
     const timeWindow = moment.range([startMoment, endMoment]);
     for (let i = 0; i < idObject.contributions.length; i++) {
@@ -101,12 +100,12 @@ function filterContributorByTime(idObject, dates) {
         }
     }
 }
-function fetchUserDataAndAddToCSV(row, dates) {
+function fetchUserDataAndAddToCSV(row, moments) {
     let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url).then(importantEvents => {
         let idObject = {};
         createIdObjects(row, idObject, importantEvents);
-        filterContributorByTime(idObject, dates);
+        filterContributorByTime(idObject, moments);
     })
         .catch(err => {
             console.log('error', err);
@@ -129,9 +128,9 @@ process.stdin.on('readable', () => {
     }
 });
 process.stdin.on('end', () => {
-    const dates = parseDatesFromArgv();
+    const moments = parseDatesFromArgv();
 
-    process.stdout.write(`Users that contributed between ${dates[0]} and ${dates[1]} \n`);
+    process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
 
     var datagrid = parser.parse(csvData).data;
     let arrayOfGithubIds = [];
@@ -150,7 +149,7 @@ process.stdin.on('end', () => {
             continue;
         }
         arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
-        fetchUserDataAndAddToCSV(currentRow, dates);
+        fetchUserDataAndAddToCSV(currentRow, moments);
     }
 });
 
