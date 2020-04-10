@@ -23,11 +23,11 @@ function parseDatesFromArgv() {
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const start = moment.tz(startDate, timeZone);
-    const startMoment = start.startOf('day');
+    const startMoment = moment.tz(startDate, timeZone)
+        .startOf('day');
 
-    const end = moment.tz(endDate, timeZone);
-    const endMoment = end.endOf('day');
+    const endMoment = moment.tz(endDate, timeZone)
+        .endOf('day');
 
     return [startMoment, endMoment];
 }
