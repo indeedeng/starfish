@@ -17,6 +17,7 @@
     "mocha": "^6.1.4",
     "moment": "^2.24.0",
     "moment-range": "^4.0.2",
+    "moment-timezone": "^0.5.28",
     "node-fetch": "^2.6.0",
     "parse-csv": "^0.2.0",
     "parse-link-header": "^1.0.1"
