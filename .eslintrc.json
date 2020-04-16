@@ -23,6 +23,7 @@
 		"polyfills": ["promises"]
 	},
 	"rules": {
+        "prettier/prettier": "error",
 		"no-console": "off",
 		"no-sync": "off",
 		"no-loops/no-loops": "off",
