@@ -1,6 +1,5 @@
 var expect = require('chai').expect;
 
-console.log(5);
 let filterResponseForImportantEvents = require('./index');
 
 describe('Testing filterResponseForImportantEvents', function() {
