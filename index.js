@@ -11,11 +11,17 @@ const githubIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID;
 const alternateIdColumnNumber = process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID;
 let githubImportantEvents = process.env.GITHUB_IMPORTANT_EVENTS;
 if (!githubImportantEvents) {
-    githubImportantEvents = ['CommitCommentEvent', 'IssueCommentEvent', 'IssuesEvent', 'PullRequestEvent', 'PullRequestReviewEvent', 'PullRequestReviewCommentEvent'];
+    githubImportantEvents = [
+        'CommitCommentEvent',
+        'IssueCommentEvent',
+        'IssuesEvent',
+        'PullRequestEvent',
+        'PullRequestReviewEvent',
+        'PullRequestReviewCommentEvent'
+    ];
 } else {
     githubImportantEvents = githubImportantEvents.split(',');
 }
-
 
 //Helper Functions
 function parseDatesFromArgv() {
@@ -49,7 +55,7 @@ function fetchPageOfDataAndFilter(url) {
         fetch(url, {
             method: 'GET',
             headers: {
-                'Authorization': `Basic ${githubToken}`
+                Authorization: `Basic ${githubToken}`
             }
         })
             .then((response) => {
@@ -59,23 +65,24 @@ function fetchPageOfDataAndFilter(url) {
                 }
                 let parsed = parse(response.headers.get('link'));
                 let importantEvents = [];
-                response.json()
+                response
+                    .json()
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
                         importantEvents = importantEvents.concat(filteredForImportant);
                         if (parsed && parsed.next && parsed.next.url) {
-                            fetchPageOfDataAndFilter(parsed.next.url).then(newEvents => {
+                            fetchPageOfDataAndFilter(parsed.next.url).then((newEvents) => {
                                 return resolve(importantEvents.concat(newEvents));
                             });
                         } else {
                             return resolve(importantEvents);
                         }
                     })
-                    .catch(err => {
+                    .catch((err) => {
                         console.log('Error turning response into JSON:', err);
                     });
             })
-            .catch(err => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
+            .catch((err) => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
     });
 }
 
@@ -103,16 +110,16 @@ function filterContributorByTime(idObject, dates) {
 }
 function fetchUserDataAndAddToCSV(row, dates) {
     let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
-    fetchPageOfDataAndFilter(url).then(importantEvents => {
-        let idObject = {};
-        createIdObjects(row, idObject, importantEvents);
-        filterContributorByTime(idObject, dates);
-    })
-        .catch(err => {
+    fetchPageOfDataAndFilter(url)
+        .then((importantEvents) => {
+            let idObject = {};
+            createIdObjects(row, idObject, importantEvents);
+            filterContributorByTime(idObject, dates);
+        })
+        .catch((err) => {
             console.log('error', err);
         });
 }
-
 
 //parse CSV into JSON
 const { Parser } = require('parse-csv');
@@ -124,7 +131,7 @@ process.stdin.setEncoding(encoding);
 process.stdin.on('readable', () => {
     let chunk;
     // eslint-disable-next-line no-cond-assign
-    while (chunk = process.stdin.read()) {
+    while ((chunk = process.stdin.read())) {
         csvData += chunk;
     }
 });
@@ -141,7 +148,10 @@ process.stdin.on('end', () => {
         let duplicateGithubId = false;
         for (let j = 0; j < arrayOfGithubIds.length; j++) {
             if (arrayOfGithubIds[j] === currentRow[githubIdColumnNumber]) {
-                console.log('Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:', currentRow[githubIdColumnNumber]);
+                console.log(
+                    'Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:',
+                    currentRow[githubIdColumnNumber]
+                );
                 duplicateGithubId = true;
                 break;
             }
