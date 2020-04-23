@@ -54,8 +54,21 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 - Paste the access token into GITHUB_TOKEN
-- By default, the time window uses UTC-0 (same as GMT). If that's acceptable, leave TIMEZONE_OFFSET as an empty string. If you want your time to be local, provide a UTC offset here.
-Example: California is UTC-08:00 (half the year) so I would make the TIMEZONE_OFFSET equal to "08:00".
+- TIMEZONE allows you to specify when your day begins and ends. This must be a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Typically, this would either be "Etc/UTC" or the time zone of your organization's main office, such as "America/Los_Angeles". 
+
+If for some reason you want the time to be a constant offset from UTC, you can say : "Etc/GMT+6", to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice. 
+For example: 
+``` .env
+TIMEZONE=“Etc/GMT+6”
+```
+
+would output:
+
+```Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
+```
+
+
+For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
 
 ### To run:
