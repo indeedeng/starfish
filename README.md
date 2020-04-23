@@ -17,8 +17,10 @@ FOSS Funds are democratized - anyone who has contributed to open source in a giv
 
 For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/) or [This awesome article from Open Collective](https://blog.opencollective.com/indeeds-open-source-sustainability-strategy/)
 
-# NOTE FOR CURRENT STARFISH USERS - BREAKING CHANGE
+# NOTE FOR CURRENT STARFISH USERS - BREAKING CHANGES
 HI, thanks for using Starfish. Recently, we changed how we talk to GitHub's API because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to take it, instead of OAuth credentials.
+
+Also, the TIMEZONE_OFFSET environment variable has become TIMEZONE. You'll want to change that as well, and probably need to change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
 
 We'll push a major version soon to make it more obvious that there's a breaking change. 
 
