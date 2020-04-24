@@ -29,11 +29,9 @@ function parseDatesFromArgv() {
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const startMoment = moment.tz(startDate, timeZone)
-        .startOf('day');
+    const startMoment = moment.tz(startDate, timeZone).startOf('day');
 
-    const endMoment = moment.tz(endDate, timeZone)
-        .endOf('day');
+    const endMoment = moment.tz(endDate, timeZone).endOf('day');
 
     return [startMoment, endMoment];
 }
@@ -97,7 +95,6 @@ function filterContributorByTime(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
 
-
     const timeWindow = moment.range([startMoment, endMoment]);
     for (let i = 0; i < idObject.contributions.length; i++) {
         const momentOfContribution = moment.utc(idObject.contributions[i].created_at);
@@ -109,12 +106,13 @@ function filterContributorByTime(idObject, moments) {
 }
 function fetchUserDataAndAddToCSV(row, moments) {
     let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
-    fetchPageOfDataAndFilter(url).then(importantEvents => {
-        let idObject = {};
-        createIdObjects(row, idObject, importantEvents);
-        filterContributorByTime(idObject, moments);
-    })
-        .catch(err => {
+    fetchPageOfDataAndFilter(url)
+        .then((importantEvents) => {
+            let idObject = {};
+            createIdObjects(row, idObject, importantEvents);
+            filterContributorByTime(idObject, moments);
+        })
+        .catch((err) => {
             console.log('error', err);
         });
 }
