@@ -67,7 +67,8 @@ TIMEZONE=“Etc/GMT+6”
 
 would output:
 
-```Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
+``` 
+Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
 ```
 
 
@@ -103,7 +104,12 @@ Lastly, if you're using Starfish we'd love to hear about it. What are you using 
 ## Contributing
 In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
 
-Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing. Thanks!
+Starfish's file structure is relatively simple - you won't need to touch most of it.
+
+>Currently, all of the application code is in index.js
+>Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a test file (with only 1 test so far), the package.json (which is a node configuration file), and files to configure eslint and prettier.
+
+Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing changes. Thanks!
 
 # Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
