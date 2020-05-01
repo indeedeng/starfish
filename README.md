@@ -29,12 +29,10 @@ New users, you don't have to worry about this - just follow the instructions in 
 # Getting Started
 ### Prerequisites
 
-#### First, clone the repo to your computer, then navigate to the starfish folder and run `npm install`.
+#### First, clone the repo to your computer, then navigate to the starfish folder and run `npm ci`.
 - This project runs on **node 10.13.0 or higher**, node 12 is preferred.
 - `node -v `, will show you which version of node you're using in your machine.
-- To update, install the needed version of node via nvm at runtime: `nvm install lts/erbium`
-- A `.nvmrc` file is included in the project to set the required node version, please update to use the node version you prefer, node 12 `lts/erbium` is the default.
-- Run `nvm use` to use the set node version in the `.nvmrc` file
+- If your version is below 10.13.0, either update to a compatible version of node, or [install nvm](https://github.com/nvm-sh/nvm#about) so that Starfish can use a compatible node version without affecting other applications on your system.
 
 #### Next, make a .csv file with the Github Ids you're interested in checking, and, if desired, an "alternate id" to go with each
 > #### Q&A Time!
@@ -71,7 +69,7 @@ TIMEZONE=“Etc/GMT+6”
 
 would output:
 
-```.txt
+```
 Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
 ```
 
