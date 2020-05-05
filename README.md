@@ -32,6 +32,9 @@ New users, you don't have to worry about this - just follow the instructions in 
 ### Prerequisites
 
 #### First, clone the repo to your computer, then navigate to the starfish folder and run `npm ci`.
+- This project runs on **node 10.13.0 or higher**, node 12 is preferred.
+- `node -v `, will show you which version of node you're using in your machine.
+- If your version is below 10.13.0, either update to a compatible version of node, or [install nvm](https://github.com/nvm-sh/nvm#about) so that Starfish can use a compatible node version without affecting other applications on your system.
 
 #### Next, make a .csv file with the Github Ids you're interested in checking, and, if desired, an "alternate id" to go with each
 > #### Q&A Time!
@@ -45,7 +48,7 @@ If you decide not to use an 'alternate id', your list of eligible employees will
 My GitHub ID is:,Email Address  
 danisyellis,dgellis@indeed.com  
 octocat,octocat@github.com  
-thisShouldError,notaname@fake.com 
+thisShouldError,notaname@example.com 
 
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet (one column per data field, one row per person) and download a CSV from that.
@@ -67,7 +70,9 @@ TIMEZONE=“Etc/GMT+6”
 
 would output:
 
+
 ``` 
+
 Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
 ```
 
