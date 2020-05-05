@@ -1,7 +1,7 @@
 # Starfish
 ## Because Your Open Source Contributors Are Stars!
 
-<p align="left"> <img src="Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
+<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
 
 ## This is a tool to:
 - parse a CSV of employee GitHub Ids
@@ -21,6 +21,8 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Wa
 HI, thanks for using Starfish. Recently, we changed how we talk to GitHub's API because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to take it, instead of OAuth credentials.
 
 Also, the TIMEZONE_OFFSET environment variable has become TIMEZONE. You'll want to change that as well, and probably need to change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
+
+Make sure to run `npm ci` to update node packages.
 
 We'll push a major version soon to make it more obvious that there's a breaking change. 
 
@@ -45,14 +47,13 @@ If you decide not to use an 'alternate id', your list of eligible employees will
 > A CSV is just a file of comma-separated values, with a newline between each line. It looks like this:  
 My GitHub ID is:,Email Address  
 danisyellis,dgellis@indeed.com  
-anexample,example@example.com  
-nerys,kira@bm.gov  
-captsisko,bsisko@starfleet.com  
+octocat,octocat@github.com  
+thisShouldError,notaname@example.com 
 
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
-> You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet and download a CSV from that.
+> You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet (one column per data field, one row per person) and download a CSV from that.
 
-You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git. Or, you can name the folder something else and add that folder name to the .gitignore file.
+You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git.
 
 #### Then, get yourself Github authentication credentials.
 Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
@@ -69,13 +70,15 @@ TIMEZONE=“Etc/GMT+6”
 
 would output:
 
-```
+
+``` 
+
 Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600 
 ```
 
 
 For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-- The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
+- The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0 and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
 
 ### To run:
 In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`  
@@ -87,19 +90,31 @@ Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile}
 ### Tests
 We've just started writing tests - there's one so far. You can run it with the command `npm test`.
 
+### Updating
+From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin master. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
+
 
 # Other Important Info
 
 This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
 
-You can also override the list of events to check by adding the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
+You can also override the list of events to check by editing the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
 
 Caveat: The github API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
 
 Also, we know that there are many types of contributions - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
 
+Lastly, if you're using Starfish we'd love to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment by creating an issue or by emailing [danisyellis](https://github.com/danisyellis).
+
 ## Contributing
 In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
+
+Starfish's file structure is relatively simple - you won't need to touch most of it.
+
+>Currently, all of the application code is in index.js
+>Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a test file (with only 1 test so far), the package.json (which is a node configuration file), and files to configure eslint and prettier.
+
+Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing changes. Thanks!
 
 # Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
@@ -112,4 +127,4 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
 
-<p align="center"> <img src="OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
+<p align="center"> <img src="img/OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
