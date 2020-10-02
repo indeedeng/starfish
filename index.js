@@ -158,4 +158,12 @@ process.stdin.on('end', () => {
     }
 });
 
-module.exports = filterResponseForImportantEvents;
+module.exports = {
+    createIdObjects,
+    fetchPageOfDataAndFilter,
+    fetchUserDataAndAddToCSV,
+    filterContributorByTime,
+    filterResponseForImportantEvents,
+    getOrThrow,
+    parseDatesFromArgv,
+}
