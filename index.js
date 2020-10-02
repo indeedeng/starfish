@@ -85,8 +85,8 @@ function createIdObject(row, importantEvents) {
     return {
         alternateId: row[alternateIdColumnNumber],
         github: row[githubIdColumnNumber],
-        contributions: importantEvents,
-    }
+        contributions: importantEvents
+    };
 }
 
 function filterContributorByTime(idObject, moments) {
