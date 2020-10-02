@@ -69,6 +69,9 @@ function fetchPageOfDataAndFilter(url) {
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url).then((newEvents) => {
                                 return resolve(importantEvents.concat(newEvents));
+                            })
+                            .catch((err) => {
+                              console.log("Error fetching page of data and filter:", err);
                             });
                         } else {
                             return resolve(importantEvents);
