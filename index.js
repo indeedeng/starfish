@@ -165,5 +165,5 @@ module.exports = {
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow,
-    parseDatesFromArgv,
-}
+    parseDatesFromArgv
+};
