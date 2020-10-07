@@ -8,7 +8,7 @@
 
 ## This is a tool to:
 - parse a CSV of employee GitHub Ids
-- use those Ids, and the Github REST API, to check for open source contributions by those employees that happened between any 2 dates
+- use those Ids, and the GitHub REST API, to check for open source contributions by those employees that happened between any 2 dates
 - log out the ids of those employees (either GitHub Ids or another unique identifier you choose)
 
 ## Purpose
@@ -37,7 +37,7 @@ New users, you don't have to worry about this - just follow the instructions in 
 - `node -v `, will show you which version of node you're using in your machine.
 - If your version is below 10.13.0, either update to a compatible version of node, or [install nvm](https://github.com/nvm-sh/nvm#about) so that Starfish can use a compatible node version without affecting other applications on your system.
 
-#### Next, make a .csv file with the Github Ids you're interested in checking, and, if desired, an "alternate id" to go with each
+#### Next, make a .csv file with the GitHub Ids you're interested in checking, and, if desired, an "alternate id" to go with each
 > #### Q&A Time!
 > ##### What do you mean "alternate id"?
 > I mean, if you normally identify your employees by some unique identifier- like an LDAP, their email, an employee id number, or even just their names- you can add that to the CSV so that your output is more useful to you. (For example, we find a list of the emails of every employee who's eligible to vote in the FOSS Fund that month to be really useful.)  
@@ -56,7 +56,7 @@ thisShouldError,notaname@example.com
 
 You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git.
 
-#### Then, get yourself Github authentication credentials.
+#### Then, get yourself GitHub authentication credentials.
 Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
@@ -101,7 +101,7 @@ This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesE
 
 You can also override the list of events to check by editing the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
 
-Caveat: The github API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
+Caveat: The GitHub API only holds the most recent 300 events for each user. So, if you are looking for contributions from a long time ago, and one of your users is very active, your result might not be completely accurate.
 
 Also, we know that there are many types of contributions - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
 
