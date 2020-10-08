@@ -9,12 +9,12 @@ const {
     parseDatesFromArgv
 } = require('../index');
 
-const env = Object.assign({}, process.env);
+const envBeforeChanges = Object.assign({}, process.env);
 beforeEach(() => {
-    process.env = Object.assign({}, env);
+    process.env = Object.assign({}, envBeforeChanges);
 });
 after(() => {
-    process.env = env;
+    process.env = envBeforeChanges;
 });
 
 describe('filterResponseForImportantEvents', () => {
@@ -39,7 +39,7 @@ describe('getOrThrow', () => {
     it('should throw an error if the configuration does not exist in the environment', () => {
         expect(() => getOrThrow('configurationThatDoesNotExist')).to.throw(Error);
     });
-    it('should return the value of a configuration that exists exists', () => {
+    it('should return the value of a configuration that exists in the environment', () => {
         expect(() => getOrThrow('TIMEZONE')).not.to.throw(Error);
         expect(getOrThrow('TIMEZONE')).to.equal(process.env.TIMEZONE);
     });
