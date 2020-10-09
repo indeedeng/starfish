@@ -3,6 +3,22 @@
 
 <p align="left"> <img src="Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
 
+<br>
+
+## Indeed + Hacktoberfest
+
+In addition to the main event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
+see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
+
+### Hacktoberfest Open Office Hours
+Join us for open office hours to talk about issues, propose ideas, help review code, and more.
+
+| Date         | Time           | Register  |
+| ------------- |:-------------:| -----:|
+| Wednesday, October 14th | 4PM-5PM PT | [register](https://organize.mlh.io/participants/events/5666-virtual-starfish-office-hours) |
+| Monday, October 26th | 2PM-3PM PT | [register](https://organize.mlh.io/participants/events/5668-virtual-starfish-office-hours) |
+<br>
+
 ## This is a tool to:
 - parse a CSV of employee GitHub Ids
 - use those Ids, and the Github REST API, to check for open source contributions by those employees that happened between any 2 dates
