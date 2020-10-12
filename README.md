@@ -117,6 +117,9 @@ Starfish's file structure is relatively simple - you won't need to touch most of
 
 Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing changes. Thanks!
 
+# Responsibilities
+Project maintainers have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, or to ban temporarily or permanently any contributor for other behaviors that they deem inappropriate, threatening, offensive, or harmful.
+
 # Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 
