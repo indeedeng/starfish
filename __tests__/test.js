@@ -1,6 +1,6 @@
 const { expect } = require('chai');
 const {
-    createIdObjects,
+    createIdObject,
     fetchPageOfDataAndFilter,
     fetchUserDataAndAddToCSV,
     filterContributorByTime,
@@ -25,6 +25,7 @@ describe('filterResponseForImportantEvents', () => {
         expect(resultArray[0].type).to.equal('IssueCommentEvent');
     });
 });
+
 describe('getOrThrow', () => {
     beforeEach(() => {
         process.env = {

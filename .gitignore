@@ -1,5 +1,4 @@
 .env
-CSVsToParse
 testResult.txt
 node_modules
 .idea

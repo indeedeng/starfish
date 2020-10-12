@@ -15,7 +15,6 @@ function getOrThrow(configField) {
 
     return value;
 }
-let arrayOfIdObjects = []; // each IdObject contains the GitHub Id PLUS Alternate Id for an individual (examples of alternate ids: an LDAP or company email- however your company identifies employees)
 const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
 const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
@@ -82,11 +81,12 @@ function fetchPageOfDataAndFilter(url) {
     });
 }
 
-function createIdObjects(row, idObject, importantEvents) {
-    idObject.alternateId = row[alternateIdColumnNumber];
-    idObject.github = row[githubIdColumnNumber];
-    idObject.contributions = importantEvents;
-    arrayOfIdObjects.push(idObject);
+function createIdObject(row, importantEvents) {
+    return {
+        alternateId: row[alternateIdColumnNumber],
+        github: row[githubIdColumnNumber],
+        contributions: importantEvents
+    };
 }
 
 function filterContributorByTime(idObject, moments) {
@@ -106,8 +106,7 @@ function fetchUserDataAndAddToCSV(row, moments) {
     let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url)
         .then((importantEvents) => {
-            let idObject = {};
-            createIdObjects(row, idObject, importantEvents);
+            const idObject = createIdObject(row, importantEvents);
             filterContributorByTime(idObject, moments);
         })
         .catch((err) => {
@@ -159,7 +158,7 @@ process.stdin.on('end', () => {
 });
 
 module.exports = {
-    createIdObjects,
+    createIdObject,
     fetchPageOfDataAndFilter,
     fetchUserDataAndAddToCSV,
     filterContributorByTime,

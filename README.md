@@ -54,7 +54,7 @@ thisShouldError,notaname@example.com
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet (one column per data field, one row per person) and download a CSV from that.
 
-You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git. If you create a new folder named "CSVsToParse", it will not be tracked by git.
+You may want to store multiple CSV files in a folder that's inside of Starfish, but not tracked by git, so we have set up `./CSVsToParse` for you.
 
 #### Then, get yourself GitHub authentication credentials.
 Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
