@@ -13,6 +13,8 @@
 In addition to the main Hacktoberfest event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
 see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
 
+Note: If you'd like to contribute, please either work on an issue labeled Hacktoberfest or create an issue to talk about the change you'd like to make. Spammy pull requests just to get swag are against the spirit of Hacktoberfest and won't be accepted. Remember, the purpose of Hacktoberfest is to support open source projects, not to create extra work for open source maintainers. If you're new to open source, please don't let this note discourge you though- we're happy to work with people who want to submit PRs in good faith, even if it's a small change or you're still learning :-)
+
 ### Hacktoberfest Open Office Hours
 Join us for open office hours to talk about issues, propose ideas, help review code, and more.
 
@@ -124,12 +126,12 @@ Also, we know that there are many types of contributions - not just code, and no
 Lastly, if you're using Starfish we'd love to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment by creating an issue or by emailing [danisyellis](https://github.com/danisyellis).
 
 ## Contributing
-In the future, we hope to include other code repositories (like Gitlab & Bitbucket) and other tools people use to make software (like Jira) in this tool! If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
+If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
 
 Starfish's file structure is relatively simple - you won't need to touch most of it.
 
 >Currently, all of the application code is in index.js
->Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a test file (with only 1 test so far), the package.json (which is a node configuration file), and files to configure eslint and prettier.
+>Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a folder for tests, the package.json (which is a node configuration file), a folder to hold the CSV(s) of employee info, and files to configure eslint, prettier, and nvm.
 
 Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing changes. Thanks!
 
