@@ -7,7 +7,7 @@
 
 ## Indeed + Hacktoberfest
 
-In addition to the main event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
+In addition to the main Hacktoberfest event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
 see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
 
 ### Hacktoberfest Open Office Hours
