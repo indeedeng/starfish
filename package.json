@@ -27,9 +27,6 @@
     "prettier": "^1.19.1"
   },
   "jest": {
-    "collectCoverageFrom": [
-      "**/*.js"
-    ],
     "verbose": true
   }
 }
