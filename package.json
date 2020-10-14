@@ -14,7 +14,7 @@
     "dotenv": "^8.2.0",
     "eslint-plugin-gettext": "^1.1.0",
     "moment-range": "^4.0.2",
-    "moment-timezone": "^0.5.28",
+    "moment-timezone": "^0.5.31",
     "node-fetch": "^2.6.1",
     "parse-csv": "^0.2.0",
     "parse-link-header": "^1.0.1"
