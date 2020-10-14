@@ -12,7 +12,7 @@ const envBeforeChanges = Object.assign({}, process.env);
 beforeEach(() => {
     process.env = Object.assign({}, envBeforeChanges);
 });
-afterEach(() => {
+afterAll(() => {
     process.env = envBeforeChanges;
 });
 
