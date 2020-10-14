@@ -1,12 +1,4 @@
-const {
-    createIdObject,
-    fetchPageOfDataAndFilter,
-    fetchUserDataAndAddToCSV,
-    filterContributorByTime,
-    filterResponseForImportantEvents,
-    getOrThrow,
-    parseDatesFromArgv
-} = require('../index');
+const { filterResponseForImportantEvents, getOrThrow } = require('../index');
 
 const envBeforeChanges = Object.assign({}, process.env);
 beforeEach(() => {
