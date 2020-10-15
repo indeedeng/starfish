@@ -40,7 +40,8 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
         if (githubImportantEvents.indexOf(event.type) !== -1) {
             arrayOfImportantEvents.push(event);
         } else if (event.payload) {
-            if (githubImportantEvents.indexOf(event.type + '.' + event.payload.action) !== -1) {
+            const typeWithAction = event.type + '.' + event.payload.action
+            if (githubImportantEvents.indexOf(typeWithAction) !== -1) {
                 arrayOfImportantEvents.push(event);
             }
         }
