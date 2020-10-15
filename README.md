@@ -13,7 +13,7 @@
 In addition to the main Hacktoberfest event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
 see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
 
-Note: If you'd like to contribute, please either work on an issue labeled Hacktoberfest or create an issue to talk about the change you'd like to make. Spammy pull requests just to get swag are against the spirit of Hacktoberfest and won't be accepted. Remember, the purpose of Hacktoberfest is to support open source projects, not to create extra work for open source maintainers. If you're new to open source, please don't let this note discourge you though- we're happy to work with people who want to submit PRs in good faith, even if it's a small change or you're still learning :-)
+Note: If you'd like to contribute, please either work on an issue labeled Hacktoberfest or create an issue to talk about the change you'd like to make. Spammy pull requests just to get swag are against the spirit of Hacktoberfest and won't be accepted.Remember, the purpose of Hacktoberfest is to support open source projects, not to create extra work for open source maintainers. If you're new to open source, please don't let this note discourge you though- we're happy to work with people who want to submit PRs in good faith, even if it's a small change or you're still learning :-)
 
 ### Hacktoberfest Open Office Hours
 Join us for open office hours to talk about issues, propose ideas, help review code, and more.
