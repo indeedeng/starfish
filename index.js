@@ -1,8 +1,6 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const Moment = require('moment-timezone');
-const { extendMoment } = require('moment-range');
-const moment = extendMoment(Moment);
+const { DateTime } = require('luxon');
 const parse = require('parse-link-header');
 
 function getOrThrow(configField) {
@@ -26,11 +24,17 @@ function parseDatesFromArgv() {
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const startMoment = moment.tz(startDate, timeZone).startOf('day');
+    const startMoment = DateTime.fromISO(startDate, {
+        zone: timeZone || 'utc',
+        setZone: true,
+    });
 
-    const endMoment = moment.tz(endDate, timeZone).endOf('day');
+    const endMoment = DateTime.fromISO(endDate, {
+        zone: timeZone || 'utc',
+        setZone: true,
+    });
 
-    return [startMoment, endMoment];
+    return [startMoment.toISO(), endMoment.toISO()];
 }
 
 function filterResponseForImportantEvents(allEventsFromFetch) {
@@ -50,8 +54,8 @@ function fetchPageOfDataAndFilter(url) {
         fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: `Basic ${githubToken}`
-            }
+                Authorization: `Basic ${githubToken}`,
+            },
         })
             .then((response) => {
                 if (!response.ok) {
@@ -92,18 +96,24 @@ function createIdObject(row, importantEvents) {
     return {
         alternateId: row[alternateIdColumnNumber],
         github: row[githubIdColumnNumber],
-        contributions: importantEvents
+        contributions: importantEvents,
     };
 }
 
 function filterContributorByTime(idObject, moments) {
-    const startMoment = moments[0];
-    const endMoment = moments[1];
+    const startMoment = DateTime.fromISO(moments[0]);
+    const endMoment = DateTime.fromISO(moments[1]);
 
-    const timeWindow = moment.range([startMoment, endMoment]);
     for (let i = 0; i < idObject.contributions.length; i++) {
-        const momentOfContribution = moment.utc(idObject.contributions[i].created_at);
-        if (timeWindow.contains(momentOfContribution)) {
+        const momentOfContribution = DateTime.fromISO(idObject.contributions[i].created_at, {
+            zone: 'utc',
+            setZone: true,
+        });
+
+        if (
+            momentOfContribution.startOf('day') >= startMoment.startOf('day') &&
+            momentOfContribution.startOf('day') <= endMoment.startOf('day')
+        ) {
             console.log(idObject.alternateId);
             break;
         }
@@ -138,7 +148,11 @@ process.stdin.on('readable', () => {
 process.stdin.on('end', () => {
     const moments = parseDatesFromArgv();
 
-    process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
+    process.stdout.write(
+        `Users that contributed between ${DateTime.fromISO(
+            moments[0]
+        ).toHTTP()} and ${DateTime.fromISO(moments[1]).toHTTP()} \n`
+    );
 
     var datagrid = parser.parse(csvData).data;
     let arrayOfGithubIds = [];
@@ -171,5 +185,5 @@ module.exports = {
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow,
-    parseDatesFromArgv
+    parseDatesFromArgv,
 };
