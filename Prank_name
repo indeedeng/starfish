@@ -1,0 +1,14 @@
+import random
+n=int(input('Enter number of friends: '))
+print(f'Enter name of {n} friends')
+l=[input() for i in range (n)]
+fname=[]
+lname=[]
+for name in l:
+    fname.append(name.split(' ')[0])
+    lname.append(name.split(' ')[1])
+print('Your Friends Name:')
+for i in range(0,n):
+    full_name=fname[i]+' '+lname[random.randint(0,n-1)]
+    print(full_name)
+    
