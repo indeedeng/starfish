@@ -66,9 +66,16 @@ function fetchPageOfDataAndFilter(url) {
                         let filteredForImportant = filterResponseForImportantEvents(json);
                         importantEvents = importantEvents.concat(filteredForImportant);
                         if (parsed && parsed.next && parsed.next.url) {
-                            fetchPageOfDataAndFilter(parsed.next.url).then((newEvents) => {
-                                return resolve(importantEvents.concat(newEvents));
-                            });
+                            fetchPageOfDataAndFilter(parsed.next.url)
+                                .then((newEvents) => {
+                                    return resolve(importantEvents.concat(newEvents));
+                                })
+                                .catch((err) => {
+                                    console.log(
+                                        `Error fetching page of data for ${parsed.next.url}: ${err}`
+                                    );
+                                    throw err;
+                                });
                         } else {
                             return resolve(importantEvents);
                         }
