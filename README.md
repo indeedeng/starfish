@@ -125,7 +125,7 @@ Also, we know that there are many types of contributions - not just code, and no
 
 Lastly, if you're using Starfish we'd love to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment by creating an issue or by emailing [danisyellis](https://github.com/danisyellis).
 
-## Contributing
+# Contributing
 If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
 
 Starfish's file structure is relatively simple - you won't need to touch most of it.
@@ -133,7 +133,14 @@ Starfish's file structure is relatively simple - you won't need to touch most of
 >Currently, all of the application code is in index.js
 >Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a folder for tests, the package.json (which is a node configuration file), a folder to hold the CSV(s) of employee info, and files to configure eslint, prettier, and nvm.
 
-Be sure to run `npm run lint` and/or `npm run lint-fix` and fix any linting errors before committing changes. Thanks!
+#### Before submitting your Pull Request, please do each of the following steps, and fix any problems that come up:
+
+1. Make sure the code runs and gives the output you expect.
+1. Run the linter `npm run lint` and/or `npm run lint-fix` and make sure everything passes.
+1. Run the tests `npm test` and make sure everything passes.
+1. Once you've pushed your commits to github, make sure that your branch can be auto-merged (there are no merge conflicts).
+
+Thanks!
 
 # Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
