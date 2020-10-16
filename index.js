@@ -45,6 +45,30 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
+function filterForAuthorAssociation(events = [], association = 'OWNER') {
+    return events.reduce(function (acc, event) {
+        switch (event.type) {
+            case 'PullRequestEvent':
+            case 'PullRequestReviewEvent':
+                return event.payload.pull_request.author_association !== association
+                    ? [...acc, event]
+                    : acc;
+            case 'CommitCommentEvent':
+            case 'IssueCommentEvent':
+            case 'PullRequestReviewCommentEvent':
+                return event.payload.comment.author_association !== association
+                    ? [...acc, event]
+                    : acc;
+            case 'IssuesEvent':
+                return event.payload.issue.author_association !== association
+                    ? [...acc, event]
+                    : acc;
+            default:
+                return acc;
+        }
+    }, []);
+}
+
 function fetchPageOfDataAndFilter(url) {
     return new Promise((resolve) => {
         fetch(url, {
@@ -65,6 +89,9 @@ function fetchPageOfDataAndFilter(url) {
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
                         importantEvents = importantEvents.concat(filteredForImportant);
+                        if (/^true|True$/.test(process.env.IGNORE_OWN_EVENTS)) {
+                            importantEvents = filterForAuthorAssociation(importantEvents);
+                        }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)
                                 .then((newEvents) => {
