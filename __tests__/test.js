@@ -54,7 +54,7 @@ describe('fetchPageOfDataAndFilter', () => {
             .reply(500);
         fetchPageOfDataAndFilter('https://api.github.com/test')
             .then(() => {
-                expect.fail('fetchPageOfDataAndFilter should error when url ');
+                expect.fail('fetchPageOfDataAndFilter should error when response status is not 200');
                 done();
             })
             .catch((e) => {
@@ -68,8 +68,7 @@ describe('fetchPageOfDataAndFilter', () => {
             .reply(200);
         fetchPageOfDataAndFilter('https://api.github.com/test')
             .then(() => {
-                console.log('oh hey');
-                expect.fail('fetchPageOfDataAndFilter should error when url ');
+                expect.fail('fetchPageOfDataAndFilter should error when there is a fetch error');
                 done();
             })
             .catch((e) => {
