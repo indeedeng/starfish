@@ -46,7 +46,7 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
 }
 
 function fetchPageOfDataAndFilter(url) {
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
         fetch(url, {
             method: 'GET',
             headers: {
@@ -82,9 +82,15 @@ function fetchPageOfDataAndFilter(url) {
                     })
                     .catch((err) => {
                         console.log('Error turning response into JSON:', err);
+
+                        return reject(err);
                     });
             })
-            .catch((err) => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
+            .catch((err) => {
+                console.log('ERROR GRABBING INFO FROM GITHUB!', err);
+
+                return reject(err);
+            });
     });
 }
 
