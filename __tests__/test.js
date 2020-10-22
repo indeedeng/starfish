@@ -1,19 +1,10 @@
-const { expect } = require('chai');
-const {
-    createIdObject,
-    fetchPageOfDataAndFilter,
-    fetchUserDataAndAddToCSV,
-    filterContributorByTime,
-    filterResponseForImportantEvents,
-    getOrThrow,
-    parseDatesFromArgv
-} = require('../index');
+const { filterResponseForImportantEvents, getOrThrow } = require('../index');
 
 const envBeforeChanges = Object.assign({}, process.env);
 beforeEach(() => {
     process.env = Object.assign({}, envBeforeChanges);
 });
-after(() => {
+afterAll(() => {
     process.env = envBeforeChanges;
 });
 
@@ -21,8 +12,8 @@ describe('filterResponseForImportantEvents', () => {
     it('should return an array with the one important event', () => {
         var arrayofTwoEvents = [{ type: 'IssueCommentEvent' }, { type: 'Unimportant' }];
         let resultArray = filterResponseForImportantEvents(arrayofTwoEvents);
-        expect(resultArray.length).to.equal(1);
-        expect(resultArray[0].type).to.equal('IssueCommentEvent');
+        expect(resultArray.length).toEqual(1);
+        expect(resultArray[0].type).toEqual('IssueCommentEvent');
     });
 });
 
@@ -38,10 +29,10 @@ describe('getOrThrow', () => {
         };
     });
     it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrow('configurationThatDoesNotExist')).to.throw(Error);
+        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
     });
     it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrow('TIMEZONE')).not.to.throw(Error);
-        expect(getOrThrow('TIMEZONE')).to.equal(process.env.TIMEZONE);
+        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
+        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
     });
 });

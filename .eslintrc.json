@@ -3,11 +3,12 @@
 		"commonjs": true,
 		"es6": true,
         "node": true,
-        "mocha": true
+        "jest/globals": true
     },
     "plugins": 
         ["gettext",
-        "prettier"],
+        "prettier",
+        "jest"],
     "extends": [
         "eslint:recommended",
         "plugin:prettier/recommended"
