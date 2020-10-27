@@ -4,7 +4,7 @@
 
 ## *Because Your Open Source Contributors Are Stars!*
 
-<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
+<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" alt="Starfish logo - Light blue circle with gold starfish in the middle and the link to github directory in the top right corner (github.com/indeedeng/starfish) " width="244" height="244" title = "Starfish logo"/> </p>
 
 <br>
 
@@ -153,4 +153,4 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
 
-<p align="center"> <img src="img/OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
+<p align="center"> <img src="img/OS-gold-starfish-banner.png" alt="Banner of five cartoony gold-colored starfishes arranged like Olympic circles, but with some spacing between, on a background of water" width="596" height="255" title = "Gold Starfish Banner"/> </p>
