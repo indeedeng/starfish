@@ -9,6 +9,15 @@ afterAll(() => {
     process.env = envBeforeChanges;
 });
 
+const testEnv = {
+    GITHUB_TOKEN: 'mock_token',
+    TIMEZONE: 'America/Los_Angeles',
+    CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
+    CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
+    GITHUB_IMPORTANT_EVENTS:
+        'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent'
+};
+
 describe('filterResponseForImportantEvents', () => {
     it('should return an array with the one important event', () => {
         var arrayofTwoEvents = [{ type: 'IssueCommentEvent' }, { type: 'Unimportant' }];
@@ -19,76 +28,62 @@ describe('filterResponseForImportantEvents', () => {
 });
 
 describe('fetchPageOfDataAndFilter', () => {
+    const apiDomain = 'https://api.github.com';
+    const apiPath = '/users/octocat/events';
+    const apiUrl = `${apiDomain}${apiPath}`;
+    let importantEvents;
     beforeEach(() => {
-        process.env = {
-            GITHUB_TOKEN: 'mockToken',
-            TIMEZONE: 'America/Los_Angeles',
-            CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
-            CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
-            GITHUB_IMPORTANT_EVENTS:
-                'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent'
-        };
+        process.env = testEnv;
+        importantEvents = process.env.GITHUB_IMPORTANT_EVENTS.split(',');
     });
     it('should resolve with list of important events', () => {
-        nock('https://api.github.com')
-            .get('/test')
+        nock(apiDomain)
+            .get(apiPath)
             .reply(200, [
-                { type: 'CommitCommentEvent' },
+                { type: importantEvents[0] },
                 { type: 'NotImportantEvent' },
-                { type: 'PullRequestReviewEvent' },
+                { type: importantEvents[1] },
                 { type: 'AnotherNotImportantEvent' }
             ]);
-        expect(fetchPageOfDataAndFilter('https://api.github.com/test')).resolves.toEqual(
+        expect(fetchPageOfDataAndFilter(apiUrl)).resolves.toEqual(
             expect.arrayContaining([
-                { type: 'CommitCommentEvent' },
-                { type: 'PullRequestReviewEvent' },
+                { type: importantEvents[0] },
+                { type: importantEvents[1] }
             ])
         );
     });
-    it('should resolve with each important event of same type', () => {
-        nock('https://api.github.com')
-            .get('/test')
-            .reply(200, [
-                { type: 'PullRequestReviewEvent' },
-                { type: 'PullRequestReviewEvent' },
-                { type: 'PullRequestReviewEvent' },
-                { type: 'PullRequestReviewEvent' }
-            ]);
-        expect(fetchPageOfDataAndFilter('https://api.github.com/test')).resolves.toHaveLength(4);
+    it('should resolve important events of same type', () => {
+        nock(apiDomain)
+            .get(apiPath)
+            .reply(200, Array(4).fill({ type: importantEvents[0] }));
+        expect(fetchPageOfDataAndFilter(apiUrl)).resolves.toHaveLength(4);
     });
     it('should resolve with empty list when no important events found', () => {
-        nock('https://api.github.com')
-            .get('/test')
+        nock(apiDomain)
+            .get(apiPath)
             .reply(200, [
                 { type: 'NotImportantEvent' },
                 { type: 'AnotherNotImportantEvent' },
                 { type: 'YetAnotherNotImportantEvent' }
             ]);
-        expect(fetchPageOfDataAndFilter('https://api.github.com/test')).resolves.toHaveLength(0);
+        expect(fetchPageOfDataAndFilter(apiUrl)).resolves.toHaveLength(0);
     });
 });
 
 describe('createIdObject', () => {
     beforeEach(() => {
-        process.env = {
-            GITHUB_TOKEN: 'mockToken',
-            TIMEZONE: 'America/Los_Angeles',
-            CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
-            CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
-            GITHUB_IMPORTANT_EVENTS:
-                'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent'
-        };
+        process.env = testEnv;
     });
     it('should return a properly formatted id object', () => {
-        const row = [123, 456, 789];
+        const row = ['danisyellis', 'octocat', 'user-01'];
         const importantEvents = [
-            { event: 1 },
-            { event: 2 },
-            { event: 3 }
+            { type: 'ImportantEvent1' },
+            { type: 'ImportantEvent2' },
+            { type: 'ImportantEvent3' }
         ];
         expect(createIdObject(row, importantEvents)).toEqual({
-            alternateId: row[1],
-            github: row[0],
+            alternateId: row[process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID],
+            github: row[process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID],
             contributions: importantEvents
         });
     });
@@ -96,14 +91,7 @@ describe('createIdObject', () => {
 
 describe('getOrThrow', () => {
     beforeEach(() => {
-        process.env = {
-            GITHUB_TOKEN: 'mockToken',
-            TIMEZONE: 'America/Los_Angeles',
-            CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
-            CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
-            GITHUB_IMPORTANT_EVENTS:
-                'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent'
-        };
+        process.env = testEnv;
     });
     it('should throw an error if the configuration does not exist in the environment', () => {
         expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
