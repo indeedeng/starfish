@@ -19,6 +19,9 @@ const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
 const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
+const minimumNumberOfContributions = process.env.MINIMUM_NUMBER_OF_CONTRIBUTIONS
+    ? process.env.MINIMUM_NUMBER_OF_CONTRIBUTIONS
+    : 1;
 
 //Helper Functions
 function parseDatesFromArgv() {
@@ -99,13 +102,17 @@ function createIdObject(row, importantEvents) {
 function filterContributorByTime(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
+    let numberOfValidContributions = 0;
 
     const timeWindow = moment.range([startMoment, endMoment]);
     for (let i = 0; i < idObject.contributions.length; i++) {
         const momentOfContribution = moment.utc(idObject.contributions[i].created_at);
         if (timeWindow.contains(momentOfContribution)) {
-            console.log(idObject.alternateId);
-            break;
+            numberOfValidContributions++;
+            if (numberOfValidContributions >= minimumNumberOfContributions) {
+                console.log(idObject.alternateId);
+                break;
+            }
         }
     }
 }

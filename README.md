@@ -98,6 +98,7 @@ Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 
 
 For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0 and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
+- By default, Starfish will return the name of anyone who has at least 1 qualifying contribution within the time period. If you want to make that a different number, you can put a MINIMUM_NUMBER_OF_CONTRIBUTIONS into your .env
 
 ### To run:
 In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`  
