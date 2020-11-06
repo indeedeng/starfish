@@ -160,7 +160,11 @@ process.stdin.on('end', () => {
             continue;
         }
         arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
-        fetchUserDataAndAddToCSV(currentRow, moments);
+
+        const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
+        setTimeout(() => {
+            fetchUserDataAndAddToCSV(currentRow, moments);
+        }, delayToAvoidOverwhelmingMacNetworkStack);
     }
 });
 
