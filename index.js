@@ -50,8 +50,8 @@ function fetchPageOfDataAndFilter(url) {
         fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: `Basic ${githubToken}`
-            }
+                Authorization: `Basic ${githubToken}`,
+            },
         })
             .then((response) => {
                 if (!response.ok) {
@@ -92,7 +92,7 @@ function createIdObject(row, importantEvents) {
     return {
         alternateId: row[alternateIdColumnNumber],
         github: row[githubIdColumnNumber],
-        contributions: importantEvents
+        contributions: importantEvents,
     };
 }
 
@@ -160,7 +160,11 @@ process.stdin.on('end', () => {
             continue;
         }
         arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
-        fetchUserDataAndAddToCSV(currentRow, moments);
+
+        const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
+        setTimeout(() => {
+            fetchUserDataAndAddToCSV(currentRow, moments);
+        }, delayToAvoidOverwhelmingMacNetworkStack);
     }
 });
 
@@ -171,5 +175,5 @@ module.exports = {
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow,
-    parseDatesFromArgv
+    parseDatesFromArgv,
 };
