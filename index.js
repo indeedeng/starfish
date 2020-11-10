@@ -97,7 +97,7 @@ function createIdObject(row, importantEvents) {
     };
 }
 
-function filterContributorByTime(idObject, moments) {
+function didTheyQualify(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
     let numberOfValidContributions = 0;
@@ -109,8 +109,7 @@ function filterContributorByTime(idObject, moments) {
             numberOfValidContributions++;
         }
         if (numberOfValidContributions >= minimumNumberOfContributions) {
-            console.log(idObject.alternateId);
-            break;
+            return true;
         }
     }
 }
@@ -119,7 +118,9 @@ function fetchUserDataAndAddToCSV(row, moments) {
     fetchPageOfDataAndFilter(url)
         .then((importantEvents) => {
             const idObject = createIdObject(row, importantEvents);
-            filterContributorByTime(idObject, moments);
+            if (didTheyQualify(idObject, moments)) {
+                console.log(idObject.alternateId);
+            }
         })
         .catch((err) => {
             console.log('error', err);
@@ -173,7 +174,7 @@ module.exports = {
     createIdObject,
     fetchPageOfDataAndFilter,
     fetchUserDataAndAddToCSV,
-    filterContributorByTime,
+    didTheyQualify,
     filterResponseForImportantEvents,
     getOrThrow,
     parseDatesFromArgv
