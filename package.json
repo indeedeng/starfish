@@ -26,6 +26,7 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^26.5.3",
+    "nock": "^13.0.4",
     "prettier": "^2.1.2"
   },
   "jest": {
@@ -35,6 +36,9 @@
       "!**/node_modules/**",
       "!**/coverage/**"
     ],
-    "coverageDirectory": "<rootDir>/coverage"
+    "coverageDirectory": "<rootDir>/coverage",
+    "setupFiles": [
+      "<rootDir>/.jest/setEnvVars.js"
+    ]
   }
 }
