@@ -51,8 +51,8 @@ function fetchPageOfDataAndFilter(url) {
         fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: `Basic ${githubToken}`
-            }
+                Authorization: `Basic ${githubToken}`,
+            },
         })
             .then((response) => {
                 if (!response.ok) {
@@ -93,7 +93,7 @@ function createIdObject(row, importantEvents) {
     return {
         alternateId: row[alternateIdColumnNumber],
         github: row[githubIdColumnNumber],
-        contributions: importantEvents
+        contributions: importantEvents,
     };
 }
 
@@ -177,5 +177,5 @@ module.exports = {
     didTheyQualify,
     filterResponseForImportantEvents,
     getOrThrow,
-    parseDatesFromArgv
+    parseDatesFromArgv,
 };

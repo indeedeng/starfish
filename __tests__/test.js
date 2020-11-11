@@ -25,7 +25,7 @@ describe('getOrThrow', () => {
             CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
             CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
             GITHUB_IMPORTANT_EVENTS:
-                'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent'
+                'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent',
         };
     });
     it('should throw an error if the configuration does not exist in the environment', () => {
