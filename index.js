@@ -55,7 +55,7 @@ function fetchPageOfDataAndFilter(url) {
         })
             .then((response) => {
                 if (!response.ok) {
-                    console.log(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
+                    console.error(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
                     throw new Error(response.statusText);
                 }
                 let parsed = parse(response.headers.get('link'));
@@ -71,7 +71,7 @@ function fetchPageOfDataAndFilter(url) {
                                     return resolve(importantEvents.concat(newEvents));
                                 })
                                 .catch((err) => {
-                                    console.log(
+                                    console.error(
                                         `Error fetching page of data for ${parsed.next.url}: ${err}`
                                     );
                                     throw err;
@@ -81,10 +81,10 @@ function fetchPageOfDataAndFilter(url) {
                         }
                     })
                     .catch((err) => {
-                        console.log('Error turning response into JSON:', err);
+                        console.error('Error turning response into JSON:', err);
                     });
             })
-            .catch((err) => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
+            .catch((err) => console.error('ERROR GRABBING INFO FROM GITHUB!', err));
     });
 }
 
@@ -117,7 +117,7 @@ function fetchUserDataAndAddToCSV(row, moments) {
             filterContributorByTime(idObject, moments);
         })
         .catch((err) => {
-            console.log('error', err);
+            console.error('error', err);
         });
 }
 
