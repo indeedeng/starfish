@@ -2,7 +2,7 @@
 [![GitHub version](https://badge.fury.io/gh/indeedeng%2Fstarfish.svg)](https://badge.fury.io/gh/indeedeng%2Fstarfish) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?style=flat-square) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 
-## *Because Your Open Source Contributors Are Stars!*
+## *Because Your Open Source Contributors Are Stars!!!*
 
 <p align="left"> <img src="img/Indeed_OS_starfish_logo.png" alt="Starfish logo - Light blue circle with gold starfish in the middle and the link to github directory in the top right corner (github.com/indeedeng/starfish) " width="244" height="244" title = "Starfish logo"/> </p>
 
