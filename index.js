@@ -140,31 +140,24 @@ process.stdin.on('end', () => {
 
     process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
 
-    var datagrid = parser.parse(csvData).data;
-    let arrayOfGithubIds = [];
-    //detect duplicates, add user events, and send the the csv to stdout
-    for (let i = 1; i < datagrid.length; i++) {
-        let currentRow = datagrid[i];
-        let duplicateGithubId = false;
-        for (let j = 0; j < arrayOfGithubIds.length; j++) {
-            if (arrayOfGithubIds[j] === currentRow[githubIdColumnNumber]) {
-                console.log(
-                    'Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:',
-                    currentRow[githubIdColumnNumber]
-                );
-                duplicateGithubId = true;
-                break;
-            }
-        }
-        if (duplicateGithubId === true) {
-            continue;
-        }
-        arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
+    const datagrid = parser.parse(csvData).data;
+    const uniqueIds = new Set();
 
-        const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
-        setTimeout(() => {
-            fetchUserDataAndAddToCSV(currentRow, moments);
-        }, delayToAvoidOverwhelmingMacNetworkStack);
+    for (let i = 1; i < datagrid.length; i++) {
+        const currentRow = datagrid[i];
+        const currentId = currentRow[githubIdColumnNumber];
+        if (uniqueIds.has(currentId)) {
+            console.log(
+                `Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV: ${currentId}`
+            );
+        } else {
+            uniqueIds.add(currentId);
+
+            const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
+            setTimeout(() => {
+                fetchUserDataAndAddToCSV(currentRow, moments);
+            }, delayToAvoidOverwhelmingMacNetworkStack);
+        }
     }
 });
 
