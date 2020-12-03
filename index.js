@@ -89,7 +89,7 @@ function fetchPageOfDataAndFilter(url) {
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
                         importantEvents = importantEvents.concat(filteredForImportant);
-                        if (/^true|True$/.test(process.env.IGNORE_OWN_EVENTS)) {
+                        if (/^true|True$/.test(process.env.IGNORE_SELFOWNED_EVENTS)) {
                             importantEvents = filterForAuthorAssociation(importantEvents);
                         }
                         if (parsed && parsed.next && parsed.next.url) {
