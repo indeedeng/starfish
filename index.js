@@ -19,6 +19,7 @@ const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
 const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
+const ignoreSelfOwnedEvents = getOrThrow('IGNORE_SELFOWNED_EVENTS');
 
 //Helper Functions
 function parseDatesFromArgv() {
@@ -45,28 +46,34 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
-function filterForAuthorAssociation(events = [], association = 'OWNER') {
-    return events.reduce(function (acc, event) {
+function filteredEventType(eventType, association = 'OWNER') {
+    if (eventType.author_association !== association) {
+        const events = [eventType];
+
+        return events;
+    }
+
+    return [];
+}
+
+function filterOutByAuthorAssociation(events) {
+    const filteredEvents = events.filter((event) => {
         switch (event.type) {
             case 'PullRequestEvent':
             case 'PullRequestReviewEvent':
-                return event.payload.pull_request.author_association !== association
-                    ? [...acc, event]
-                    : acc;
+                return filteredEventType(event.payload.pull_request);
             case 'CommitCommentEvent':
             case 'IssueCommentEvent':
             case 'PullRequestReviewCommentEvent':
-                return event.payload.comment.author_association !== association
-                    ? [...acc, event]
-                    : acc;
+                return filteredEventType(event.payload.comment);
             case 'IssuesEvent':
-                return event.payload.issue.author_association !== association
-                    ? [...acc, event]
-                    : acc;
+                return filteredEventType(event.payload.issue);
             default:
-                return acc;
+                return [];
         }
-    }, []);
+    });
+
+    return filteredEvents;
 }
 
 function fetchPageOfDataAndFilter(url) {
@@ -88,9 +95,11 @@ function fetchPageOfDataAndFilter(url) {
                     .json()
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
+
                         importantEvents = importantEvents.concat(filteredForImportant);
-                        if (/^true|True$/.test(process.env.IGNORE_SELFOWNED_EVENTS)) {
-                            importantEvents = filterForAuthorAssociation(importantEvents);
+
+                        if (ignoreSelfOwnedEvents.toLowerCase() === 'true') {
+                            importantEvents = filterOutByAuthorAssociation(importantEvents);
                         }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)
