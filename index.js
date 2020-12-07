@@ -27,7 +27,6 @@ function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
 
     return DateTime.fromISO(isoDateTimeString, {
         zone,
-        setZone: true,
     });
 }
 
