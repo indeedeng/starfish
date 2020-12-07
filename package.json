@@ -4,7 +4,8 @@
   "description": "- parse a CSV of employee GitHub Ids - use those Ids and the Github REST API to check for open source contributions on GitHub that happened between 2 different dates - make a new text file with the GitHub Ids of those employees",
   "main": "contributors.js",
   "scripts": {
-    "test": "mocha ./__tests__/test.js",
+    "test": "jest test",
+    "test:coverage": "jest test --coverage",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
@@ -20,11 +21,24 @@
     "parse-link-header": "^1.0.1"
   },
   "devDependencies": {
-    "chai": "^4.2.0",
     "eslint": "^7.10.0",
     "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
-    "mocha": "^8.1.3",
+    "jest": "^26.5.3",
+    "nock": "^13.0.4",
     "prettier": "^2.1.2"
+  },
+  "jest": {
+    "verbose": true,
+    "collectCoverageFrom": [
+      "**/*.{js,jsx}",
+      "!**/node_modules/**",
+      "!**/coverage/**"
+    ],
+    "coverageDirectory": "<rootDir>/coverage",
+    "setupFiles": [
+      "<rootDir>/.jest/setEnvVars.js"
+    ]
   }
 }

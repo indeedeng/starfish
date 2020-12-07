@@ -4,10 +4,9 @@
 
 ## _Because Your Open Source Contributors Are Stars!_
 
-<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
+<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" alt="Starfish logo - Light blue circle with gold starfish in the middle and the link to github directory in the top right corner (github.com/indeedeng/starfish) " width="244" height="244" title = "Starfish logo"/> </p>
 
 <br>
-
 
 ## This is a tool to:
 
@@ -114,6 +113,7 @@ Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile}
 
 We've just started writing tests - there's one so far. You can run it with the command `npm test`.
 
+
 ### Updating
 
 From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin master. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
@@ -143,7 +143,7 @@ Starfish's file structure is relatively simple - you won't need to touch most of
 
 1. Make sure the code runs and gives the output you expect.
 1. Run the linter `npm run lint` and/or `npm run lint-fix` and make sure everything passes.
-1. Run the tests `npm test` and make sure everything passes.
+1. Run the tests `npm test` and make sure everything passes. (Our test suite is still a work in progress and doesn't cover everything yet, but we're working on it. If your change adds new functionality, it would be great if you added a test for it too.)
 1. Once you've pushed your commits to github, make sure that your branch can be auto-merged (there are no merge conflicts).
 
 Thanks!
@@ -162,4 +162,4 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 
 -   feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
-<p align="center"> <img src="img/OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
+<p align="center"> <img src="img/OS-gold-starfish-banner.png" alt="Banner of five cartoony gold-colored starfishes arranged like Olympic circles, but with some spacing between, on a background of water" width="596" height="255" title = "Gold Starfish Banner"/> </p>

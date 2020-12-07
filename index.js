@@ -84,7 +84,7 @@ function fetchPageOfDataAndFilter(url) {
         })
             .then((response) => {
                 if (!response.ok) {
-                    console.log(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
+                    console.error(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
                     throw new Error(response.statusText);
                 }
                 let parsed = parse(response.headers.get('link'));
@@ -105,7 +105,7 @@ function fetchPageOfDataAndFilter(url) {
                                     return resolve(importantEvents.concat(newEvents));
                                 })
                                 .catch((err) => {
-                                    console.log(
+                                    console.error(
                                         `Error fetching page of data for ${parsed.next.url}: ${err}`
                                     );
                                     throw err;
@@ -115,10 +115,10 @@ function fetchPageOfDataAndFilter(url) {
                         }
                     })
                     .catch((err) => {
-                        console.log('Error turning response into JSON:', err);
+                        console.error('Error turning response into JSON:', err);
                     });
             })
-            .catch((err) => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
+            .catch((err) => console.error('ERROR GRABBING INFO FROM GITHUB!', err));
     });
 }
 
@@ -151,7 +151,7 @@ function fetchUserDataAndAddToCSV(row, moments) {
             filterContributorByTime(idObject, moments);
         })
         .catch((err) => {
-            console.log('error', err);
+            console.error('error', err);
         });
 }
 
@@ -174,27 +174,24 @@ process.stdin.on('end', () => {
 
     process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
 
-    var datagrid = parser.parse(csvData).data;
-    let arrayOfGithubIds = [];
-    //detect duplicates, add user events, and send the the csv to stdout
+    const datagrid = parser.parse(csvData).data;
+    const uniqueIds = new Set();
+
     for (let i = 1; i < datagrid.length; i++) {
-        let currentRow = datagrid[i];
-        let duplicateGithubId = false;
-        for (let j = 0; j < arrayOfGithubIds.length; j++) {
-            if (arrayOfGithubIds[j] === currentRow[githubIdColumnNumber]) {
-                console.log(
-                    'Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:',
-                    currentRow[githubIdColumnNumber]
-                );
-                duplicateGithubId = true;
-                break;
-            }
+        const currentRow = datagrid[i];
+        const currentId = currentRow[githubIdColumnNumber];
+        if (uniqueIds.has(currentId)) {
+            console.log(
+                `Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV: ${currentId}`
+            );
+        } else {
+            uniqueIds.add(currentId);
+
+            const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
+            setTimeout(() => {
+                fetchUserDataAndAddToCSV(currentRow, moments);
+            }, delayToAvoidOverwhelmingMacNetworkStack);
         }
-        if (duplicateGithubId === true) {
-            continue;
-        }
-        arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
-        fetchUserDataAndAddToCSV(currentRow, moments);
     }
 });
 
