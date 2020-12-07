@@ -34,7 +34,7 @@ function parseDatesFromArgv() {
         setZone: true,
     });
 
-    return [startMoment.toISO(), endMoment.toISO()];
+    return [startMoment, endMoment];
 }
 
 function filterResponseForImportantEvents(allEventsFromFetch) {
@@ -101,8 +101,8 @@ function createIdObject(row, importantEvents) {
 }
 
 function filterContributorByTime(idObject, moments) {
-    const startMoment = DateTime.fromISO(moments[0]);
-    const endMoment = DateTime.fromISO(moments[1]);
+    const startMoment = moments[0];
+    const endMoment = moments[1];
 
     for (let i = 0; i < idObject.contributions.length; i++) {
         const momentOfContribution = DateTime.fromISO(idObject.contributions[i].created_at, {
@@ -149,9 +149,7 @@ process.stdin.on('end', () => {
     const moments = parseDatesFromArgv();
 
     process.stdout.write(
-        `Users that contributed between ${DateTime.fromISO(
-            moments[0]
-        ).toHTTP()} and ${DateTime.fromISO(moments[1]).toHTTP()} \n`
+        `Users that contributed between ${moments[0].toHTTP()} and ${moments[1].toHTTP()} \n`
     );
 
     var datagrid = parser.parse(csvData).data;
