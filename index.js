@@ -1,6 +1,6 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const { DateTime } = require('luxon');
+const { DateTime, IANAZone } = require('luxon');
 const parse = require('parse-link-header');
 
 function getOrThrow(configField) {
@@ -19,20 +19,25 @@ const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID')
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
 
 //Helper Functions
+function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
+    if (!IANAZone.isValidZone(timeZoneIdentifier)) {
+        throw new Error(`Unknown time zone ${timeZoneIdentifier}`);
+    }
+    const zone = IANAZone.create(timeZoneIdentifier);
+
+    return DateTime.fromISO(isoDateTimeString, {
+        zone,
+        setZone: true,
+    });
+}
+
 function parseDatesFromArgv() {
     const timeZone = getOrThrow('TIMEZONE');
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const startMoment = DateTime.fromISO(startDate, {
-        zone: timeZone || 'utc',
-        setZone: true,
-    });
-
-    const endMoment = DateTime.fromISO(endDate, {
-        zone: timeZone || 'utc',
-        setZone: true,
-    });
+    const startMoment = createLuxonMomentFromIso(startDate, timeZone);
+    const endMoment = createLuxonMomentFromIso(endDate, timeZone);
 
     return [startMoment, endMoment];
 }
@@ -105,10 +110,10 @@ function filterContributorByTime(idObject, moments) {
     const endMoment = moments[1];
 
     for (let i = 0; i < idObject.contributions.length; i++) {
-        const momentOfContribution = DateTime.fromISO(idObject.contributions[i].created_at, {
-            zone: 'utc',
-            setZone: true,
-        });
+        const momentOfContribution = createLuxonMomentFromIso(
+            idObject.contributions[i].created_at,
+            'Etc/UTC'
+        );
 
         if (
             momentOfContribution.startOf('day') >= startMoment.startOf('day') &&
