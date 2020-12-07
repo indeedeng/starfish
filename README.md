@@ -4,24 +4,8 @@
 
 ## *Because Your Open Source Contributors Are Stars!*
 
-<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" width="244" height="244" title = "Starfish logo"/> </p>
+<p align="left"> <img src="img/Indeed_OS_starfish_logo.png" alt="Starfish logo - Light blue circle with gold starfish in the middle and the link to github directory in the top right corner (github.com/indeedeng/starfish) " width="244" height="244" title = "Starfish logo"/> </p>
 
-<br>
-
-## Indeed + Hacktoberfest
-
-In addition to the main Hacktoberfest event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
-see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
-
-Note: If you'd like to contribute, please either work on an issue labeled Hacktoberfest or create an issue to talk about the change you'd like to make. Spammy pull requests just to get swag are against the spirit of Hacktoberfest and won't be accepted. Remember, the purpose of Hacktoberfest is to support open source projects, not to create extra work for open source maintainers. If you're new to open source, please don't let this note discourge you though- we're happy to work with people who want to submit PRs in good faith, even if it's a small change or you're still learning :-)
-
-### Hacktoberfest Open Office Hours
-Join us for open office hours to talk about issues, propose ideas, help review code, and more.
-
-| Date         | Time           | Register  |
-| ------------- |:-------------:| -----:|
-| Wednesday, October 14th | 4PM-5PM PT | [register](https://organize.mlh.io/participants/events/5666-virtual-starfish-office-hours) |
-| Monday, October 26th | 2PM-3PM PT | [register](https://organize.mlh.io/participants/events/5668-virtual-starfish-office-hours) |
 <br>
 
 ## This is a tool to:
@@ -112,9 +96,6 @@ In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2
 
 Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile} | node index.js > {nameOfFileToCreate}.txt {date1} {date2}`
 
-### Tests
-We've just started writing tests - there's one so far. You can run it with the command `npm test`.
-
 ### Updating
 From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin master. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
 
@@ -143,7 +124,7 @@ Starfish's file structure is relatively simple - you won't need to touch most of
 
 1. Make sure the code runs and gives the output you expect.
 1. Run the linter `npm run lint` and/or `npm run lint-fix` and make sure everything passes.
-1. Run the tests `npm test` and make sure everything passes.
+1. Run the tests `npm test` and make sure everything passes. (Our test suite is still a work in progress and doesn't cover everything yet, but we're working on it. If your change adds new functionality, it would be great if you added a test for it too.)
 1. Once you've pushed your commits to github, make sure that your branch can be auto-merged (there are no merge conflicts).
 
 Thanks!
@@ -159,4 +140,4 @@ Starfish is licensed under the [Apache 2 License](LICENSE).
 - feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
 
 
-<p align="center"> <img src="img/OS-gold-starfish-banner.png" width="596" height="255" title = "Gold Starfish Banner"/> </p>
+<p align="center"> <img src="img/OS-gold-starfish-banner.png" alt="Banner of five cartoony gold-colored starfishes arranged like Olympic circles, but with some spacing between, on a background of water" width="596" height="255" title = "Gold Starfish Banner"/> </p>
