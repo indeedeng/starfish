@@ -8,23 +8,6 @@
 
 <br>
 
-## Indeed + Hacktoberfest
-
-In addition to the main Hacktoberfest event, [Indeed.com](https://indeed.com) is sponsoring additional activities --
-see [Indeed Hacktoberfest 2020](https://engineering.indeedblog.com/indeed-hacktoberfest-2020/) for details
-
-Note: If you'd like to contribute, please either work on an issue labeled Hacktoberfest or create an issue to talk about the change you'd like to make. Spammy pull requests just to get swag are against the spirit of Hacktoberfest and won't be accepted. Remember, the purpose of Hacktoberfest is to support open source projects, not to create extra work for open source maintainers. If you're new to open source, please don't let this note discourge you though- we're happy to work with people who want to submit PRs in good faith, even if it's a small change or you're still learning :-)
-
-### Hacktoberfest Open Office Hours
-
-Join us for open office hours to talk about issues, propose ideas, help review code, and more.
-
-| Date                    |    Time    |                                                                                   Register |
-| ----------------------- | :--------: | -----------------------------------------------------------------------------------------: |
-| Wednesday, October 14th | 4PM-5PM PT | [register](https://organize.mlh.io/participants/events/5666-virtual-starfish-office-hours) |
-| Monday, October 26th    | 2PM-3PM PT | [register](https://organize.mlh.io/participants/events/5668-virtual-starfish-office-hours) |
-
-<br>
 
 ## This is a tool to:
 
@@ -116,7 +99,7 @@ For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) 
 
 -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0 and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
 
--   To filter out events for which the author is the OWNER of the repository, simply set the IGNORE_SELFOWNED_EVENTS environment variable to true or True otherwise leave as IGNORE_SELFOWNED_EVENTS = "".
+-   To filter out events for which the author is the OWNER of the repository, simply set the IGNORE_SELFOWNED_EVENTS environment variable to "true", otherwise leave as IGNORE_SELFOWNED_EVENTS = "".
 
 ### To run:
 

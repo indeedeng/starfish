@@ -46,28 +46,26 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
-function filteredEventType(eventType, association = 'OWNER') {
+function shouldIncludeEvent(eventType, association = 'OWNER') {
     if (eventType.author_association !== association) {
-        const events = [eventType];
-
-        return events;
+        return true;
     }
 
-    return [];
+    return false;
 }
 
-function filterOutByAuthorAssociation(events) {
+function filterByAuthorAssociation(events) {
     const filteredEvents = events.filter((event) => {
         switch (event.type) {
             case 'PullRequestEvent':
             case 'PullRequestReviewEvent':
-                return filteredEventType(event.payload.pull_request);
+                return shouldIncludeEvent(event.payload.pull_request);
             case 'CommitCommentEvent':
             case 'IssueCommentEvent':
             case 'PullRequestReviewCommentEvent':
-                return filteredEventType(event.payload.comment);
+                return shouldIncludeEvent(event.payload.comment);
             case 'IssuesEvent':
-                return filteredEventType(event.payload.issue);
+                return shouldIncludeEvent(event.payload.issue);
             default:
                 return [];
         }
@@ -99,7 +97,7 @@ function fetchPageOfDataAndFilter(url) {
                         importantEvents = importantEvents.concat(filteredForImportant);
 
                         if (ignoreSelfOwnedEvents.toLowerCase() === 'true') {
-                            importantEvents = filterOutByAuthorAssociation(importantEvents);
+                            importantEvents = filterByAuthorAssociation(importantEvents);
                         }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)
