@@ -46,9 +46,8 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
-function shouldIncludeEvent(eventType, association = 'OWNER') {
-    const isAuthorAlsoTheOwner = eventType.author_association !== association;
-
+function shouldIncludeEvent(eventType) {
+    const isAuthorAlsoTheOwner = eventType.author_association !== 'OWNER';
     return !isAuthorAlsoTheOwner;
 }
 
