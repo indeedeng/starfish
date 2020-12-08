@@ -66,8 +66,8 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 - Paste the access token into GITHUB_TOKEN
 - CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID should match the columns in the input file.
   - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
-  - For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`
-  - If you choose not to use an alternate id, you can put the same column number in both fields
+  - For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
+  - If you choose not to use an alternate id, you can put the same value in both fields
 - TIMEZONE allows you to specify how Starfish should assign issues to days. The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
 
 #### Time zones
