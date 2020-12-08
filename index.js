@@ -20,7 +20,7 @@ let githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS'
 
 //Helper Functions
 function createTimeZone(timeZoneIdentifier) {
-    if (timeZoneIdentifier === '') {
+    if (!timeZoneIdentifier || timeZoneIdentifier === '') {
         return IANAZone.create('UTC');
     }
     if (timeZoneIdentifier === 'local') {
@@ -46,7 +46,7 @@ function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
 }
 
 function parseDatesFromArgv() {
-    const timeZone = getOrThrowIfMissingOrEmpty('TIMEZONE');
+    const timeZone = process.env.TIMEZONE;
     console.log(`Using time zone: ${createTimeZone(timeZone).name}`);
     const startDate = process.argv[2];
     const endDate = process.argv[3];
