@@ -19,7 +19,13 @@ const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
 const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
-const ignoreSelfOwnedEvents = getOrThrow('IGNORE_SELFOWNED_EVENTS');
+
+const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
+console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
+if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
+    console.error(`IGNORE_SELFOWNED_EVENTS must be "true" or "false"`);
+    process.exit(1);
+}
 
 //Helper Functions
 function parseDatesFromArgv() {
@@ -93,7 +99,7 @@ function fetchPageOfDataAndFilter(url) {
 
                         importantEvents = importantEvents.concat(filteredForImportant);
 
-                        if (ignoreSelfOwnedEvents.toLowerCase() === 'true') {
+                        if (ignoreSelfOwnedEvents === 'true') {
                             importantEvents = filterByAuthorAssociation(importantEvents);
                         }
                         if (parsed && parsed.next && parsed.next.url) {
