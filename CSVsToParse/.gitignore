@@ -1,2 +1,5 @@
-# This wildcard filter pattern will ignore all files in this directory in order to prevent accidental commits of sensitive information.
-*
+.env
+testResult.txt
+node_modules
+.idea
+coverage
