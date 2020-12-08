@@ -62,17 +62,23 @@ You may want to store multiple CSV files in a folder that's inside of Starfish, 
 Log in to GitHub and [register a new personal access token](https://github.com/settings/tokens/new) (you can find this under Profile > Settings > Developer Settings > Personal access token > "Generate new token"). Fill the "Note" field with e.g. "Starfish" or another description. You don't need to select any scopes. (By default, a token is allowed read-only access to public information, and that's all Starfish needs). Click "Generate token". Copy the access token and store it as you will need it for the next step.
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
+
 - Paste the access token into GITHUB_TOKEN
-- TIMEZONE allows you to specify when your day begins and ends. This must be one of the following:
-    - An empty string `''` which means UTC (aka GMT)
-    - The word `'local'`, which also means the local time zone
-    - a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If you use this option, it would normally be the time zone of the organization's main office, such as "America / Los_Angeles".
+- CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID should match the columns in the input file.
+  - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
+  - For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`
+  - If you choose not to use an alternate id, you can put the same column number in both fields
+- TIMEZONE allows you to specify when your day begins and ends. The default is UTC. See the "Time zones" section for details.
 
-Luxon shows some examples of possible entries, according to this table:
+#### Time zones
 
-![image](https://imgur.com/KT5jR9T.png)
+The TIMEZONE value must be one of the following:
 
-If for some reason you want the time to be a constant offset from UTC, you can say : "UTC+6", to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice. 
+- An empty string `''` which means UTC (aka GMT), and which is the default
+- The word `'local'`, which means the local time zone
+- a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If you use this option, it would normally be the time zone of the organization's main office, such as `"America/Los_Angeles"`.
+
+If for some reason you want the time to be a constant offset from UTC, you can say : `"Etc/GMT+6"`, to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This behavior is defined by IANA, not by us.
 
 For example:
 ``` .env
@@ -88,8 +94,7 @@ Users that contributed between Tue Mar 31 2020 18:00:00 GMT-0600 and Tue Apr 07 
 ```
 
 
-For further reading visit Specifying a zone at [luxon](https://moment.github.io/luxon/docs/manual/zones) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
-- The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0 and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
+For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
 
 ### To run:
 In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`  
