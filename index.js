@@ -64,7 +64,7 @@ function filterByAuthorAssociation(events) {
             case 'IssuesEvent':
                 return shouldIncludeEvent(event.payload.issue);
             default:
-                return [];
+                return false;
         }
     });
 
