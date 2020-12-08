@@ -63,8 +63,10 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 - Paste the access token into GITHUB_TOKEN
-- TIMEZONE allows you to specify when your day begins and ends. This must be a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). TIt would normally be "local" or the time zone of the organization's main office, such as "America / Los_Angeles", or even "utc" for the system's local zone. 
-
+- TIMEZONE allows you to specify when your day begins and ends. This must be one of the following:
+    - An empty string `''` which means UTC (aka GMT)
+    - The word `'local'`, which also means the local time zone
+    - a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If you use this option, it would normally be the time zone of the organization's main office, such as "America / Los_Angeles".
 
 Luxon shows some examples of possible entries, according to this table:
 
@@ -72,9 +74,9 @@ Luxon shows some examples of possible entries, according to this table:
 
 If for some reason you want the time to be a constant offset from UTC, you can say : "UTC+6", to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice. 
 
-For example: 
+For example:
 ``` .env
-TIMEZONE=“”
+TIMEZONE=“Etc/GMT+6”
 ```
 
 would output:

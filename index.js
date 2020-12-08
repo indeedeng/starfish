@@ -1,11 +1,11 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const { DateTime, IANAZone } = require('luxon');
+const { DateTime, IANAZone, LocalZone } = require('luxon');
 const parse = require('parse-link-header');
 
 function getOrThrow(configField) {
     const value = process.env[configField];
-    if (!value) {
+    if (!value && value !== '') {
         throw new Error(
             `${configField} is required. Please create a .env file, based off of the .env.template file, and ensure that all variables have values (no empty quotes)`
         );
@@ -19,19 +19,35 @@ const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID')
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
 
 //Helper Functions
-function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
-    if (!IANAZone.isValidZone(timeZoneIdentifier)) {
-        throw new Error(`Unknown time zone ${timeZoneIdentifier}`);
+function createTimeZone(timeZoneIdentifier) {
+    if (timeZoneIdentifier === '') {
+        return IANAZone.create('UTC');
     }
-    const zone = IANAZone.create(timeZoneIdentifier);
+    if (timeZoneIdentifier === 'local') {
+        return LocalZone.instance;
+    }
+    if (IANAZone.isValidZone(timeZoneIdentifier)) {
+        return IANAZone.create(timeZoneIdentifier);
+    }
+    console.error(
+        `Unknown time zone "${timeZoneIdentifier}". Fix the TIMEZONE entry of the .env file.`
+    );
+    process.exit(1);
+}
 
-    return DateTime.fromISO(isoDateTimeString, {
+function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
+    const zone = createTimeZone(timeZoneIdentifier);
+
+    const moment = DateTime.fromISO(isoDateTimeString, {
         zone,
     });
+
+    return moment;
 }
 
 function parseDatesFromArgv() {
     const timeZone = getOrThrow('TIMEZONE');
+    console.log(`Using time zone: ${createTimeZone(timeZone).name}`);
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
