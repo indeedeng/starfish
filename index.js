@@ -3,9 +3,9 @@ const fetch = require('node-fetch');
 const { DateTime, IANAZone, LocalZone } = require('luxon');
 const parse = require('parse-link-header');
 
-function getOrThrow(configField) {
+function getOrThrowIfMissingOrEmpty(configField) {
     const value = process.env[configField];
-    if (!value && value !== '') {
+    if (!value) {
         throw new Error(
             `${configField} is required. Please create a .env file, based off of the .env.template file, and ensure that all variables have values (no empty quotes)`
         );
@@ -13,10 +13,10 @@ function getOrThrow(configField) {
 
     return value;
 }
-const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
-const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
-const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
-let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
+const githubToken = Buffer.from(getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).toString('base64');
+const githubIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
+const alternateIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
+let githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS').split(',');
 
 //Helper Functions
 function createTimeZone(timeZoneIdentifier) {
@@ -46,7 +46,7 @@ function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
 }
 
 function parseDatesFromArgv() {
-    const timeZone = getOrThrow('TIMEZONE');
+    const timeZone = getOrThrowIfMissingOrEmpty('TIMEZONE');
     console.log(`Using time zone: ${createTimeZone(timeZone).name}`);
     const startDate = process.argv[2];
     const endDate = process.argv[3];
@@ -206,6 +206,6 @@ module.exports = {
     fetchUserDataAndAddToCSV,
     filterContributorByTime,
     filterResponseForImportantEvents,
-    getOrThrow,
+    getOrThrow: getOrThrowIfMissingOrEmpty,
     parseDatesFromArgv,
 };
