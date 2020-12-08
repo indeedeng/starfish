@@ -68,7 +68,7 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
   - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
   - For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`
   - If you choose not to use an alternate id, you can put the same column number in both fields
-- TIMEZONE allows you to specify when your day begins and ends. The default is UTC. See the "Time zones" section for details.
+- TIMEZONE allows you to specify how Starfish should assign issues to days. The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
 
 #### Time zones
 
@@ -90,11 +90,10 @@ would output:
 
 ``` 
 
-Users that contributed between Tue Mar 31 2020 18:00:00 GMT-0600 and Tue Apr 07 2020 18:00:00 GMT-0600 
+Users that contributed between Tue, 01 Dec 2020 06:00:00 GMT and Tue, 15 Dec 2020 06:00:00 GMT 
 ```
 
-
-For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).
+For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 ### To run:
 In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`  
