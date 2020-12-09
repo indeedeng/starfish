@@ -23,7 +23,7 @@ let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
 if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
-    console.error(`IGNORE_SELFOWNED_EVENTS must be "true" or "false"`);
+    console.error('IGNORE_SELFOWNED_EVENTS must be "true" or "false"');
     process.exit(1);
 }
 
@@ -45,12 +45,11 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     for (let i = 0; i < allEventsFromFetch.length; i++) {
         const event = allEventsFromFetch[i];
         const type = event.type;
-        const typeWithAction = `${event.type}.${event.payload.action}`;
+        const typeWithAction = `${type}.${event.payload.action}`;
         if (
-        githubImportantEvents.indexOf(type) >= 0 ||
-        githubImportantEvents.indexOf(typeWithAction) >= 0
+            githubImportantEvents.indexOf(type) >= 0 ||
+            githubImportantEvents.indexOf(typeWithAction) >= 0
         ) {
-            
             arrayOfImportantEvents.push(event);
         }
     }
@@ -60,6 +59,7 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
 
 function shouldIncludeEvent(eventType) {
     const isAuthorAlsoTheOwner = eventType.author_association === 'OWNER';
+
     return !isAuthorAlsoTheOwner;
 }
 
