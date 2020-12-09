@@ -105,7 +105,7 @@ would output:
 
 ``` 
 
-Users that contributed between Tue, 01 Dec 2020 06:00:00 GMT and Tue, 15 Dec 2020 06:00:00 GMT 
+Users that contributed between Tue, 01 Dec 2020 06:00:00 GMT and Wed, 16 Dec 2020 05:59:59 GMT 
 ```
 
 For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)

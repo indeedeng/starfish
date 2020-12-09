@@ -58,8 +58,8 @@ function parseDatesFromArgv() {
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const startMoment = createLuxonMomentFromIso(startDate, timeZone);
-    const endMoment = createLuxonMomentFromIso(endDate, timeZone);
+    const startMoment = createLuxonMomentFromIso(startDate, timeZone).startOf('day');
+    const endMoment = createLuxonMomentFromIso(endDate, timeZone).endOf('day');
 
     return [startMoment, endMoment];
 }
