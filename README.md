@@ -96,16 +96,16 @@ The TIMEZONE value must be one of the following:
 If for some reason you want the time to be a constant offset from UTC, you can say : `"Etc/GMT+6"`, to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This behavior is defined by IANA, not by us.
 
 For example:
+
 ``` .env
 TIMEZONE=“Etc/GMT+6”
 ```
 
 would output:
 
+``` txt
 
-``` 
-
-Users that contributed between Tue, 01 Dec 2020 06:00:00 GMT and Wed, 16 Dec 2020 05:59:59 GMT 
+Users that contributed between December 1, 2020, 12:00 AM GMT-6 and December 15, 2020, 11:59 PM GMT-6 
 ```
 
 For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)

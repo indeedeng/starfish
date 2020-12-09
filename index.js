@@ -17,6 +17,7 @@ const githubToken = Buffer.from(getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).toSt
 const githubIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS').split(',');
+const timeZone = process.env.TIMEZONE;
 
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
@@ -53,7 +54,6 @@ function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
 }
 
 function parseDatesFromArgv() {
-    const timeZone = process.env.TIMEZONE;
     console.log(`Using time zone: ${createTimeZone(timeZone).name}`);
     const startDate = process.argv[2];
     const endDate = process.argv[3];
@@ -206,9 +206,11 @@ process.stdin.on('readable', () => {
 process.stdin.on('end', () => {
     const moments = parseDatesFromArgv();
 
-    process.stdout.write(
-        `Users that contributed between ${moments[0].toHTTP()} and ${moments[1].toHTTP()} \n`
-    );
+    const zone = createTimeZone(timeZone);
+
+    const localStart = moments[0].setZone(zone).toLocaleString(DateTime.DATETIME_FULL);
+    const localEnd = moments[1].setZone(zone).toLocaleString(DateTime.DATETIME_FULL);
+    process.stdout.write(`Users that contributed between ${localStart} and ${localEnd} \n`);
 
     const datagrid = parser.parse(csvData).data;
     const uniqueIds = new Set();
