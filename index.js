@@ -21,7 +21,7 @@ let githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS'
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
 if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
-    console.error(`IGNORE_SELFOWNED_EVENTS must be "true" or "false"`);
+    console.error('IGNORE_SELFOWNED_EVENTS must be "true" or "false"');
     process.exit(1);
 }
 
@@ -78,6 +78,7 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
 
 function shouldIncludeEvent(eventType) {
     const isAuthorAlsoTheOwner = eventType.author_association === 'OWNER';
+
     return !isAuthorAlsoTheOwner;
 }
 
