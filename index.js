@@ -20,6 +20,13 @@ const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
 
+const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
+console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
+if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
+    console.error(`IGNORE_SELFOWNED_EVENTS must be "true" or "false"`);
+    process.exit(1);
+}
+
 //Helper Functions
 function parseDatesFromArgv() {
     const timeZone = getOrThrow('TIMEZONE');
@@ -45,6 +52,31 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
+function shouldIncludeEvent(eventType) {
+    const isAuthorAlsoTheOwner = eventType.author_association === 'OWNER';
+    return !isAuthorAlsoTheOwner;
+}
+
+function filterByAuthorAssociation(events) {
+    const filteredEvents = events.filter((event) => {
+        switch (event.type) {
+            case 'PullRequestEvent':
+            case 'PullRequestReviewEvent':
+                return shouldIncludeEvent(event.payload.pull_request);
+            case 'CommitCommentEvent':
+            case 'IssueCommentEvent':
+            case 'PullRequestReviewCommentEvent':
+                return shouldIncludeEvent(event.payload.comment);
+            case 'IssuesEvent':
+                return shouldIncludeEvent(event.payload.issue);
+            default:
+                return false;
+        }
+    });
+
+    return filteredEvents;
+}
+
 function fetchPageOfDataAndFilter(url) {
     return new Promise((resolve) => {
         fetch(url, {
@@ -64,7 +96,12 @@ function fetchPageOfDataAndFilter(url) {
                     .json()
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
+
                         importantEvents = importantEvents.concat(filteredForImportant);
+
+                        if (ignoreSelfOwnedEvents === 'true') {
+                            importantEvents = filterByAuthorAssociation(importantEvents);
+                        }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)
                                 .then((newEvents) => {
