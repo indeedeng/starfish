@@ -2,3 +2,4 @@
 testResult.txt
 node_modules
 .idea
+coverage

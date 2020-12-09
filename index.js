@@ -20,6 +20,13 @@ const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
 let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
 
+const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
+console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
+if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
+    console.error(`IGNORE_SELFOWNED_EVENTS must be "true" or "false"`);
+    process.exit(1);
+}
+
 //Helper Functions
 function parseDatesFromArgv() {
     const timeZone = getOrThrow('TIMEZONE');
@@ -50,17 +57,42 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     return arrayOfImportantEvents;
 }
 
+function shouldIncludeEvent(eventType) {
+    const isAuthorAlsoTheOwner = eventType.author_association === 'OWNER';
+    return !isAuthorAlsoTheOwner;
+}
+
+function filterByAuthorAssociation(events) {
+    const filteredEvents = events.filter((event) => {
+        switch (event.type) {
+            case 'PullRequestEvent':
+            case 'PullRequestReviewEvent':
+                return shouldIncludeEvent(event.payload.pull_request);
+            case 'CommitCommentEvent':
+            case 'IssueCommentEvent':
+            case 'PullRequestReviewCommentEvent':
+                return shouldIncludeEvent(event.payload.comment);
+            case 'IssuesEvent':
+                return shouldIncludeEvent(event.payload.issue);
+            default:
+                return false;
+        }
+    });
+
+    return filteredEvents;
+}
+
 function fetchPageOfDataAndFilter(url) {
     return new Promise((resolve) => {
         fetch(url, {
             method: 'GET',
             headers: {
-                Authorization: `Basic ${githubToken}`
-            }
+                Authorization: `Basic ${githubToken}`,
+            },
         })
             .then((response) => {
                 if (!response.ok) {
-                    console.log(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
+                    console.error(`Error: ${response.status} ${response.statusText} \nFor: ${url}`);
                     throw new Error(response.statusText);
                 }
                 let parsed = parse(response.headers.get('link'));
@@ -69,20 +101,32 @@ function fetchPageOfDataAndFilter(url) {
                     .json()
                     .then((json) => {
                         let filteredForImportant = filterResponseForImportantEvents(json);
+
                         importantEvents = importantEvents.concat(filteredForImportant);
+
+                        if (ignoreSelfOwnedEvents === 'true') {
+                            importantEvents = filterByAuthorAssociation(importantEvents);
+                        }
                         if (parsed && parsed.next && parsed.next.url) {
-                            fetchPageOfDataAndFilter(parsed.next.url).then((newEvents) => {
-                                return resolve(importantEvents.concat(newEvents));
-                            });
+                            fetchPageOfDataAndFilter(parsed.next.url)
+                                .then((newEvents) => {
+                                    return resolve(importantEvents.concat(newEvents));
+                                })
+                                .catch((err) => {
+                                    console.error(
+                                        `Error fetching page of data for ${parsed.next.url}: ${err}`
+                                    );
+                                    throw err;
+                                });
                         } else {
                             return resolve(importantEvents);
                         }
                     })
                     .catch((err) => {
-                        console.log('Error turning response into JSON:', err);
+                        console.error('Error turning response into JSON:', err);
                     });
             })
-            .catch((err) => console.log('ERROR GRABBING INFO FROM GITHUB!', err));
+            .catch((err) => console.error('ERROR GRABBING INFO FROM GITHUB!', err));
     });
 }
 
@@ -90,7 +134,7 @@ function createIdObject(row, importantEvents) {
     return {
         alternateId: row[alternateIdColumnNumber],
         github: row[githubIdColumnNumber],
-        contributions: importantEvents
+        contributions: importantEvents,
     };
 }
 
@@ -115,7 +159,7 @@ function fetchUserDataAndAddToCSV(row, moments) {
             filterContributorByTime(idObject, moments);
         })
         .catch((err) => {
-            console.log('error', err);
+            console.error('error', err);
         });
 }
 
@@ -138,27 +182,24 @@ process.stdin.on('end', () => {
 
     process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
 
-    var datagrid = parser.parse(csvData).data;
-    let arrayOfGithubIds = [];
-    //detect duplicates, add user events, and send the the csv to stdout
+    const datagrid = parser.parse(csvData).data;
+    const uniqueIds = new Set();
+
     for (let i = 1; i < datagrid.length; i++) {
-        let currentRow = datagrid[i];
-        let duplicateGithubId = false;
-        for (let j = 0; j < arrayOfGithubIds.length; j++) {
-            if (arrayOfGithubIds[j] === currentRow[githubIdColumnNumber]) {
-                console.log(
-                    'Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV:',
-                    currentRow[githubIdColumnNumber]
-                );
-                duplicateGithubId = true;
-                break;
-            }
+        const currentRow = datagrid[i];
+        const currentId = currentRow[githubIdColumnNumber];
+        if (uniqueIds.has(currentId)) {
+            console.log(
+                `Ignoring Duplicate GitHub ID- you should probably erase one instance of this github id from your CSV: ${currentId}`
+            );
+        } else {
+            uniqueIds.add(currentId);
+
+            const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
+            setTimeout(() => {
+                fetchUserDataAndAddToCSV(currentRow, moments);
+            }, delayToAvoidOverwhelmingMacNetworkStack);
         }
-        if (duplicateGithubId === true) {
-            continue;
-        }
-        arrayOfGithubIds.push(currentRow[githubIdColumnNumber]);
-        fetchUserDataAndAddToCSV(currentRow, moments);
     }
 });
 
@@ -169,5 +210,5 @@ module.exports = {
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow,
-    parseDatesFromArgv
+    parseDatesFromArgv,
 };
