@@ -54,7 +54,7 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
 
 function shouldIncludeEvent(eventType) {
     const isAuthorAlsoTheOwner = eventType.author_association !== 'OWNER';
-    return !isAuthorAlsoTheOwner;
+    return isAuthorAlsoTheOwner;
 }
 
 function filterByAuthorAssociation(events) {
@@ -101,6 +101,7 @@ function fetchPageOfDataAndFilter(url) {
 
                         if (ignoreSelfOwnedEvents === 'true') {
                             importantEvents = filterByAuthorAssociation(importantEvents);
+                           
                         }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)
