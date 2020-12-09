@@ -124,6 +124,9 @@ This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesE
 
 You can also override the list of events to check by editing the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
 
+Starfish supports filtering events based on the specific action taken. For example, you might want to count when a pull request is closed, but not when it is opened. To do that, the list of important events can include types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
+You can list multiple actions for the same event type.
+
 Caveats: The GitHub Rest API only holds the most recent 300 events for each user. Also, events older than 90 days will not be included (even if the total number of events in the timeline is less than 300). So, if you're looking for contributions from 4 months ago, Starfish won't be able to find any. And if you are looking for contributions from 2 months ago, and one or more of your users is very active (300 events or more per month!), your result might not be completely accurate.
 
 Also, we know that there are many types of contributions - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
