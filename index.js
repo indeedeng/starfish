@@ -45,12 +45,14 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     for (let i = 0; i < allEventsFromFetch.length; i++) {
         const event = allEventsFromFetch[i];
         const type = event.type;
-        const typeWithAction = `${type}.${event.payload.action}`;
-        if (
-            githubImportantEvents.indexOf(type) >= 0 ||
-            githubImportantEvents.indexOf(typeWithAction) >= 0
-        ) {
+
+        if (githubImportantEvents.indexOf(type) >= 0) {
             arrayOfImportantEvents.push(event);
+        } else if (event.payload) {
+            const typeWithAction = `${type}.${event.payload.action}`;
+            if (githubImportantEvents.indexOf(typeWithAction) >= 0) {
+                arrayOfImportantEvents.push(event);
+            }
         }
     }
 
