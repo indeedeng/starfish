@@ -37,10 +37,8 @@ function createTimeZone(timeZoneIdentifier) {
     if (IANAZone.isValidZone(timeZoneIdentifier)) {
         return IANAZone.create(timeZoneIdentifier);
     }
-    console.error(
-        `Unknown time zone "${timeZoneIdentifier}". Fix the TIMEZONE entry of the .env file.`
-    );
-    process.exit(1);
+    const errorMessage = `Unknown time zone "${timeZoneIdentifier}". Fix the TIMEZONE entry of the .env file.`;
+    throw new Error(errorMessage);
 }
 
 function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
