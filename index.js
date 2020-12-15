@@ -241,4 +241,5 @@ module.exports = {
     filterResponseForImportantEvents,
     getOrThrow: getOrThrowIfMissingOrEmpty,
     parseDatesFromArgv,
+    createTimeZone,
 };
