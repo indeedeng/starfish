@@ -1,5 +1,5 @@
 const { DateTime } = require('luxon');
-const { createTimeZone } = require('..');
+const { createTimeZone, isContributionInTimeRange } = require('..');
 
 const oneHourInMinutes = 60;
 
@@ -34,5 +34,21 @@ describe('createTimeZone', () => {
         expect(() => {
             createTimeZone('illegal');
         }).toThrow();
+    });
+});
+
+describe('isContributionInTimeRange', () => {
+    it('should handle UTC/UTC cases', () => {
+        const justBeforeStartString = '2020-07-09T01:59Z';
+        const start = DateTime.fromISO('2020-07-09T02:00Z', { zone: 'Etc/UTC' });
+        const justAfterStartString = '2020-07-09T02:01Z';
+        const justBeforeEndString = '2020-07-10T01:59Z';
+        const end = DateTime.fromISO('2020-07-10T02:00Z', { zone: 'Etc/UTC' });
+        const justAfterEndString = '2020-07-10T02:01Z';
+
+        expect(isContributionInTimeRange(justBeforeStartString, start, end)).toBeFalsy();
+        expect(isContributionInTimeRange(justAfterStartString, start, end)).toBeTruthy();
+        expect(isContributionInTimeRange(justBeforeEndString, start, end)).toBeTruthy();
+        expect(isContributionInTimeRange(justAfterEndString, start, end)).toBeFalsy();
     });
 });

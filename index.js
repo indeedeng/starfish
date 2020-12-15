@@ -156,25 +156,29 @@ function createIdObject(row, importantEvents) {
     };
 }
 
+function isContributionInTimeRange(createdAt, startMoment, endMoment) {
+    const momentOfContribution = createLuxonMomentFromIso(createdAt, 'Etc/UTC');
+
+    return (
+        momentOfContribution.toMillis() >= startMoment.toMillis() &&
+        momentOfContribution.toMillis() < endMoment.toMillis()
+    );
+}
+
 function filterContributorByTime(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
 
     for (let i = 0; i < idObject.contributions.length; i++) {
-        const momentOfContribution = createLuxonMomentFromIso(
-            idObject.contributions[i].created_at,
-            'Etc/UTC'
-        );
+        const createdAtString = idObject.contributions[i].created_at;
 
-        if (
-            momentOfContribution.startOf('day') >= startMoment.startOf('day') &&
-            momentOfContribution.startOf('day') <= endMoment.startOf('day')
-        ) {
+        if (isContributionInTimeRange(createdAtString, startMoment, endMoment)) {
             console.log(idObject.alternateId);
             break;
         }
     }
 }
+
 function fetchUserDataAndAddToCSV(row, moments) {
     let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url)
@@ -240,4 +244,5 @@ module.exports = {
     getOrThrow: getOrThrowIfMissingOrEmpty,
     parseDatesFromArgv,
     createTimeZone,
+    isContributionInTimeRange,
 };
