@@ -51,4 +51,18 @@ describe('isContributionInTimeRange', () => {
         expect(isContributionInTimeRange(justBeforeEndString, start, end)).toBeTruthy();
         expect(isContributionInTimeRange(justAfterEndString, start, end)).toBeFalsy();
     });
+
+    it('should handle start and end in non-UTC', () => {
+        const justBeforeStartString = '2020-07-09T05:59Z';
+        const start = DateTime.fromISO('2020-07-09', { zone: 'Etc/GMT+6' });
+        const justAfterStartString = '2020-07-09T06:01Z';
+        const justBeforeEndString = '2020-07-10T05:59Z';
+        const end = DateTime.fromISO('2020-07-10', { zone: 'Etc/GMT+6' });
+        const justAfterEndString = '2020-07-10T06:01Z';
+
+        expect(isContributionInTimeRange(justBeforeStartString, start, end)).toBeFalsy();
+        expect(isContributionInTimeRange(justAfterStartString, start, end)).toBeTruthy();
+        expect(isContributionInTimeRange(justBeforeEndString, start, end)).toBeTruthy();
+        expect(isContributionInTimeRange(justAfterEndString, start, end)).toBeFalsy();
+    });
 });
