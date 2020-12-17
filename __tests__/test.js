@@ -1,10 +1,10 @@
 const sinon = require('sinon');
 const {
+    getOrThrow,
+    parseDatesFromArgv,
     filterResponseForImportantEvents,
     fetchPageOfDataAndFilter,
     createIdObject,
-    getOrThrow,
-    parseDatesFromArgv,
     filterContributorByTime,
 } = require('../index');
 const nock = require('nock');
@@ -86,6 +86,29 @@ const mockedEvents = [
 ];
 /* eslint-enable camelcase */
 
+describe('getOrThrow', () => {
+    it('should throw an error if the configuration does not exist in the environment', () => {
+        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
+    });
+    it('should return the value of a configuration that exists in the environment', () => {
+        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
+        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
+    });
+});
+
+describe('parseDatesFromArgv', () => {
+    it('should generate 2 dates based on arguments', () => {
+        const moments = parseDatesFromArgv();
+
+        expect(`${moments[0]}`).toEqual('Wed Jan 01 2020 00:00:00 GMT-0800');
+        expect(`${moments[1]}`).toEqual('Tue Dec 01 2020 23:59:59 GMT-0800');
+
+        expect(`Users that contributed between ${moments[0]} and ${moments[1]}`).toEqual(
+            'Users that contributed between Wed Jan 01 2020 00:00:00 GMT-0800 and Tue Dec 01 2020 23:59:59 GMT-0800'
+        );
+    });
+});
+
 describe('filterResponseForImportantEvents', () => {
     it('should return an array with the one important event', () => {
         var arrayofTwoEvents = [{ type: 'IssueCommentEvent' }, { type: 'Unimportant' }];
@@ -131,16 +154,6 @@ describe('fetchPageOfDataAndFilter', () => {
     });
 });
 
-describe('getOrThrow', () => {
-    it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
-    });
-    it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
-    });
-});
-
 describe('createIdObject', () => {
     it('should create a object id', () => {
         const mockedRow = ['mockedUser', 'mockedUser@user.com'];
@@ -160,19 +173,6 @@ describe('createIdObject', () => {
             expect(returnObject.contributions[index].id).toEqual(contribution.id);
             expect(returnObject.contributions[index].type).toEqual(contribution.type);
         });
-    });
-});
-
-describe('parseDatesFromArgv', () => {
-    it('should generate 2 dates based on arguments', () => {
-        const moments = parseDatesFromArgv();
-
-        expect(`${moments[0]}`).toEqual('Wed Jan 01 2020 00:00:00 GMT-0800');
-        expect(`${moments[1]}`).toEqual('Tue Dec 01 2020 23:59:59 GMT-0800');
-
-        expect(`Users that contributed between ${moments[0]} and ${moments[1]}`).toEqual(
-            'Users that contributed between Wed Jan 01 2020 00:00:00 GMT-0800 and Tue Dec 01 2020 23:59:59 GMT-0800'
-        );
     });
 });
 
