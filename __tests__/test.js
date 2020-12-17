@@ -17,6 +17,7 @@ beforeEach(() => {
         TIMEZONE: 'America/Los_Angeles',
         CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
         CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
+        IGNORE_SELFOWNED_EVENTS: 'false',
         GITHUB_IMPORTANT_EVENTS:
             'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent',
     };

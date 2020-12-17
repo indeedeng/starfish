@@ -109,11 +109,6 @@ In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2
 
 Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile} | node index.js > {nameOfFileToCreate}.txt {date1} {date2}`
 
-### Tests
-
-We've just started writing tests - there's one so far. You can run it with the command `npm test`.
-
-
 ### Updating
 
 From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin master. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
@@ -142,9 +137,10 @@ Starfish's file structure is relatively simple - you won't need to touch most of
 #### Before submitting your Pull Request, please do each of the following steps, and fix any problems that come up:
 
 1. Make sure the code runs and gives the output you expect.
+1. If your change adds an environment variable, be sure to add it to the `.env.template` file and to the `process.env` being created before each test in the `test.js` file.
 1. Run the linter `npm run lint` and/or `npm run lint-fix` and make sure everything passes.
-1. Run the tests `npm test` and make sure everything passes. (Our test suite is still a work in progress and doesn't cover everything yet, but we're working on it. If your change adds new functionality, it would be great if you added a test for it too.)
-1. Once you've pushed your commits to github, make sure that your branch can be auto-merged (there are no merge conflicts).
+1. Run the tests `npm test` and make sure everything passes. (Our test suite is still a work in progress and doesn't cover everything yet, but it's getting there.) If your change adds new functionality, it would be great if you added a test for it too!
+1. Once you've pushed your commits to github, make sure that your branch can be auto-merged (there are no merge conflicts). If not, on your computer, merge master into your branch, make sure everything still runs correctly and passes all the tests, and then push up those changes.
 
 Thanks!
 
