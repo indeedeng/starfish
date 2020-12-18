@@ -82,7 +82,8 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
   - The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
   - For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
   - If you choose not to use an alternate id, you can put the same value in both fields
-- TIMEZONE allows you to specify how Starfish should assign contributions to days. The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
+- TIMEZONE allows you to specify which timezone Starfish should use to decide on which day a contribution happened.
+  - The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
 - To filter out events for which the author is the OWNER of the repository, simply set `IGNORE_SELFOWNED_EVENTS = "true"`; otherwise leave it as `IGNORE_SELFOWNED_EVENTS = ""`.
 
 #### Time zones
