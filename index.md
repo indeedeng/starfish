@@ -18,11 +18,11 @@ Starfish checks a list of GitHub users and identifies which users have contribut
 <li>You input start and end dates for the period you want to check.</li>
 <li>Starfish checks GitHub for open source contributions from each employee in the list.</li>
 <li>Starfish outputs the people who contributed during the time period.</li>
-</ol>
+</ol><br><br>
 
 
 ## Installing and Running Starfish
-For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.
+For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.<br><br>
 
 
 
@@ -32,13 +32,13 @@ We welcome contributions.
 
 To contribute, please open an issue (or comment on an existing issue) describing what you want to change or add. Please explain why you want to make the change.
 
-We’re eager for your input.
+We’re eager for your input.<br><br>
 
 
 
 
 ## Code of Conduct
-Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/indeedeng/starfish/blob/master/CODE_OF_CONDUCT.md)
+Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/indeedeng/starfish/blob/master/CODE_OF_CONDUCT.md)<br><br>
 
 
 
