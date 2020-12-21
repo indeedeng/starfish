@@ -1,63 +1,42 @@
 ---
 layout: default
-title: Proctor
+title: Starfish
 exclude_toc: true
 ---
-<img src="{{ site.baseurl }}/images/Proctor.png" style="max-width:125px;max-height:125px;clear:both;padding:10px;" />
+<img src="{{ site.baseurl }}/images/indeed_OS_starfish_logo.png" style="max-width:125px;max-height:125px;clear:both;padding:10px;" class="center" />
 
-Proctor is a A/B testing framework written in Java that enables [data-driven product design](http://engineering.indeed.com/blog/2013/05/indeedeng-data-driven-product-design-slides-video/) at Indeed. Proctor consists of data-model, client specification, matrix builder, and java and javascript code generators.
+Starfish tells you which members of your organization contributed to open source projects on GitHub during a given period of time. Indeed developed this tool to help manage our [FOSS Contributor Fund](https://engineering.indeedblog.com/blog/2019/11/foss-fund-adopters/),a program to manage financial contributions to our open source dependencies (FOSS is Free and Open Source Software). Each month, the fund donates money to a different FOSS project. We use a democratic process to choose the recipient: any Indeed employee who contributed to open source projects during the previous month can vote. Starfish identifies our eligible voters.
 
-<p>&nbsp;</p>
-<p><span style="border:1pt solid; padding:5px;"><strong>View the <a href="{{ site.baseurl }}/docs/release-notes">Release Notes</a> to see the most recent changes to Proctor.</strong></span></p>
-<p>&nbsp;</p>
-
-The following Indeed Engineering blog posts describe Proctor in more detail:  <br><br>
-<table>
-<tr>
-    <th>Engineering blog post</th>
-    <th>Description</th>
-  </tr>
-  <tr>
-    <td><a href ="http://engineering.indeed.com/blog/2014/06/proctor-a-b-testing-framework/">Proctor: Indeed's A/B Testing Framework</a></td>
-    <td>Provides an overview of Proctor and A/B testing at Indeed. <em>This is the first part in a blog series on Proctor at Indeed.</em></td>
-    </tr>
-   <tr>
-    <td><a href="http://engineering.indeed.com/blog/2014/11/how-indeed-uses-proctor-for-a-b-testing/">How Indeed Uses Proctor for A/B Testing</a></td>
-    <td>Describes in detail how Indeed integrates Proctor into its development process. <em>This is the second part in a blog series on Proctor at Indeed.</em></td>
-    
-  </tr>
-  <tr>
-    <td><a href="http://engineering.indeed.com/blog/2014/09/proctor-pipet-ab-testing-service/">Using Proctor for A/B Testing from a Non-Java Platform</a></td>
-
-<td>Announces the open sourcing of proctor-pipet -- a Java web application that exposes Proctor as a simple REST API accessible over HTTP -- which allows you to do A/B testing in applications written in non-JVM languages. </td>
-</tr>
-  </table> 
- 
-GitHub source for Proctor: <a href="https://github.com/indeedeng/proctor">https://github.com/indeedeng/proctor</a><br><br>
+Starfish is open source software. We encourage you to use it for your own democratic FOSS contributor fund. Find it on [GitHub] (https://github.com/indeedeng/starfish).
 
 
-## Features
-- Consistent tests across multiple applications, services and tools
-- Group adjustments without code deploys
-- Rule-based group assignment for segmenting users:
-  - Logged-in users: 50% A, 50% B
-  - Logged-out users: 25% A, 25% B, 25% C, 25% D
-- Human-readable test format
-- Overriding test groups during internal testing
-- Java and JavaScript code generation for A/B tests groups<br><br>
+## How Starfish Works
+
+Starfish checks a list of GitHub users and identifies which users have contributed to open source projects during a specified time period. Here is a simplified description of how it works:
+<ul>
+<li>You create a list of people’s GitHub IDs.</li>
+<li>You input start and end dates for the period you want to check.</li>
+<li>Starfish checks GitHub for open source contributions from each employee in the list.</li>
+<li>Starfish outputs the people who contributed during the time period.</li>
+</ul>
 
 
-## Getting Started
-Read the [Quick Start]({{ site.baseurl }}/docs/quick-start) guide to start running A/B test using Proctor.<br><br>
+## Installing and Running Starfish
+For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to mailto:opensouce@indeed.com.
 
 
-## Example
-[https://github.com/indeedeng/proctor-demo](https://github.com/indeedeng/proctor-demo)
+
+## Contributing to Starfish
+We welcome contributions.
+
+To contribute, please open an issue (or comment on an existing issue) describing what you want to change or add. Please explain why you want to make the change.
+
+We’re eager for your input.
 
 
-## Discussion
-Ask and answer questions in our Q&A forum for Proctor: [indeedeng-proctor-users](https://groups.google.com/forum/#!categories/indeedeng-proctor-users)<br><br>
 
+## Code of Conduct
+Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/indeedeng/starfish/blob/master/CODE_OF_CONDUCT.md)
 
 ## License
 
