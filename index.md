@@ -22,7 +22,7 @@ Starfish checks a list of GitHub users and identifies which users have contribut
 
 
 ## Installing and Running Starfish
-For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to mailto:opensouce@indeed.com.
+For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.
 
 
 
