@@ -13,11 +13,12 @@ Starfish is open source software. We encourage you to use it for your own democr
 ## How Starfish Works
 
 Starfish checks a list of GitHub users and identifies which users have contributed to open source projects during a specified time period. Here is a simplified description of how it works:
+<ol>
 <li>You create a list of people’s GitHub IDs.</li>
 <li>You input start and end dates for the period you want to check.</li>
 <li>Starfish checks GitHub for open source contributions from each employee in the list.</li>
 <li>Starfish outputs the people who contributed during the time period.</li>
-
+</ol>
 
 ## Installing and Running Starfish
 For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.
