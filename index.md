@@ -18,7 +18,7 @@ Starfish checks a list of GitHub users and identifies which users have contribut
 <li>You input start and end dates for the period you want to check.</li>
 <li>Starfish checks GitHub for open source contributions from each employee in the list.</li>
 <li>Starfish outputs the people who contributed during the time period.</li>
-</ol><br>
+</ol>
 
 
 ## Installing and Running Starfish
@@ -26,11 +26,9 @@ For detailed instructions, see the [Starfish README](https://github.com/indeeden
 
 
 ## Contributing to Starfish
-We welcome contributions.
+We welcome contributors, and we’re eager for your input.
 
-To contribute, please open an issue (or comment on an existing issue) describing what you want to change or add. Please explain why you want to make the change.
-
-We’re eager for your input.<br><br>
+To contribute, please open an issue (or comment on an existing issue) describing what you want to change or add. Please explain why you want to make the change. <br><br>
 
 
 ## Code of Conduct
