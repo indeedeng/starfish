@@ -3,8 +3,7 @@ layout: default
 title: Starfish
 exclude_toc: true
 ---
-<img src="{{ site.baseurl }}/images/Indeed_OS_starfish_logo.png
-" style="max-width:125px;max-height:125px;clear:both;padding:10px;"/>
+<img src="{{ site.baseurl }}/images/Indeed_OS_starfish_logo.png" style="max-width:125px;max-height:125px;clear:both;padding:10px;"/>
 
 Starfish tells you which members of your organization contributed to open source projects on GitHub during a given period of time. Indeed developed this tool to help manage our [FOSS Contributor Fund](https://engineering.indeedblog.com/blog/2019/11/foss-fund-adopters/), a program to manage financial contributions to our open source dependencies (FOSS is Free and Open Source Software). Each month, the fund donates money to a different FOSS project. We use a democratic process to choose the recipient: any Indeed employee who contributed to open source projects during the previous month can vote. Starfish identifies our eligible voters.
 
@@ -40,4 +39,4 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/in
 
 ## License
 
-[Apache License Version 2.0](https://github.com/indeedeng/proctor/blob/master/LICENSE)
+[Apache License Version 2.0](https://github.com/indeedeng/starfish/blob/master/LICENSE)
