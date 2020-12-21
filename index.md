@@ -25,8 +25,6 @@ Starfish checks a list of GitHub users and identifies which users have contribut
 For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.<br><br>
 
 
-
-
 ## Contributing to Starfish
 We welcome contributions.
 
@@ -35,11 +33,8 @@ To contribute, please open an issue (or comment on an existing issue) describing
 We’re eager for your input.<br><br>
 
 
-
-
 ## Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/indeedeng/starfish/blob/master/CODE_OF_CONDUCT.md)<br><br>
-
 
 
 ## License
