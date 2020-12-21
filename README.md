@@ -98,7 +98,7 @@ For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) 
 
 -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`. If you choose not to use an alternate id, you can put the same column number in both `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID`.
 
--   To filter out events for which the author is the OWNER of the repository, simply set the `IGNORE_SELFOWNED_EVENTS` environment variable to "true", otherwise leave as `IGNORE_SELFOWNED_EVENTS = ""`.
+-   To filter out events for which the author is the owner of the repository, simply set the `IGNORE_SELFOWNED_EVENTS` environment variable to "true", otherwise leave as `IGNORE_SELFOWNED_EVENTS = ""`.
 
 ### To run:
 
