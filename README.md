@@ -25,11 +25,11 @@ _You can use Starfish to determine which of your employees are eligible to vote 
 
 For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/) or [This awesome article from Open Collective](https://blog.opencollective.com/indeeds-open-source-sustainability-strategy/)
 
-# NOTE FOR CURRENT STARFISH USERS - BREAKING CHANGES
+# **Note for current starfish users - breaking changes**
 
 Hi, thanks for using Starfish. Recently, we pushed up Starfish 2.0.0 which changes how we talk to GitHub's API, because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to use that token, instead of OAuth credentials.
 
-Also, the TIMEZONE_OFFSET environment variable has become TIMEZONE. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
+Also, the `TIMEZONE_OFFSET` environment variable has become `TIMEZONE`. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
 
 Make sure to run `npm ci` to update node packages.
 
@@ -77,10 +77,10 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 
--   Paste the access token into GITHUB_TOKEN
--   TIMEZONE allows you to specify when your day begins and ends. This must be a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Typically, this would either be "Etc/UTC" or the time zone of your organization's main office, such as "America/Los_Angeles".
+-   Paste the access token into `GITHUB_TOKEN`
+-   `TIMEZONE` allows you to specify when your day begins and ends. This must be a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Typically, this would either be "Etc/UTC" or the time zone of your organization's main office, such as "America/Los_Angeles".
 
-If for some reason you want the time to be a constant offset from UTC, you can say : "Etc/GMT+6", to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice.
+If for some reason you want the time to be a constant offset from UTC, you can say : "Etc/GMT+6", to mean UTC-0600. **Note that positive values in the `TIMEZONE` string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice.
 For example:
 
 ```.env
@@ -96,9 +96,9 @@ Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 
 
 For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
--   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0 and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1. If you choose not to use an alternate id, you can put the same column number in both CSV_COLUMN_NUMBER_FOR_GITHUB_ID and CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID.
+-   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`. If you choose not to use an alternate id, you can put the same column number in both `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID`.
 
--   To filter out events for which the author is the OWNER of the repository, simply set the IGNORE_SELFOWNED_EVENTS environment variable to "true", otherwise leave as IGNORE_SELFOWNED_EVENTS = "".
+-   To filter out events for which the author is the OWNER of the repository, simply set the `IGNORE_SELFOWNED_EVENTS` environment variable to "true", otherwise leave as `IGNORE_SELFOWNED_EVENTS = ""`.
 
 ### To run:
 
@@ -122,7 +122,7 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
 
 This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
 
-You can also override the list of events to check by editing the "GITHUB_IMPORTANT_EVENTS" variable in your ".env" file with a comma-separated list of events
+You can also override the list of events to check by editing the `GITHUB_IMPORTANT_EVENTS` variable in your ".env" file with a comma-separated list of events
 
 Caveats: The GitHub Rest API only holds the most recent 300 events for each user. Also, events older than 90 days will not be included (even if the total number of events in the timeline is less than 300). So, if you're looking for contributions from 4 months ago, Starfish won't be able to find any. And if you are looking for contributions from 2 months ago, and one or more of your users is very active (300 events or more per month!), your result might not be completely accurate.
 
