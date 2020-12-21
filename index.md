@@ -20,8 +20,10 @@ Starfish checks a list of GitHub users and identifies which users have contribut
 <li>Starfish outputs the people who contributed during the time period.</li>
 </ol>
 
+
 ## Installing and Running Starfish
 For detailed instructions, see the [Starfish README](https://github.com/indeedeng/starfish/blob/master/README.md). If you have any issues with installing or running Starfish, please reach out to opensouce@indeed.com.
+
 
 
 
@@ -34,8 +36,11 @@ We’re eager for your input.
 
 
 
+
 ## Code of Conduct
 Starfish is governed by the [Contributor Covenant v 1.4.1](https://github.com/indeedeng/starfish/blob/master/CODE_OF_CONDUCT.md)
+
+
 
 ## License
 
