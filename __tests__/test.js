@@ -99,13 +99,16 @@ describe('getOrThrow', () => {
 
 describe('parseDatesFromArgv', () => {
     it('should generate 2 dates based on arguments', () => {
+        const testdateString1 = 'Wed Jan 01 2020 00:00:00 GMT-0800';
+        const testdateString2 = 'Tue Dec 01 2020 23:59:59 GMT-0800';
+
         const moments = parseDatesFromArgv();
 
-        expect(`${moments[0]}`).toEqual('Wed Jan 01 2020 00:00:00 GMT-0800');
-        expect(`${moments[1]}`).toEqual('Tue Dec 01 2020 23:59:59 GMT-0800');
+        expect(`${moments[0]}`).toEqual(`${testdateString1}`);
+        expect(`${moments[1]}`).toEqual(`${testdateString2}`);
 
         expect(`Users that contributed between ${moments[0]} and ${moments[1]}`).toEqual(
-            'Users that contributed between Wed Jan 01 2020 00:00:00 GMT-0800 and Tue Dec 01 2020 23:59:59 GMT-0800'
+            `Users that contributed between ${testdateString1} and ${testdateString2}`
         );
     });
 });
@@ -156,7 +159,7 @@ describe('fetchPageOfDataAndFilter', () => {
 });
 
 describe('createIdObject', () => {
-    it('should create a object id', () => {
+    it('should create an idObject', () => {
         const mockedRow = ['mockedUser', 'mockedUser@user.com'];
         const returnObject = createIdObject(mockedRow, mockedEvents);
 
@@ -165,12 +168,12 @@ describe('createIdObject', () => {
         );
         expect(returnObject.github).toEqual(mockedRow[process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID]);
 
-        const contributionsObject = [
-            { id: '1', type: 'IssueCommentEvent' },
-            { id: '2', type: 'PullRequestEvent' },
+        const contributionObjects = [
+            { id: mockedEvents[0].id, type: mockedEvents[0].type },
+            { id: mockedEvents[1].id, type: mockedEvents[1].type },
         ];
 
-        contributionsObject.forEach((contribution, index) => {
+        contributionObjects.forEach((contribution, index) => {
             expect(returnObject.contributions[index].id).toEqual(contribution.id);
             expect(returnObject.contributions[index].type).toEqual(contribution.type);
         });
