@@ -1,10 +1,117 @@
+const sinon = require('sinon');
 const {
+    getOrThrow,
+    parseDatesFromArgv,
     filterResponseForImportantEvents,
     fetchPageOfDataAndFilter,
     createIdObject,
-    getOrThrow,
+    filterContributorByTime,
 } = require('../index');
 const nock = require('nock');
+
+const envBeforeChanges = Object.assign({}, process.env);
+
+beforeEach(() => {
+    process.env = {
+        GITHUB_TOKEN: 'mockToken',
+        TIMEZONE: 'America/Los_Angeles',
+        CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
+        CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
+        IGNORE_SELFOWNED_EVENTS: 'false',
+        GITHUB_IMPORTANT_EVENTS:
+            'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent',
+    };
+
+    process.argv[2] = '2020-01-01';
+    process.argv[3] = '2020-12-01';
+});
+afterAll(() => {
+    process.env = envBeforeChanges;
+});
+/* eslint-disable camelcase */
+const mockedEvents = [
+    {
+        id: '1',
+        type: 'IssueCommentEvent',
+        actor: {
+            id: 43557983,
+            login: 'mockedUser',
+            display_login: 'mockedUser',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/mockedUser',
+            avatar_url: 'https://avatars.githubusercontent.com/u/mockedUser',
+        },
+        repo: {
+            id: 189639372,
+            name: 'indeedeng/starfish',
+            url: 'https://api.github.com/repos/indeedeng/starfish',
+        },
+        payload: { action: 'created', issue: [Object], comment: [Object] },
+        public: true,
+        created_at: '2020-10-16T18:36:33Z',
+        org: {
+            id: 2905043,
+            login: 'indeedeng',
+            gravatar_id: '',
+            url: 'https://api.github.com/orgs/indeedeng',
+            avatar_url: 'https://avatars.githubusercontent.com/u/2905043?',
+        },
+    },
+    {
+        id: '2',
+        type: 'PullRequestEvent',
+        actor: {
+            id: 4355712983,
+            login: 'mockedUser',
+            display_login: 'mockedUser',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/mockedUser',
+            avatar_url: 'https://avatars.githubusercontent.com/u/mockedUser',
+        },
+        repo: {
+            id: 189612339372,
+            name: 'indeedeng/starfish',
+            url: 'https://api.github.com/repos/indeedeng/starfish',
+        },
+        payload: { action: 'created', issue: [Object], comment: [Object] },
+        public: true,
+        created_at: '2020-09-16T18:36:33Z',
+        org: {
+            id: 2905012343,
+            login: 'indeedeng',
+            gravatar_id: '',
+            url: 'https://api.github.com/orgs/indeedeng',
+            avatar_url: 'https://avatars.githubusercontent.com/u/2905043?',
+        },
+    },
+];
+/* eslint-enable camelcase */
+
+describe('getOrThrow', () => {
+    it('should throw an error if the configuration does not exist in the environment', () => {
+        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
+    });
+    it('should return the value of a configuration that exists in the environment', () => {
+        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
+        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
+    });
+});
+
+describe('parseDatesFromArgv', () => {
+    it('should generate 2 dates based on arguments', () => {
+        const testdateString1 = 'Wed Jan 01 2020 00:00:00 GMT-0800';
+        const testdateString2 = 'Tue Dec 01 2020 23:59:59 GMT-0800';
+
+        const moments = parseDatesFromArgv();
+
+        expect(`${moments[0]}`).toEqual(`${testdateString1}`);
+        expect(`${moments[1]}`).toEqual(`${testdateString2}`);
+
+        expect(`Users that contributed between ${moments[0]} and ${moments[1]}`).toEqual(
+            `Users that contributed between ${testdateString1} and ${testdateString2}`
+        );
+    });
+});
 
 describe('filterResponseForImportantEvents', () => {
     it('should return an array with the one important event', () => {
@@ -52,27 +159,36 @@ describe('fetchPageOfDataAndFilter', () => {
 });
 
 describe('createIdObject', () => {
-    it('should return a properly formatted id object', () => {
-        const row = ['danisyellis', 'octocat', 'user-01'];
-        const importantEvents = [
-            { type: 'ImportantEvent1' },
-            { type: 'ImportantEvent2' },
-            { type: 'ImportantEvent3' },
+    it('should create an idObject', () => {
+        const mockedRow = ['mockedUser', 'mockedUser@user.com'];
+        const returnObject = createIdObject(mockedRow, mockedEvents);
+
+        expect(returnObject.alternateId).toEqual(
+            mockedRow[process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID]
+        );
+        expect(returnObject.github).toEqual(mockedRow[process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID]);
+
+        const contributionObjects = [
+            { id: mockedEvents[0].id, type: mockedEvents[0].type },
+            { id: mockedEvents[1].id, type: mockedEvents[1].type },
         ];
-        expect(createIdObject(row, importantEvents)).toEqual({
-            alternateId: row[process.env.CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID],
-            github: row[process.env.CSV_COLUMN_NUMBER_FOR_GITHUB_ID],
-            contributions: importantEvents,
+
+        contributionObjects.forEach((contribution, index) => {
+            expect(returnObject.contributions[index].id).toEqual(contribution.id);
+            expect(returnObject.contributions[index].type).toEqual(contribution.type);
         });
     });
 });
 
-describe('getOrThrow', () => {
-    it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
-    });
-    it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
+describe('filterContributorByTime', () => {
+    sinon.spy(console, 'log');
+
+    it('must show the contributor email', () => {
+        const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], mockedEvents);
+        const moments = parseDatesFromArgv();
+
+        filterContributorByTime(idObject, moments);
+
+        expect(console.log.calledWith('mockedUser@user.com')).toEqual(true);
     });
 });

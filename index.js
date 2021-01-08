@@ -157,8 +157,8 @@ function filterContributorByTime(idObject, moments) {
         }
     }
 }
-function fetchUserDataAndAddToCSV(row, moments) {
-    let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
+function fetchUserDataAndAddToOutput(row, moments) {
+    const url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url)
         .then((importantEvents) => {
             const idObject = createIdObject(row, importantEvents);
@@ -203,7 +203,7 @@ process.stdin.on('end', () => {
 
             const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
             setTimeout(() => {
-                fetchUserDataAndAddToCSV(currentRow, moments);
+                fetchUserDataAndAddToOutput(currentRow, moments);
             }, delayToAvoidOverwhelmingMacNetworkStack);
         }
     }
@@ -212,7 +212,7 @@ process.stdin.on('end', () => {
 module.exports = {
     createIdObject,
     fetchPageOfDataAndFilter,
-    fetchUserDataAndAddToCSV,
+    fetchUserDataAndAddToOutput,
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow,
