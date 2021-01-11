@@ -1,11 +1,9 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
-const Moment = require('moment-timezone');
-const { extendMoment } = require('moment-range');
-const moment = extendMoment(Moment);
+const { DateTime, IANAZone, LocalZone } = require('luxon');
 const parse = require('parse-link-header');
 
-function getOrThrow(configField) {
+function getOrThrowIfMissingOrEmpty(configField) {
     const value = process.env[configField];
     if (!value) {
         throw new Error(
@@ -15,10 +13,11 @@ function getOrThrow(configField) {
 
     return value;
 }
-const githubToken = Buffer.from(getOrThrow('GITHUB_TOKEN')).toString('base64');
-const githubIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
-const alternateIdColumnNumber = getOrThrow('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
-let githubImportantEvents = getOrThrow('GITHUB_IMPORTANT_EVENTS').split(',');
+const githubToken = Buffer.from(getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).toString('base64');
+const githubIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
+const alternateIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
+let githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS').split(',');
+const timeZone = process.env.TIMEZONE;
 
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
@@ -28,14 +27,37 @@ if (ignoreSelfOwnedEvents !== 'true' && ignoreSelfOwnedEvents !== 'false') {
 }
 
 //Helper Functions
+function createTimeZone(timeZoneIdentifier) {
+    if (!timeZoneIdentifier || timeZoneIdentifier === '') {
+        return IANAZone.create('UTC');
+    }
+    if (timeZoneIdentifier === 'local') {
+        return LocalZone.instance;
+    }
+    if (IANAZone.isValidZone(timeZoneIdentifier)) {
+        return IANAZone.create(timeZoneIdentifier);
+    }
+    const errorMessage = `Unknown time zone "${timeZoneIdentifier}". Fix the TIMEZONE entry of the .env file.`;
+    throw new Error(errorMessage);
+}
+
+function createLuxonMomentFromIso(isoDateTimeString, timeZoneIdentifier) {
+    const zone = createTimeZone(timeZoneIdentifier);
+
+    const moment = DateTime.fromISO(isoDateTimeString, {
+        zone,
+    });
+
+    return moment;
+}
+
 function parseDatesFromArgv() {
-    const timeZone = getOrThrow('TIMEZONE');
+    console.log(`Using time zone: ${createTimeZone(timeZone).name}`);
     const startDate = process.argv[2];
     const endDate = process.argv[3];
 
-    const startMoment = moment.tz(startDate, timeZone).startOf('day');
-
-    const endMoment = moment.tz(endDate, timeZone).endOf('day');
+    const startMoment = createLuxonMomentFromIso(startDate, timeZone).startOf('day');
+    const endMoment = createLuxonMomentFromIso(endDate, timeZone).endOf('day');
 
     return [startMoment, endMoment];
 }
@@ -144,14 +166,23 @@ function createIdObject(row, importantEvents) {
     };
 }
 
+function isContributionInTimeRange(createdAt, startMoment, endMoment) {
+    const momentOfContribution = createLuxonMomentFromIso(createdAt, 'Etc/UTC');
+
+    return (
+        momentOfContribution.toMillis() >= startMoment.toMillis() &&
+        momentOfContribution.toMillis() < endMoment.toMillis()
+    );
+}
+
 function filterContributorByTime(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
 
-    const timeWindow = moment.range([startMoment, endMoment]);
     for (let i = 0; i < idObject.contributions.length; i++) {
-        const momentOfContribution = moment.utc(idObject.contributions[i].created_at);
-        if (timeWindow.contains(momentOfContribution)) {
+        const createdAtString = idObject.contributions[i].created_at;
+
+        if (isContributionInTimeRange(createdAtString, startMoment, endMoment)) {
             console.log(idObject.alternateId);
             break;
         }
@@ -186,7 +217,11 @@ process.stdin.on('readable', () => {
 process.stdin.on('end', () => {
     const moments = parseDatesFromArgv();
 
-    process.stdout.write(`Users that contributed between ${moments[0]} and ${moments[1]} \n`);
+    const zone = createTimeZone(timeZone);
+
+    const localStart = moments[0].setZone(zone).toLocaleString(DateTime.DATETIME_FULL);
+    const localEnd = moments[1].setZone(zone).toLocaleString(DateTime.DATETIME_FULL);
+    process.stdout.write(`Users that contributed between ${localStart} and ${localEnd} \n`);
 
     const datagrid = parser.parse(csvData).data;
     const uniqueIds = new Set();
@@ -215,6 +250,8 @@ module.exports = {
     fetchUserDataAndAddToOutput,
     filterContributorByTime,
     filterResponseForImportantEvents,
-    getOrThrow,
+    getOrThrow: getOrThrowIfMissingOrEmpty,
     parseDatesFromArgv,
+    createTimeZone,
+    isContributionInTimeRange,
 };

@@ -99,17 +99,13 @@ describe('getOrThrow', () => {
 
 describe('parseDatesFromArgv', () => {
     it('should generate 2 dates based on arguments', () => {
-        const testdateString1 = 'Wed Jan 01 2020 00:00:00 GMT-0800';
-        const testdateString2 = 'Tue Dec 01 2020 23:59:59 GMT-0800';
+        const testdateString1 = '2020-01-01T00:00:00.000-08:00';
+        const testdateString2 = '2020-12-01T23:59:59.999-08:00';
 
         const moments = parseDatesFromArgv();
 
         expect(`${moments[0]}`).toEqual(`${testdateString1}`);
         expect(`${moments[1]}`).toEqual(`${testdateString2}`);
-
-        expect(`Users that contributed between ${moments[0]} and ${moments[1]}`).toEqual(
-            `Users that contributed between ${testdateString1} and ${testdateString2}`
-        );
     });
 });
 

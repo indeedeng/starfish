@@ -78,9 +78,24 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 
 -   Paste the access token into `GITHUB_TOKEN`
--   `TIMEZONE` allows you to specify when your day begins and ends. This must be a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). Typically, this would either be "Etc/UTC" or the time zone of your organization's main office, such as "America/Los_Angeles".
+-   `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID` should match the columns in the input file.
+    -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
+    -   For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
+    -   If you choose not to use an alternate id, you can put the same value in both fields
+-   `TIMEZONE` allows you to specify which timezone Starfish should use to decide on which day a contribution happened.
+    -   The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
+-   To filter out events for which the author is the owner of the repository, simply set `IGNORE_SELFOWNED_EVENTS = "true"`; otherwise leave it as `IGNORE_SELFOWNED_EVENTS = ""`.
 
-If for some reason you want the time to be a constant offset from UTC, you can say : "Etc/GMT+6", to mean UTC-0600. **Note that positive values in the `TIMEZONE` string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This is a result of IANA, not by choice.
+#### Time zones
+
+The `TIMEZONE` value must be one of the following:
+
+-   An empty string `''` which means UTC (aka GMT), and which is the default
+-   The word `'local'`, which means the local time zone
+-   a value from the [IANA Time Zone Database](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If you use this option, it would normally be the time zone of the organization's main office, such as `"America/Los_Angeles"`.
+
+If for some reason you want the time to be a constant offset from UTC, you can say : `"Etc/GMT+6"`, to mean UTC-0600. **Note that positive values in the TIMEZONE string will result in negative UTC offsets** (that is, West of UTC), while **negative values will result in positive UTC offsets.** This behavior is defined by IANA, not by us.
+
 For example:
 
 ```.env
@@ -89,12 +104,12 @@ TIMEZONE=“Etc/GMT+6”
 
 would output:
 
+```txt
+
+Users that contributed between December 1, 2020, 12:00 AM GMT-6 and December 15, 2020, 11:59 PM GMT-6
 ```
 
-Users that contributed between Tue Mar 31 2020 00:00:00 GMT-0600 and Tue Apr 07 2020 23:59:59 GMT-0600
-```
-
-For further reading visit [moment-timezone](https://momentjs.com/timezone/docs) and [List of tz](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
+For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
 -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`. If you choose not to use an alternate id, you can put the same column number in both `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID`.
 
