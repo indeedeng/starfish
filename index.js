@@ -62,16 +62,26 @@ function parseDatesFromArgv() {
     return [startMoment, endMoment];
 }
 
-function filterResponseForImportantEvents(allEventsFromFetch) {
-    let arrayOfImportantEvents = [];
-    for (let i = 0; i < allEventsFromFetch.length; i++) {
-        const event = allEventsFromFetch[i];
-        if (githubImportantEvents.indexOf(event.type) !== -1) {
-            arrayOfImportantEvents.push(event);
+function isEventImportant(event) {
+    const type = event.type;
+
+    if (githubImportantEvents.indexOf(type) >= 0) {
+        return true;
+    }
+    if (event.payload) {
+        const typeWithAction = `${type}.${event.payload.action}`;
+        if (githubImportantEvents.indexOf(typeWithAction) >= 0) {
+            return true;
         }
     }
 
-    return arrayOfImportantEvents;
+    return false;
+}
+
+function filterResponseForImportantEvents(allEventsFromFetch) {
+    return allEventsFromFetch.filter((event) => {
+        return isEventImportant(event);
+    });
 }
 
 function shouldIncludeEvent(eventType) {
@@ -178,9 +188,8 @@ function filterContributorByTime(idObject, moments) {
         }
     }
 }
-
-function fetchUserDataAndAddToCSV(row, moments) {
-    let url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
+function fetchUserDataAndAddToOutput(row, moments) {
+    const url = `https://api.github.com/users/${row[githubIdColumnNumber]}/events`;
     fetchPageOfDataAndFilter(url)
         .then((importantEvents) => {
             const idObject = createIdObject(row, importantEvents);
@@ -229,7 +238,7 @@ process.stdin.on('end', () => {
 
             const delayToAvoidOverwhelmingMacNetworkStack = i * 10;
             setTimeout(() => {
-                fetchUserDataAndAddToCSV(currentRow, moments);
+                fetchUserDataAndAddToOutput(currentRow, moments);
             }, delayToAvoidOverwhelmingMacNetworkStack);
         }
     }
@@ -238,7 +247,7 @@ process.stdin.on('end', () => {
 module.exports = {
     createIdObject,
     fetchPageOfDataAndFilter,
-    fetchUserDataAndAddToCSV,
+    fetchUserDataAndAddToOutput,
     filterContributorByTime,
     filterResponseForImportantEvents,
     getOrThrow: getOrThrowIfMissingOrEmpty,
