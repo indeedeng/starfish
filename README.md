@@ -155,10 +155,8 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 
 Starfish is licensed under the [Apache 2 License](LICENSE).
 
-#### Maintainers
+# Maintainers
 
-[danisyellis](https://github.com/danisyellis), Indeed Open Source
-
--   feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
+[danisyellis](https://github.com/danisyellis) and the rest of the Indeed Open Source team
 
 <p align="center"> <img src="img/OS-gold-starfish-banner.png" alt="Banner of five cartoony gold-colored starfishes arranged like Olympic circles, but with some spacing between, on a background of water" width="596" height="255" title = "Gold Starfish Banner"/> </p>
