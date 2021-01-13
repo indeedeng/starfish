@@ -108,13 +108,13 @@ For further reading see the [luxon time zone documentation](https://moment.githu
 
 ### To run:
 
-In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`
+In your terminal, type `node index.js < {path/to/CSVfile}.csv {date1} {date2}`
 
 > In the above, any text inside of curly brackets {} means that you should put your own value in.  
 > Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.  
-> Here's an example of what the terminal command could look like (I name my CSV files by date): `cat CSVsToParse/2020-11-01.csv | node index.js 2020-10-01 2020-11-01`
+> Here's an example of what the terminal command could look like (I name my CSV files by date): `node index.js < CSVsToParse/2020-11-01.csv 2020-10-01 2020-11-01`
 
-Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile} | node index.js > {nameOfFileToCreate}.txt {date1} {date2}`
+Reminder: You can redirect the output to a file, if you like: `node index.js < {path/to/CSVfile} {date1} {date2} > {nameOfFileToCreate}.txt`
 
 ### Updating
 
@@ -128,7 +128,7 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
 
 -   Lastly, if you're using Starfish we'd ***love*** to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment over in the [Discussions](https://github.com/indeedeng/starfish/discussions).
 
-# Troubleshooting and Changelog
+# Changelog and Troubleshooting
 
 ### Changelog
 **We recently created a [Changelog](https://github.com/indeedeng/starfish/discussions/100)** over in [Starfish's Discussions](https://github.com/indeedeng/starfish/discussions). ***If you're using Starfish, I'd recommend Subscribing to notifications for the Changelog.*** We'll be posting there when big changes happen like interesting new features and, most importantly, when security issues arise and get patched.
