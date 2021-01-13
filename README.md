@@ -1,6 +1,6 @@
 # Starfish
 
-[![GitHub version](https://badge.fury.io/gh/indeedeng%2Fstarfish.svg)](https://badge.fury.io/gh/indeedeng%2Fstarfish) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?style=flat-square) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+![GitHub version](https://img.shields.io/github/v/release/indeedeng/starfish?color=informational) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?color=lightgrey) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
 
 ## _Because Your Open Source Contributors Are Stars!_
 
@@ -25,15 +25,6 @@ _You can use Starfish to determine which of your employees are eligible to vote 
 
 For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/) or [This awesome article from Open Collective](https://blog.opencollective.com/indeeds-open-source-sustainability-strategy/)
 
-# **Note for current starfish users - breaking changes**
-
-Hi, thanks for using Starfish. Recently, we pushed up Starfish 2.0.0 which changes how we talk to GitHub's API, because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to use that token, instead of OAuth credentials.
-
-Also, the `TIMEZONE_OFFSET` environment variable has become `TIMEZONE`. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
-
-Make sure to run `npm ci` to update node packages.
-
-New users, you don't have to worry about this - just follow the instructions in _Getting Started_ below.
 
 # Getting Started
 
@@ -77,14 +68,18 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 
 #### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 
--   Paste the access token into `GITHUB_TOKEN`
--   `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID` should match the columns in the input file.
-    -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
-    -   For example, for the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
-    -   If you choose not to use an alternate id, you can put the same value in both fields
+-   Paste the access token into `GITHUB_TOKEN`.
 -   `TIMEZONE` allows you to specify which timezone Starfish should use to decide on which day a contribution happened.
     -   The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
+-   `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID` should match the columns in the input file.
+    -   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed.
+    -   For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
+    -   If you choose not to use an alternate id, you can put the same value in both fields.
 -   To filter out events for which the author is the owner of the repository, simply set `IGNORE_SELFOWNED_EVENTS = "true"`; otherwise leave it as `IGNORE_SELFOWNED_EVENTS = ""`.
+-   `GITHUB_IMPORTANT_EVENTS` contains a default set of events for Starfish to check. You can edit this list. It must contain a comma-separated list of events.
+    -   By default, this tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+    -   Starfish allows you to filter events based on the specific action taken. For example, you might want to count when a pull request is opened, but not when it is closed. To do that, the list of important events can include basic types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
+You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
 
 #### Time zones
 
@@ -111,18 +106,15 @@ Users that contributed between December 1, 2020, 12:00 AM GMT-6 and December 15,
 
 For further reading see the [luxon time zone documentation](https://moment.github.io/luxon/docs/manual/zones) and the [List of tz values](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones)
 
--   The CSV you input will be turned into an array, so the numbers for the CSV columns are zero-indexed. For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = 0` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = 1`. If you choose not to use an alternate id, you can put the same column number in both `CSV_COLUMN_NUMBER_FOR_GITHUB_ID` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID`.
-
--   To filter out events for which the author is the owner of the repository, simply set the `IGNORE_SELFOWNED_EVENTS` environment variable to "true", otherwise leave as `IGNORE_SELFOWNED_EVENTS = ""`.
-
 ### To run:
 
-In your terminal, type `cat {path/to/CSVfile}.csv | node index.js {date1} {date2}`
+In your terminal, type `node index.js < {path/to/CSVfile}.csv {date1} {date2}`
 
 > In the above, any text inside of curly brackets {} means that you should put your own value in.  
-> Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.
+> Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.  
+> Here's an example of what the terminal command could look like (I name my CSV files by date): `node index.js < CSVsToParse/2020-11-01.csv 2020-10-01 2020-11-01`
 
-Reminder: You can pipe the output to a file, if you like: `cat {path/to/CSVfile} | node index.js > {nameOfFileToCreate}.txt {date1} {date2}`
+Reminder: You can redirect the output to a file, if you like: `node index.js < {path/to/CSVfile} {date1} {date2} > {nameOfFileToCreate}.txt`
 
 ### Updating
 
@@ -130,18 +122,26 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
 
 # Other Important Info
 
-This tool by default checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+-   Caveats: [The GitHub Rest API](https://docs.github.com/en/free-pro-team@latest/rest) only holds the most recent 300 events for each user. Also, events older than 90 days will not be included (even if the total number of events in the timeline is less than 300). So, if you're looking for contributions from 4 months ago, Starfish won't be able to find any. And if you are looking for contributions from 2 months ago, and one or more of your users is very active (300 events or more per month!), your result might not be completely accurate.
 
-You can also override the list of events to check by editing the `GITHUB_IMPORTANT_EVENTS` variable in your ".env" file with a comma-separated list of events
+-   Also, we know that there are many types of contributions to open source - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
 
-Starfish supports filtering events based on the specific action taken. For example, you might want to count when a pull request is closed, but not when it is opened. To do that, the list of important events can include types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
-You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
+-   Lastly, if you're using Starfish we'd ***love*** to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment over in the [Discussions](https://github.com/indeedeng/starfish/discussions).
 
-Caveats: [The GitHub Rest API](https://docs.github.com/en/free-pro-team@latest/rest) only holds the most recent 300 events for each user. Also, events older than 90 days will not be included (even if the total number of events in the timeline is less than 300). So, if you're looking for contributions from 4 months ago, Starfish won't be able to find any. And if you are looking for contributions from 2 months ago, and one or more of your users is very active (300 events or more per month!), your result might not be completely accurate.
+# Changelog and Troubleshooting
 
-Also, we know that there are many types of contributions - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
+### Changelog
+**We recently created a [Changelog](https://github.com/indeedeng/starfish/discussions/100)** over in [Starfish's Discussions](https://github.com/indeedeng/starfish/discussions). ***If you're using Starfish, I'd recommend Subscribing to notifications for the Changelog.*** We'll be posting there when big changes happen like interesting new features and, most importantly, when security issues arise and get patched.
 
-Lastly, if you're using Starfish we'd love to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment by creating an issue or by emailing [danisyellis](https://github.com/danisyellis).
+### Troubleshooting
+-   **If you ran Starfish previously, pulled in new code, and are now having problems**, it's probably because we made some changes for version 2.0.0
+    -   Starfish 2.0.0 changes how we talk to GitHub's API, because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to use that token, instead of OAuth credentials.
+    -   Also, the `TIMEZONE_OFFSET` environment variable has become `TIMEZONE`. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
+
+-   **Whenever you pull in new code**, Make sure to run `npm ci` to update node packages.
+
+-   **If you get any other errors you can't fix** please start a [Discussion](https://github.com/indeedeng/starfish/discussions/new) so we can help you get set up or fix any bugs we've missed in the code.
+
 
 # Contributing
 
@@ -155,10 +155,8 @@ Starfish is governed by the [Contributor Covenant v 1.4.1](CODE_OF_CONDUCT.md).
 
 Starfish is licensed under the [Apache 2 License](LICENSE).
 
-#### Maintainers
+# Maintainers
 
-[danisyellis](https://github.com/danisyellis), Indeed Open Source
-
--   feel free to open an issue if you have any questions about how to use Starfish. I'm happy to help.
+[danisyellis](https://github.com/danisyellis) and the rest of the Indeed Open Source team
 
 <p align="center"> <img src="img/OS-gold-starfish-banner.png" alt="Banner of five cartoony gold-colored starfishes arranged like Olympic circles, but with some spacing between, on a background of water" width="596" height="255" title = "Gold Starfish Banner"/> </p>
