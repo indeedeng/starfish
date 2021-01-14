@@ -12,16 +12,6 @@ const nock = require('nock');
 const envBeforeChanges = Object.assign({}, process.env);
 
 beforeEach(() => {
-    process.env = {
-        GITHUB_TOKEN: 'mockToken',
-        TIMEZONE: 'America/Los_Angeles',
-        CSV_COLUMN_NUMBER_FOR_GITHUB_ID: '0',
-        CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID: '1',
-        IGNORE_SELFOWNED_EVENTS: 'false',
-        GITHUB_IMPORTANT_EVENTS:
-            'CommitCommentEvent,IssueCommentEvent,IssuesEvent,PullRequestEvent,PullRequestReviewEvent,PullRequestReviewCommentEvent',
-    };
-
     process.argv[2] = '2020-01-01';
     process.argv[3] = '2020-12-01';
 });
