@@ -1,4 +1,3 @@
-const sinon = require('sinon');
 const {
     getOrThrow,
     parseDatesFromArgv,
@@ -66,6 +65,63 @@ const mockedEvents = [
         payload: { action: 'created', issue: [Object], comment: [Object] },
         public: true,
         created_at: '2020-09-16T18:36:33Z',
+        org: {
+            id: 2905012343,
+            login: 'indeedeng',
+            gravatar_id: '',
+            url: 'https://api.github.com/orgs/indeedeng',
+            avatar_url: 'https://avatars.githubusercontent.com/u/2905043?',
+        },
+    },
+];
+
+const mockedEventsOutOfTimeRange = [
+    {
+        id: '3',
+        type: 'PullRequestEvent',
+        actor: {
+            id: 4355712984,
+            login: 'earlyUser',
+            display_login: 'madeEventNotInTimeRange',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/earlyUser',
+            avatar_url: 'https://avatars.githubusercontent.com/u/earlyUser',
+        },
+        repo: {
+            id: 189612339372,
+            name: 'indeedeng/starfish',
+            url: 'https://api.github.com/repos/indeedeng/starfish',
+        },
+        payload: { action: 'created', issue: [Object], comment: [Object] },
+        public: true,
+        created_at: '2019-01-01T18:36:33Z',
+        org: {
+            id: 2905012343,
+            login: 'indeedeng',
+            gravatar_id: '',
+            url: 'https://api.github.com/orgs/indeedeng',
+            avatar_url: 'https://avatars.githubusercontent.com/u/2905043?',
+        },
+    },
+    {
+        id: '4',
+        type: 'PullRequestEvent',
+        actor: {
+            id: 4355712985,
+            login: 'earlyUser',
+            display_login: 'madeEventNotInTimeRange',
+            gravatar_id: '',
+            url: 'https://api.github.com/users/earlyUser',
+            avatar_url: 'https://avatars.githubusercontent.com/u/earlyUser',
+        },
+        repo: {
+            id: 189612339372,
+            name: 'indeedeng/starfish',
+            url: 'https://api.github.com/repos/indeedeng/starfish',
+        },
+        payload: { action: 'created', issue: [Object], comment: [Object] },
+        public: true,
+        created_at: '2019-01-02T18:36:33Z',
         org: {
             id: 2905012343,
             login: 'indeedeng',
@@ -177,13 +233,22 @@ describe('createIdObject', () => {
 });
 
 describe('didTheyQualify', () => {
-    it('must show the contributor email', () => {
+    it('returns true if two contributions are within the time range and the minimum number of contributions is 2', () => {
         const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], mockedEvents);
         const moments = parseDatesFromArgv();
-
         expect(didTheyQualify(idObject, moments)).toBeTruthy();
     });
+    it('returns false if there is only 1 valid contribution, minimum number of contributions is higher than 1', () => {
+        const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], mockedEvents[0]);
+        const moments = parseDatesFromArgv();
+        expect(didTheyQualify(idObject, moments)).toBeFalsy();
+    });
+    it('returns false if the two dates of the contribution are not within the date range', () => {
+        const idObject = createIdObject(
+            ['earlyUser', 'madeEventNotInTimeRange@user.com'],
+            mockedEventsOutOfTimeRange
+        );
+        const moments = parseDatesFromArgv();
+        expect(didTheyQualify(idObject, moments)).toBeFalsy();
+    });
 });
-// make a test that checks for this
-// sinon.spy(console, 'log');
-// expect(console.log.calledWith('mockedUser@user.com')).toEqual(true);
