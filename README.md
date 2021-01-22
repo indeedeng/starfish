@@ -76,8 +76,11 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
     -   If you choose not to use an alternate id, you can put the same value in both fields.
 -   To filter out events for which the author is the owner of the repository, simply set `IGNORE_SELFOWNED_EVENTS = "true"`; otherwise leave it as `IGNORE_SELFOWNED_EVENTS = ""`.
 -   By default, Starfish will return the name of anyone who has at least 1 qualifying contribution within the time period. If you'd like to use a different number, you can change `MINIMUM_NUMBER_OF_CONTRIBUTIONS`.
--   `GITHUB_IMPORTANT_EVENTS` contains a default set of events for Starfish to check. You can edit this list. It must contain a comma-separated list of events. - By default, this tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions. - Starfish allows you to filter events based on the specific action taken. For example, you might want to count when a pull request is opened, but not when it is closed. To do that, the list of important events can include basic types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
-    You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
+-   `GITHUB_IMPORTANT_EVENTS` contains a default set of events for Starfish to check. You can edit this list. It must contain a comma-separated list of events.
+    -   By default, this tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents.
+    -   We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+    -   Starfish allows you to filter events based on the specific action taken. For example, you might want to count when a pull request is opened, but not when it is closed. To do that, the list of important events can include basic types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
+        You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
 
 #### Time zones
 

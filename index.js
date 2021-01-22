@@ -179,14 +179,14 @@ function isContributionInTimeRange(createdAt, startMoment, endMoment) {
 function didTheyQualify(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
-    let numberOfValidContributions = 0;
+    let numberOfQualifyingContributions = 0;
 
     for (let i = 0; i < idObject.contributions.length; i++) {
         const createdAtString = idObject.contributions[i].created_at;
         if (isContributionInTimeRange(createdAtString, startMoment, endMoment)) {
-            numberOfValidContributions++;
+            numberOfQualifyingContributions++;
         }
-        if (numberOfValidContributions >= minimumNumberOfContributions) {
+        if (numberOfQualifyingContributions >= minimumNumberOfContributions) {
             return true;
         }
     }

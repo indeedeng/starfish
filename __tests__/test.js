@@ -239,7 +239,7 @@ describe('didTheyQualify', () => {
         expect(didTheyQualify(idObject, moments)).toBeTruthy();
     });
     it('returns false if there is only 1 valid contribution, minimum number of contributions is higher than 1', () => {
-        const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], mockedEvents[0]);
+        const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], [mockedEvents[0]]);
         const moments = parseDatesFromArgv();
         expect(didTheyQualify(idObject, moments)).toBeFalsy();
     });
