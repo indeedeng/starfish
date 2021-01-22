@@ -25,7 +25,6 @@ _You can use Starfish to determine which of your employees are eligible to vote 
 
 For More Info on what a FOSS Contributor Fund is, and how to start your own, [Watch This Talk from FOSDEM](https://fosdem.org/2019/schedule/event/community_sustaining_foss_projects_democratizing_sponsorship/) or [Read This Post on Indeed's Engineering Blog](https://engineering.indeedblog.com/blog/2019/07/foss-fund-six-months-in/) or [This awesome article from Open Collective](https://blog.opencollective.com/indeeds-open-source-sustainability-strategy/)
 
-
 # Getting Started
 
 ### Prerequisites
@@ -76,10 +75,12 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
     -   For example, in the example CSV above, `CSV_COLUMN_NUMBER_FOR_GITHUB_ID = "0"` and `CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID = "1"`
     -   If you choose not to use an alternate id, you can put the same value in both fields.
 -   To filter out events for which the author is the owner of the repository, simply set `IGNORE_SELFOWNED_EVENTS = "true"`; otherwise leave it as `IGNORE_SELFOWNED_EVENTS = ""`.
+-   By default, Starfish will return the name of anyone who has at least 1 qualifying contribution within the time period. If you'd like to use a different number, you can change `MINIMUM_NUMBER_OF_CONTRIBUTIONS`.
 -   `GITHUB_IMPORTANT_EVENTS` contains a default set of events for Starfish to check. You can edit this list. It must contain a comma-separated list of events.
-    -   By default, this tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents. We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
+    -   By default, this tool checks for CommitCommentEvents, IssueCommentEvents, IssuesEvents, PullRequestEvents, PullRequestReviewEvents, and PullRequestReviewCommentEvents.
+    -   We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
     -   Starfish allows you to filter events based on the specific action taken. For example, you might want to count when a pull request is opened, but not when it is closed. To do that, the list of important events can include basic types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
-You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
+        You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
 
 #### Time zones
 
@@ -126,22 +127,24 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
 
 -   Also, we know that there are many types of contributions to open source - not just code, and not just on GitHub. At Indeed, we have a Google form Indeedians can fill out to tell us about other contributions they've made. We recommend you do that as well.
 
--   Lastly, if you're using Starfish we'd ***love*** to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment over in the [Discussions](https://github.com/indeedeng/starfish/discussions).
+-   Lastly, if you're using Starfish we'd **_love_** to hear about it. What are you using Starfish for? Does it work well for you? You can leave us a comment over in the [Discussions](https://github.com/indeedeng/starfish/discussions).
 
 # Changelog and Troubleshooting
 
 ### Changelog
-**We recently created a [Changelog](https://github.com/indeedeng/starfish/discussions/100)** over in [Starfish's Discussions](https://github.com/indeedeng/starfish/discussions). ***If you're using Starfish, I'd recommend Subscribing to notifications for the Changelog.*** We'll be posting there when big changes happen like interesting new features and, most importantly, when security issues arise and get patched.
+
+**We recently created a [Changelog](https://github.com/indeedeng/starfish/discussions/100)** over in [Starfish's Discussions](https://github.com/indeedeng/starfish/discussions). **_If you're using Starfish, I'd recommend Subscribing to notifications for the Changelog._** We'll be posting there when big changes happen like interesting new features and, most importantly, when security issues arise and get patched.
 
 ### Troubleshooting
+
 -   **If you ran Starfish previously, pulled in new code, and are now having problems**, it's probably because we made some changes for version 2.0.0
+
     -   Starfish 2.0.0 changes how we talk to GitHub's API, because the old way is now deprecated. When you pull in the latest code changes, you'll also want to look at [these Instructions](https://github.com/indeedeng/starfish/blob/master/README.md#then-get-yourself-github-authentication-credentials) to get a Personal Access Token for the GitHub API. Then, change your .env to use that token, instead of OAuth credentials.
     -   Also, the `TIMEZONE_OFFSET` environment variable has become `TIMEZONE`. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
 
 -   **Whenever you pull in new code**, Make sure to run `npm ci` to update node packages.
 
 -   **If you get any other errors you can't fix** please start a [Discussion](https://github.com/indeedeng/starfish/discussions/new) so we can help you get set up or fix any bugs we've missed in the code.
-
 
 # Contributing
 

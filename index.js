@@ -14,10 +14,11 @@ function getOrThrowIfMissingOrEmpty(configField) {
     return value;
 }
 const githubToken = Buffer.from(getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).toString('base64');
+const timeZone = process.env.TIMEZONE;
 const githubIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_GITHUB_ID');
 const alternateIdColumnNumber = getOrThrowIfMissingOrEmpty('CSV_COLUMN_NUMBER_FOR_ALTERNATE_ID');
+const minimumNumberOfContributions = process.env.MINIMUM_NUMBER_OF_CONTRIBUTIONS || 1;
 const githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENTS').split(',');
-const timeZone = process.env.TIMEZONE;
 
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.log(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
@@ -175,16 +176,18 @@ function isContributionInTimeRange(createdAt, startMoment, endMoment) {
     );
 }
 
-function filterContributorByTime(idObject, moments) {
+function didTheyQualify(idObject, moments) {
     const startMoment = moments[0];
     const endMoment = moments[1];
+    let numberOfQualifyingContributions = 0;
 
     for (let i = 0; i < idObject.contributions.length; i++) {
         const createdAtString = idObject.contributions[i].created_at;
-
         if (isContributionInTimeRange(createdAtString, startMoment, endMoment)) {
-            console.log(idObject.alternateId);
-            break;
+            numberOfQualifyingContributions++;
+        }
+        if (numberOfQualifyingContributions >= minimumNumberOfContributions) {
+            return true;
         }
     }
 }
@@ -193,7 +196,9 @@ function fetchUserDataAndAddToOutput(row, moments) {
     fetchPageOfDataAndFilter(url)
         .then((importantEvents) => {
             const idObject = createIdObject(row, importantEvents);
-            filterContributorByTime(idObject, moments);
+            if (didTheyQualify(idObject, moments)) {
+                console.log(idObject.alternateId);
+            }
         })
         .catch((err) => {
             console.error('error', err);
@@ -248,7 +253,7 @@ module.exports = {
     createIdObject,
     fetchPageOfDataAndFilter,
     fetchUserDataAndAddToOutput,
-    filterContributorByTime,
+    didTheyQualify,
     filterResponseForImportantEvents,
     getOrThrow: getOrThrowIfMissingOrEmpty,
     parseDatesFromArgv,
