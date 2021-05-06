@@ -8,6 +8,8 @@
 
 <br>
 
+### NOTE: The main branch has been renamed from 'master' to 'main'.
+
 ## This is a tool to:
 
 -   parse a CSV of employee GitHub Ids
