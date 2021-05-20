@@ -119,7 +119,7 @@ Reminder: You can redirect the output to a file, if you like: `node index.js < {
 
 ### Updating
 
-From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin master. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
+From time to time, we'll be updating the Starfish code. You can get the newest code with git pull origin main. Just be sure to run `npm ci` when you do that, in case any node packages were updated.
 
 # Other Important Info
 
