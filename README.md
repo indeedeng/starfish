@@ -8,6 +8,8 @@
 
 <br>
 
+### NOTE: The default branch has been renamed from 'master' to 'main'.
+
 ## This is a tool to:
 
 -   parse a CSV of employee GitHub Ids
@@ -143,6 +145,8 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
     -   Also, the `TIMEZONE_OFFSET` environment variable has become `TIMEZONE`. You'll want to change that as well, and most likely change the value you're giving it, as explained [here](https://github.com/indeedeng/starfish#next-create-a-file-named-env-copy-the-contents-of-the-envtemplate-file-into-it-and-add-your-values-to-the-new-file)
 
 -   **Whenever you pull in new code**, Make sure to run `npm ci` to update node packages.
+
+- If you are having **other issues** (For example, if you need help switching your local clone's default branch from master to main), **check out the [Changelog](https://github.com/indeedeng/starfish/discussions/100).**
 
 -   **If you get any other errors you can't fix** please start a [Discussion](https://github.com/indeedeng/starfish/discussions/new) so we can help you get set up or fix any bugs we've missed in the code.
 
