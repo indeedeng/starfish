@@ -1,6 +1,6 @@
 const { DateTime } = require('luxon');
-const { createTimeZone, isContributionInTimeRange } = require('..');
-
+const { createTimeZone } = require('../dateTimes');
+const { isContributionInTimeRange } = require('../starfish');
 const oneHourInMinutes = 60;
 
 describe('createTimeZone', () => {
