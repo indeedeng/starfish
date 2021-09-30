@@ -32,24 +32,24 @@ function filterResponseForImportantEvents(allEventsFromFetch) {
     });
 }
 
-function shouldIncludeEventBecauseAutherIsNotRepoOwner(eventType) {
+function repoIsNotSelfOwned(eventType) {
     const isAuthorAlsoTheOwner = eventType.author_association === 'OWNER';
 
     return !isAuthorAlsoTheOwner;
 }
 
-function filterByAuthorAssociation(events) {
+function filterOutSelfOwnedEvents(events) {
     const filteredEvents = events.filter((event) => {
         switch (event.type) {
             case 'PullRequestEvent':
             case 'PullRequestReviewEvent':
-                return shouldIncludeEventBecauseAutherIsNotRepoOwner(event.payload.pull_request);
+                return repoIsNotSelfOwned(event.payload.pull_request);
             case 'CommitCommentEvent':
             case 'IssueCommentEvent':
             case 'PullRequestReviewCommentEvent':
-                return shouldIncludeEventBecauseAutherIsNotRepoOwner(event.payload.comment);
+                return repoIsNotSelfOwned(event.payload.comment);
             case 'IssuesEvent':
-                return shouldIncludeEventBecauseAutherIsNotRepoOwner(event.payload.issue);
+                return repoIsNotSelfOwned(event.payload.issue);
             default:
                 return false;
         }
@@ -81,7 +81,7 @@ function fetchPageOfDataAndFilter(url) {
                         importantEvents = importantEvents.concat(filteredForImportant);
 
                         if (ignoreSelfOwnedEvents === 'true') {
-                            importantEvents = filterByAuthorAssociation(importantEvents);
+                            importantEvents = filterOutSelfOwnedEvents(importantEvents);
                         }
                         if (parsed && parsed.next && parsed.next.url) {
                             fetchPageOfDataAndFilter(parsed.next.url)

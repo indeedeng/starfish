@@ -56,7 +56,7 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Wa
 > My GitHub ID is:,Email Address  
 > danisyellis,dgellis@indeed.com  
 > octocat,octocat@github.com  
-> thisShouldError,notARealGithubId@example.com
+> thisNameWillThrowAnErrorBecauseItIsNotARealGithubId,fakePerson@example.com
 
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet (one column per data field, one row per person) and download a CSV from that.
@@ -114,7 +114,7 @@ For further reading see the [luxon time zone documentation](https://moment.githu
 In your terminal, type `node index.js {date1} {date2} {path/to/CSVfile}.csv`
 
 > In the above, any text inside of curly brackets {} means that you should put your own value in.  
-> Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.  
+> Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as `2019-04-01`.  
 > Here's an example of what the terminal command could look like (I name my CSV files by date): `node index.js 2020-10-01 2020-11-01 CSVsToParse/2020-11-01.csv`
 
 Tip: You can redirect the output to a file, if you like: `node index.js {date1} {date2} {path/to/CSVfile} > {nameOfFileToCreate}.txt`
