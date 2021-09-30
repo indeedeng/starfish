@@ -56,7 +56,7 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Wa
 > My GitHub ID is:,Email Address  
 > danisyellis,dgellis@indeed.com  
 > octocat,octocat@github.com  
-> thisShouldError,notaname@example.com
+> thisShouldError,notARealGithubId@example.com
 
 > (Not all CSVs have a header, but Starfish does expect the first row of your CSV to be a header.)  
 > You can create a CSV on your own by creating a file, giving it the file extension .csv, and making it look like the above example. Or, even if you're not using google forms to gather GitHub ids, you can still enter your data into a google sheet (one column per data field, one row per person) and download a CSV from that.
@@ -111,13 +111,13 @@ For further reading see the [luxon time zone documentation](https://moment.githu
 
 ### To run:
 
-In your terminal, type `node index.js < {path/to/CSVfile}.csv {date1} {date2}`
+In your terminal, type `node index.js {date1} {date2} {path/to/CSVfile}.csv`
 
 > In the above, any text inside of curly brackets {} means that you should put your own value in.  
 > Dates should be written in ISO-8601 format. For example, April 1, 2019 should be entered as 2019-04-01.  
-> Here's an example of what the terminal command could look like (I name my CSV files by date): `node index.js < CSVsToParse/2020-11-01.csv 2020-10-01 2020-11-01`
+> Here's an example of what the terminal command could look like (I name my CSV files by date): `node index.js 2020-10-01 2020-11-01 CSVsToParse/2020-11-01.csv`
 
-Reminder: You can redirect the output to a file, if you like: `node index.js < {path/to/CSVfile} {date1} {date2} > {nameOfFileToCreate}.txt`
+Tip: You can redirect the output to a file, if you like: `node index.js {date1} {date2} {path/to/CSVfile} > {nameOfFileToCreate}.txt`
 
 ### Updating
 
@@ -146,7 +146,7 @@ From time to time, we'll be updating the Starfish code. You can get the newest c
 
 -   **Whenever you pull in new code**, Make sure to run `npm ci` to update node packages.
 
-- If you are having **other issues** (For example, if you need help switching your local clone's default branch from master to main), **check out the [Changelog](https://github.com/indeedeng/starfish/discussions/100).**
+-   If you are having **other issues** (For example, if you need help switching your local clone's default branch from master to main), **check out the [Changelog](https://github.com/indeedeng/starfish/discussions/100).**
 
 -   **If you get any other errors you can't fix** please start a [Discussion](https://github.com/indeedeng/starfish/discussions/new) so we can help you get set up or fix any bugs we've missed in the code.
 

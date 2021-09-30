@@ -1,16 +1,16 @@
 {
   "name": "starfish",
-  "version": "1.0.0",
-  "description": "- parse a CSV of employee GitHub Ids - use those Ids and the Github REST API to check for open source contributions on GitHub that happened between 2 different dates - make a new text file with the GitHub Ids of those employees",
-  "main": "contributors.js",
+  "version": "2.0.0",
+  "description": "- parse a CSV of employee GitHub Ids - use those Ids and the Github REST API to check for open source contributions on GitHub that happened between 2 different dates - log out the ids of those employees",
+  "main": "index.js",
   "scripts": {
     "test": "jest",
     "test:coverage": "jest --coverage",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Dani Gellis <dgellis@indeed.com> (https://github.com/danisyellis)",
+  "license": "Apache-2.0",
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-plugin-gettext": "^1.1.0",

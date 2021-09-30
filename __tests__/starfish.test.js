@@ -1,18 +1,18 @@
 const {
-    getOrThrow,
-    parseDatesFromArgv,
-    filterResponseForImportantEvents,
-    fetchPageOfDataAndFilter,
     createIdObject,
     didTheyQualify,
-} = require('../index');
-const nock = require('nock');
+    fetchPageOfDataAndFilter,
+    filterResponseForImportantEvents,
+} = require('../starfish');
+const { getDateTimesFromArgv, getOrThrowIfMissingOrEmpty } = require('../globals');
 
+const nock = require('nock');
 const envBeforeChanges = Object.assign({}, process.env);
 
 beforeEach(() => {
     process.argv[2] = '2020-01-01';
     process.argv[3] = '2020-12-01';
+    process.argv[4] = './fixtures/test.csv';
 });
 afterAll(() => {
     process.env = envBeforeChanges;
@@ -133,25 +133,25 @@ const mockedEventsOutOfTimeRange = [
 ];
 /* eslint-enable camelcase */
 
-describe('getOrThrow', () => {
+describe('getOrThrowIfMissingOrEmpty', () => {
     it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
+        expect(() => getOrThrowIfMissingOrEmpty('configurationThatDoesNotExist')).toThrow(Error);
     });
     it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
+        expect(() => getOrThrowIfMissingOrEmpty('TIMEZONE')).not.toThrow(Error);
+        expect(getOrThrowIfMissingOrEmpty('TIMEZONE')).toEqual(process.env.TIMEZONE);
     });
 });
 
-describe('parseDatesFromArgv', () => {
+describe('getDatesFromArgv', () => {
     it('should generate 2 dates based on arguments', () => {
         const testdateString1 = '2020-01-01T00:00:00.000-08:00';
         const testdateString2 = '2020-12-01T23:59:59.999-08:00';
 
-        const moments = parseDatesFromArgv();
+        const dateTimes = getDateTimesFromArgv(process.env.TIMEZONE);
 
-        expect(`${moments[0]}`).toEqual(`${testdateString1}`);
-        expect(`${moments[1]}`).toEqual(`${testdateString2}`);
+        expect(`${dateTimes[0]}`).toEqual(`${testdateString1}`);
+        expect(`${dateTimes[1]}`).toEqual(`${testdateString2}`);
     });
 });
 
@@ -164,13 +164,13 @@ describe('filterResponseForImportantEvents', () => {
     });
 });
 
-describe('getOrThrow', () => {
+describe('getOrThrowIfMissingOrEmpty', () => {
     it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrow('configurationThatDoesNotExist')).toThrow(Error);
+        expect(() => getOrThrowIfMissingOrEmpty('configurationThatDoesNotExist')).toThrow(Error);
     });
     it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrow('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrow('TIMEZONE')).toEqual(process.env.TIMEZONE);
+        expect(() => getOrThrowIfMissingOrEmpty('TIMEZONE')).not.toThrow(Error);
+        expect(getOrThrowIfMissingOrEmpty('TIMEZONE')).toEqual(process.env.TIMEZONE);
     });
 });
 
@@ -235,20 +235,20 @@ describe('createIdObject', () => {
 describe('didTheyQualify', () => {
     it('returns true if two contributions are within the time range and the minimum number of contributions is 2', () => {
         const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], mockedEvents);
-        const moments = parseDatesFromArgv();
-        expect(didTheyQualify(idObject, moments)).toBeTruthy();
+        const dateTimes = getDateTimesFromArgv(process.env.TIMEZONE);
+        expect(didTheyQualify(idObject, dateTimes)).toBeTruthy();
     });
     it('returns false if there is only 1 valid contribution, minimum number of contributions is higher than 1', () => {
         const idObject = createIdObject(['mockedUser', 'mockedUser@user.com'], [mockedEvents[0]]);
-        const moments = parseDatesFromArgv();
-        expect(didTheyQualify(idObject, moments)).toBeFalsy();
+        const dateTimes = getDateTimesFromArgv(process.env.TIMEZONE);
+        expect(didTheyQualify(idObject, dateTimes)).toBeFalsy();
     });
     it('returns false if the two dates of the contribution are not within the date range', () => {
         const idObject = createIdObject(
             ['earlyUser', 'madeEventNotInTimeRange@user.com'],
             mockedEventsOutOfTimeRange
         );
-        const moments = parseDatesFromArgv();
-        expect(didTheyQualify(idObject, moments)).toBeFalsy();
+        const dateTimes = getDateTimesFromArgv(process.env.TIMEZONE);
+        expect(didTheyQualify(idObject, dateTimes)).toBeFalsy();
     });
 });
