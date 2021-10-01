@@ -1,15 +1,15 @@
 # Contributing
 
-If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you.
+## If you'd like to contribute, please open an issue describing what you want to change and why, or comment on an existing issue. We'd love to have you
 
-Here's an overview of Starfish's file structure.
+### Here's an overview of Starfish's file structure
 
-> -   The `index.js` file is the code's entry point. It parses the incoming CSV of potential contributors, and then calls the code in `starfish.js` for each potential contributor.
-> -   The main 'business logic' of Starfish is inside of `starfish.js`. This is where we fetch from GitHub, decide if an event is a valid contribution, and then log out the contributors who have valid events.
-> -   The `globals.js` and `dateTimes.js` files contain code that sets configuration variables, based on user input from the `.env` file and from `process.argv`.
-> -   Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a folder for tests, the package.json (which is a node configuration file), a folder to hold the CSV(s) of employee info, and files to configure eslint, prettier, and nvm.
+> - The `index.js` file is the code's entry point. It parses the incoming CSV of potential contributors, and then calls the code in `starfish.js` for each potential contributor.
+> - The main 'business logic' of Starfish is inside of `starfish.js`. This is where we fetch from GitHub, decide if an event is a valid contribution, and then log out the contributors who have valid events.
+> - The `globals.js` and `dateTimes.js` files contain code that sets configuration variables, based on user input from the `.env` file and from `process.argv`.
+> - Everything else is text files, image files, the gitignore (tells git which files/folders to ignore), a template for making the environment variables, a folder for tests, the package.json (which is a node configuration file), a folder to hold the CSV(s) of employee info, and files to configure eslint, prettier, and nvm.
 
-#### Before submitting your Pull Request, please do each of the following steps, and fix any problems that come up:
+## Before submitting your Pull Request, please do each of the following steps, and fix any problems that come up
 
 1. Make sure the code runs and gives the output you expect.
 1. If your change adds an environment variable, be sure to add it to the both the `.env.template` file and the `jest/setEnvVars.js` file. (`setEnvVars.js` is used to create environment variables for the tests.)
