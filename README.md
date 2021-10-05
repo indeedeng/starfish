@@ -1,7 +1,3 @@
-<!-- markdownlint-disable MD026 -->
-<!-- markdownlint-disable MD025 -->
-<!-- markdownlint-disable MD007 -->
-<!-- markdownlint-disable MD033 -->
 # Starfish
 
 ![GitHub version](https://img.shields.io/github/v/release/indeedeng/starfish?color=informational) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?color=lightgrey) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
