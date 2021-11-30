@@ -10,9 +10,11 @@
 
 ## This is a tool to:
 
-- parse a CSV of employee GitHub Ids
-- use those Ids, and the GitHub REST API, to check for open source contributions by those employees that happened between any 2 dates
-- log out the ids of those employees (either GitHub Ids or another unique identifier you choose)
+- Parse a CSV of employee GitHub Ids
+- Use those Ids, and the Github REST API, to check for open source contributions made by those employees between 2 specific dates
+- Log out the ids of those employees (either GitHub Ids or another unique identifier you choose)
+
+Starfish gives you the option of either using the default settings or making customizations.  
 
 ## Purpose
 
