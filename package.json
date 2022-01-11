@@ -18,7 +18,7 @@
     "luxon": "^1.25.0",
     "node-fetch": "^2.6.1",
     "parse-csv": "^0.2.0",
-    "parse-link-header": "^1.0.1"
+    "parse-link-header": "^2.0.0"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
