@@ -16,7 +16,7 @@
     "dotenv": "^8.2.0",
     "eslint-plugin-gettext": "^1.1.0",
     "luxon": "^1.25.0",
-    "node-fetch": "^2.6.1",
+    "node-fetch": "^2.6.7",
     "parse-csv": "^0.2.0",
     "parse-link-header": "^2.0.0"
   },
@@ -26,7 +26,7 @@
     "eslint-plugin-jest": "^24.1.0",
     "eslint-plugin-prettier": "^3.1.4",
     "jest": "^27.2.4",
-    "markdownlint-cli": "^0.29.0",
+    "markdownlint-cli": "^0.32.2",
     "nock": "^13.0.4",
     "prettier": "^2.1.2"
   },
