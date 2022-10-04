@@ -5,6 +5,8 @@ const {
     githubToken,
     ignoreSelfOwnedEvents,
     minimumNumberOfContributions,
+    githubIgnoreRepositories,
+    githubOrganizations,
 } = require('./globals');
 const { createLuxonDateTimeFromIso } = require('./dateTimes');
 const fetch = require('node-fetch');
@@ -123,6 +125,14 @@ function isContributionInTimeRange(createdAt, startMoment, endMoment) {
     );
 }
 
+function filterResponseFor(organization) {
+    if (githubOrganizations.length && githubOrganizations[0] !== '') {
+        return githubOrganizations.indexOf(organization) >= 0;
+    }
+
+    return true;
+}
+
 function didTheyQualify(idObject, dateTimes) {
     const startMoment = dateTimes[0];
     const endMoment = dateTimes[1];
@@ -130,7 +140,13 @@ function didTheyQualify(idObject, dateTimes) {
 
     for (let i = 0; i < idObject.contributions.length; i++) {
         const createdAtString = idObject.contributions[i].created_at;
-        if (isContributionInTimeRange(createdAtString, startMoment, endMoment)) {
+        const repository = idObject.contributions[i].repo.name;
+        const organization = idObject.contributions[i].org.login;
+        if (
+            isContributionInTimeRange(createdAtString, startMoment, endMoment) &&
+            filterResponseFor(organization) &&
+            githubIgnoreRepositories.indexOf(repository) === -1
+        ) {
             numberOfQualifyingContributions++;
         }
         if (numberOfQualifyingContributions >= minimumNumberOfContributions) {
