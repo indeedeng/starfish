@@ -5,8 +5,8 @@ const {
     githubToken,
     ignoreSelfOwnedEvents,
     minimumNumberOfContributions,
-    githubIgnoreRepositories,
-    githubOrganizations,
+    repositoriesToFilterOut,
+    organizationsToFilterOut,
 } = require('./globals');
 const { createLuxonDateTimeFromIso } = require('./dateTimes');
 const fetch = require('node-fetch');
@@ -125,28 +125,33 @@ function isContributionInTimeRange(createdAt, startMoment, endMoment) {
     );
 }
 
-function filterResponseFor(organization) {
-    if (githubOrganizations.length && githubOrganizations[0] !== '') {
-        return githubOrganizations.indexOf(organization) >= 0;
+function filterResponseFor(orgFromThisContribution) {
+    if (organizationsToFilterOut.length && organizationsToFilterOut[0] !== '') {
+        return organizationsToFilterOut.indexOf(orgFromThisContribution) === -1;
     }
 
     return true;
 }
 
-function didTheyQualify(idObject, dateTimes) {
+function isValidContribution(contribution, dateTimes) {
     const startMoment = dateTimes[0];
     const endMoment = dateTimes[1];
+    const createdAtString = contribution.created_at;
+    const repository = contribution.repo.name;
+    const organization = contribution.org.login;
+
+    return (
+        isContributionInTimeRange(createdAtString, startMoment, endMoment) &&
+        filterResponseFor(organization) &&
+        repositoriesToFilterOut.indexOf(repository) === -1
+    );
+}
+
+function didTheyQualify(idObject, dateTimes) {
     let numberOfQualifyingContributions = 0;
 
     for (let i = 0; i < idObject.contributions.length; i++) {
-        const createdAtString = idObject.contributions[i].created_at;
-        const repository = idObject.contributions[i].repo.name;
-        const organization = idObject.contributions[i].org.login;
-        if (
-            isContributionInTimeRange(createdAtString, startMoment, endMoment) &&
-            filterResponseFor(organization) &&
-            githubIgnoreRepositories.indexOf(repository) === -1
-        ) {
+        if (isValidContribution(idObject.contributions[i], dateTimes)) {
             numberOfQualifyingContributions++;
         }
         if (numberOfQualifyingContributions >= minimumNumberOfContributions) {

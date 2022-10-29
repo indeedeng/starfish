@@ -30,10 +30,10 @@ const githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENT
 const timeZone = process.env.TIMEZONE;
 const dateTimes = getDateTimesFromArgv(timeZone);
 const csvFilename = process.argv[4];
-const githubIgnoreRepositories = (process.env.IGNORE_REPOSITORIES || '')
+const repositoriesToFilterOut = (process.env.IGNORE_REPOSITORIES || '')
     .split(',')
     .map((repo) => repo.trim());
-const githubOrganizations = (process.env.GITHUB_ORGANIZATIONS || '')
+const organizationsToFilterOut = (process.env.IGNORE_ORGANIZATIONS || '')
     .split(',')
     .map((repo) => repo.trim());
 
@@ -55,6 +55,6 @@ module.exports = {
     githubToken,
     ignoreSelfOwnedEvents,
     minimumNumberOfContributions,
-    githubIgnoreRepositories,
-    githubOrganizations,
+    repositoriesToFilterOut,
+    organizationsToFilterOut,
 };

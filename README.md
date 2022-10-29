@@ -86,9 +86,9 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 - `IGNORE_REPOSITORIES` contains repository names to be ignored to check. Names must be separated by a comma.
     - One repository to ignore: `IGNORE_REPOSITORIES="indeedeng/starfish"`
     - Many repositories to ignore: `IGNORE_REPOSITORIES="indeedeng/starfish,indeedeng/proctor"`
-- `GITHUB_ORGANIZATIONS` contains organization login to be filter the events. Logins must be separated by a comma.
-    - One organization to consider: `GITHUB_ORGANIZATIONS = "indeedeng"`
-    - Many organizations to consider: `GITHUB_ORGANIZATIONS = "indeedeng,github"`
+- `IGNORE_ORGANIZATIONS` contains organization login to be filter the events. Logins must be separated by a comma.
+    - One organization to consider: `IGNORE_ORGANIZATIONS = "indeedeng"`
+    - Many organizations to consider: `IGNORE_ORGANIZATIONS = "indeedeng,github"`
 
 ### Time zones
 
