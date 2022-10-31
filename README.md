@@ -33,9 +33,9 @@ For More Info on what a FOSS Contributor Fund is, and how to start your own, [Wa
 
 ### First, clone the repo to your computer, then navigate to the starfish folder and run `npm ci`.
 
-- This project runs on **node 10.13.0 or higher**, node 12 is preferred.
-- `node -v`, will show you which version of node you're using in your machine.
-- If your version is below 10.13.0, either update to a compatible version of node, or [install nvm](https://github.com/nvm-sh/nvm#about) so that Starfish can use a compatible node version without affecting other applications on your system.
+- This project only runs on **node version 16 or higher**, node 18 is preferred.
+- `node -v`, will show you which version of node you're using on your machine.
+- If your node version is below 16, either update to a compatible version of node, or [install and use nvm](https://github.com/nvm-sh/nvm#about) so that Starfish can use a compatible node version without affecting other applications on your system.
 
 ### Next, make a .csv file with the GitHub Ids you're interested in checking, and, if desired, an "alternate id" to go with each
 
