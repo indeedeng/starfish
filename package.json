@@ -15,7 +15,7 @@
   "dependencies": {
     "dotenv": "^8.2.0",
     "eslint-plugin-gettext": "^1.1.0",
-    "luxon": "^1.25.0",
+    "luxon": "^1.28.1",
     "node-fetch": "^2.6.7",
     "parse-csv": "^0.2.0",
     "parse-link-header": "^2.0.0"
