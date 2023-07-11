@@ -1,6 +1,15 @@
 # Starfish
 
-![GitHub version](https://img.shields.io/github/v/release/indeedeng/starfish?color=informational) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/Naereen/StrapDown.js/graphs/commit-activity) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?color=lightgrey) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+![GitHub version](https://img.shields.io/github/v/release/indeedeng/starfish?color=informational) ![GitHub](https://img.shields.io/github/license/indeedeng/starfish?color=lightgrey) [![Open Source Love svg1](https://badges.frapsoft.com/os/v1/open-source.svg?v=103)](https://github.com/ellerbrock/open-source-badges/)
+
+As of July 2023, this project is no longer being actively maintained by Indeed. We are immensely grateful for all the support and contributions from our community throughout the years.
+
+While this repository will remain open and accessible, we will not be issuing updates, accepting pull requests, or addressing issues. It is crucial for users to know that the codebase will not receive security updates or patches. Thus, please use this project with caution as it might not be secure or up-to-date with the latest industry standards.
+
+We encourage the open-source community to fork this project if continued development is desired. We hope that the project has been of use and will continue to be valuable in its current state.
+
+Thank you once again for your support and understanding.
+
 
 ## _Because Your Open Source Contributors Are Stars!_
 
