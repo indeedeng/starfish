@@ -138,8 +138,8 @@ describe('getOrThrowIfMissingOrEmpty', () => {
         expect(() => getOrThrowIfMissingOrEmpty('configurationThatDoesNotExist')).toThrow(Error);
     });
     it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrowIfMissingOrEmpty('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrowIfMissingOrEmpty('TIMEZONE')).toEqual(process.env.TIMEZONE);
+        expect(() => getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).not.toThrow(Error);
+        expect(getOrThrowIfMissingOrEmpty('GITHUB_TOKEN')).toEqual(process.env.GITHUB_TOKEN);
     });
 });
 
@@ -161,16 +161,6 @@ describe('filterResponseForImportantEvents', () => {
         let resultArray = filterResponseForImportantEvents(arrayofTwoEvents);
         expect(resultArray.length).toEqual(1);
         expect(resultArray[0].type).toEqual('IssueCommentEvent');
-    });
-});
-
-describe('getOrThrowIfMissingOrEmpty', () => {
-    it('should throw an error if the configuration does not exist in the environment', () => {
-        expect(() => getOrThrowIfMissingOrEmpty('configurationThatDoesNotExist')).toThrow(Error);
-    });
-    it('should return the value of a configuration that exists in the environment', () => {
-        expect(() => getOrThrowIfMissingOrEmpty('TIMEZONE')).not.toThrow(Error);
-        expect(getOrThrowIfMissingOrEmpty('TIMEZONE')).toEqual(process.env.TIMEZONE);
     });
 });
 

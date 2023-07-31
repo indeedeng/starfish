@@ -78,6 +78,8 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
 
 ### Next, Create a file named .env, copy the contents of the .env.template file into it, and add your values to the new file.
 
+#### NOTE: We have provided default(hardcoded) environment variable values for easy onboarding inside the `globals.js` file where we handle our environment variables. The only thing you need to take care about is the `GITHUB_TOKEN`(access token) which is unique for every user in your .env file. This default implementation is provided for user convinience, rest you can modify the .env according to your needs.
+
 - Paste the access token into `GITHUB_TOKEN`.
 - `TIMEZONE` allows you to specify which timezone Starfish should use to decide on which day a contribution happened.
     - The default is UTC, which works well for organizations with multiple locations. See the "Time zones" section for details.
