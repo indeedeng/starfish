@@ -30,6 +30,12 @@ const githubImportantEvents = getOrThrowIfMissingOrEmpty('GITHUB_IMPORTANT_EVENT
 const timeZone = process.env.TIMEZONE;
 const dateTimes = getDateTimesFromArgv(timeZone);
 const csvFilename = process.argv[4];
+const repositoriesToFilterOut = (process.env.IGNORE_REPOSITORIES || '')
+    .split(',')
+    .map((repo) => repo.trim());
+const organizationsToFilterOut = (process.env.IGNORE_ORGANIZATIONS || '')
+    .split(',')
+    .map((repo) => repo.trim());
 
 const ignoreSelfOwnedEvents = (process.env.IGNORE_SELFOWNED_EVENTS || 'false').toLowerCase();
 console.info(`Configuration set to ignore self-owned events? ${ignoreSelfOwnedEvents}`);
@@ -49,4 +55,6 @@ module.exports = {
     githubToken,
     ignoreSelfOwnedEvents,
     minimumNumberOfContributions,
+    repositoriesToFilterOut,
+    organizationsToFilterOut,
 };

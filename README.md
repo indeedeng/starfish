@@ -92,6 +92,12 @@ Log in to GitHub and [register a new personal access token](https://github.com/s
     - We do not look for PushEvents because those are usually used for personal projects, not actual open source contributions.
     - Starfish allows you to filter events based on the specific action taken. For example, you might want to count when a pull request is opened, but not when it is closed. To do that, the list of important events can include basic types (like "PullRequestEvent") or a specific action of a type (like "PullRequestEvent.closed").
         You can list multiple actions for the same event type. Visit [GitHub event types](https://docs.github.com/en/free-pro-team@latest/developers/webhooks-and-events/github-event-types#event-object-common-properties) for more information.
+- `IGNORE_REPOSITORIES` contains repository names to be ignored to check. Names must be separated by a comma.
+    - One repository to ignore: `IGNORE_REPOSITORIES="indeedeng/starfish"`
+    - Many repositories to ignore: `IGNORE_REPOSITORIES="indeedeng/starfish,indeedeng/proctor"`
+- `IGNORE_ORGANIZATIONS` contains organization login to be filter the events. Logins must be separated by a comma.
+    - One organization to consider: `IGNORE_ORGANIZATIONS = "indeedeng"`
+    - Many organizations to consider: `IGNORE_ORGANIZATIONS = "indeedeng,github"`
 
 ### Time zones
 
